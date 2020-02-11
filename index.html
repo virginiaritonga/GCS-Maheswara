@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!-- Bootstrap plugin (kalo mau run, 'public' dihapus dulu di css & logo)  -->
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <!-- Chart.js plugin -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+
+    <link rel="stylesheet" href="css/jquery-ui.css">
+    <link rel="stylesheet" href="css/leaflet.css">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/custom.css">
+
+    <script type="text/javascript" src="js/fileSaver.js"></script>
+    <script type="text/javascript" src="js/ease.js"></script>
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/socket.io.js"></script>
+    <script type="text/javascript" src="js/papaparse.min.js"></script>
+    <script type="text/javascript" src="js/jquery-ui.js"></script>
+    <script type="text/javascript" src="js/leaflet.js"></script>
+    <script type="text/javascript" src="js/chartjs.js"></script>
+
+    <link rel="stylesheet" href="css/main.css">
+    <!-- Click Menu -->
+    <script>
+		/*$(document).ready(function(){
+			$(".hamburger").click(function(){
+			   $(".wrapper").toggleClass("collapse");
+			});
+        });*/
+	</script>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="top_navbar">
+          <div class="hamburger">
+             <div class="one"></div>
+             <div class="two"></div>
+             <div class="three"></div>
+          </div>
+          <div class="top_menu">
+            <div class="logo">
+               <img src="logo/GMAT.png" class="GMAT">
+            </div>
+            <div class="team">
+                Maheswara
+            </div>
+          </div>
+        </div>
+        
+        <div class="sidebar">
+            <ul>
+              <li><a href="map.html" onclick="ChangeButtonOne()">
+                <span class="icon"><i class="fas fa-map-marked-alt"></i></span>
+                <span class="title">Map</span>
+                </a></li>
+              <li><a href="">
+                <span class="icon"><i class="fas fa-chart-line"></i></span>
+                <span class="title">Graph</span>
+                </a></li>
+              <li><a href="detail.html">
+                <span class="icon"><i class="fas fa-info-circle"></i></span>
+                <span class="title">Detail</span>
+                </a></li>
+              <li><a href="manual.html">
+                    <span class="icon"><i class="fas fa-hdd"></i></span>
+                    <span class="title">Manual</span>
+                </a></li>
+              <li><a href="setting.html">
+                    <span class="icon"><i class="fas fa-cog"></i></span>
+                    <span class="title">Setting</span>
+                </a></li>
+            </ul>
+        </div>
+        
+        <div class="main_container">
+             <!-- Content Row-->
+            <div class="row" id="Graph">
+                <!-- Temperature Card -->
+                <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="card border-left-primary shadow h-100 py-2">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Temperatur</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                    <span id="tmp">305</span><span>°C</span>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                        </div>
+                </div>
+                 <!-- Kelembapan Card -->
+                 <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card border-left-success shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Kelembapan</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                <span id="kel">305</span><span>%</span>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            
+                        </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                <!-- Tekanan Card -->
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card border-left-info shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Tekanan</div>
+                            <div class="row no-gutters align-items-center">
+                            <div class="col-auto">
+                                <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">
+                                    <span id="tek">45</span><span> mbar</span>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                        
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                <!-- Arah Angin Card -->
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card border-left-warning shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Arah Angin</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                <span id="arah">45</span><span>°</span>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                         
+                        </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>  
+                <!-- Kecepatan Angin Card -->
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card border-left-warning shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Kecepatan Angin</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                              <span id="kec">45</span><span> m/s</span>
+                            </div>
+                        </div>
+                        
+                        </div>
+                    </div>
+                    </div>
+                </div>  
+             </div>
+
+             <div class="row" id="Graph">
+                <div class="item">
+                    Temperature Graph
+                          <canvas id="myChart"></canvas>
+                  </div>
+                  <div class="item">
+                    Kelembapan Graph
+                          <canvas id="myChart2"></canvas>
+                  </div>
+                  <div class="item">
+                          Pressure Graph
+                      <canvas id="myChart3"></canvas>
+                  </div>
+                  <div class="item">
+                    Arah Angin Graph
+                        <canvas id="myChart4"></canvas>
+                  </div>
+                  <div class="item">
+                    Kecepatan Angin Graph
+                          <canvas id="myChart5"></canvas>
+                  </div>
+             </div>
+        </div>
+             
+      </div>
+
+      <script src="/socket.io/socket.io.js" charset="utf-8"></script>
+      <script type="text/javascript">
+        const socket = io();
+
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var chart = new Chart(ctx, {
+            // The type of chart we want to create
+            type: 'line',
+            // The data for our dataset
+            data: {
+                labels: ["Serial"],
+                datasets: [{
+                    label: "Temperature Data from Arduino",
+                    backgroundColor: 'rgb(52, 73, 94)',
+                    borderColor: 'rgb(41, 128, 185)',
+                    data: [],
+                }]
+            },
+            // Configuration options go here
+            options: {}
+        });
+        let counter = 0 ;
+        socket.on('arduino:data', function (dataSerial) {
+          // console.log(dataSerial);
+          chart.data.labels.push(counter);
+          chart.data.datasets.forEach(dataset => {
+            dataset.data.push(dataSerial.temps);
+            document.getElementById('tmp').innerHTML = dataSerial.temps;
+          });
+          counter++;
+          chart.update();
+          
+        });
+
+        var ctx2 = document.getElementById('myChart2').getContext('2d');
+	    var chart2 = new Chart(ctx2, {
+			// The type of chart we want to create
+			type: 'line',
+			// The data for our dataset
+			data: {
+					labels: ["Serial"],
+					datasets: [{
+							label: "Kelembapan Data from Arduino",
+							backgroundColor: 'rgb(48, 166, 74)',
+							borderColor: 'rgb(48, 166, 74)',
+							fill: false,
+							data: [],
+					}]
+			},
+			// Configuration options go here
+			options: {}
+	});
+	let counter2 = 0 ;
+	socket.on('arduino:data', function (dataSerial) {
+		// console.log(dataSerial);
+		chart2.data.labels.push(counter);
+		chart2.data.datasets.forEach(dataset => {
+            dataset.data.push(dataSerial.altitudes);
+            document.getElementById('kel').innerHTML = dataSerial.altitudes;
+		});
+		counter2++;
+		chart2.update();
+	});
+
+	var ctx3 = document.getElementById('myChart3').getContext('2d');
+	var chart3 = new Chart(ctx3, {
+			// The type of chart we want to create
+			type: 'line',
+			// The data for our dataset
+			data: {
+					labels: ["Serial"],
+					datasets: [{
+							label: "Pressure Data from Arduino",
+							backgroundColor: 'rgb(37, 162, 183)',
+							borderColor: 'rgb(37, 162, 183)',
+							fill: false,
+							data: [],
+					}]
+			},
+			// Configuration options go here
+			options: {}
+	});
+	let counter3 = 0 ;
+	socket.on('arduino:data', function (dataSerial) {
+		// console.log(dataSerial);
+		chart3.data.labels.push(counter);
+		chart3.data.datasets.forEach(dataset => {
+            dataset.data.push(dataSerial.pressures);
+            document.getElementById('tek').innerHTML = dataSerial.pressures;
+		});
+		counter3++;
+		chart3.update();
+	});
+
+	var ctx4 = document.getElementById('myChart4').getContext('2d');
+	var chart4 = new Chart(ctx4, {
+			// The type of chart we want to create
+			type: 'line',
+			// The data for our dataset
+			data: {
+					labels: ["Serial"],
+					datasets: [{
+							label: "Arah Angin Data from Arduino",
+							backgroundColor: 'rgb(254, 192, 47)',
+							borderColor: 'rgb(254, 192, 47)',
+							fill: false,
+							data: [],
+					}]
+			},
+			// Configuration options go here
+			options: {}
+	});
+	let counter4 = 0 ;
+	socket.on('arduino:data', function (dataSerial) {
+		// console.log(dataSerial);
+		chart4.data.labels.push(counter);
+		chart4.data.datasets.forEach(dataset => {
+            dataset.data.push(dataSerial.windd);
+            document.getElementById('arah').innerHTML = dataSerial.windd;
+		});
+		counter4++;
+		chart4.update();
+    });
+    
+    var ctx5 = document.getElementById('myChart5').getContext('2d');
+	var chart5 = new Chart(ctx5, {
+			// The type of chart we want to create
+			type: 'line',
+			// The data for our dataset
+			data: {
+					labels: ["Serial"],
+					datasets: [{
+							label: "Kecepatan Angin Data from Arduino",
+							backgroundColor: 'rgb(254, 192, 47)',
+							borderColor: 'rgb(254, 192, 47)',
+							fill: false,
+							data: [],
+					}]
+			},
+			// Configuration options go here
+			options: {}
+	});
+	let counter5 = 0 ;
+	socket.on('arduino:data', function (dataSerial) {
+		// console.log(dataSerial);
+		chart5.data.labels.push(counter);
+		chart5.data.datasets.forEach(dataset => {
+            dataset.data.push(dataSerial.winds);
+            document.getElementById('kec').innerHTML = dataSerial.temps;
+		});
+		counter5++;
+		chart5.update();
+	});
+
+     </script>
+</body>
+</html>
