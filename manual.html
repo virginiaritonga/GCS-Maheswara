@@ -77,11 +77,12 @@
         </div>
         
         <div class="main_container">
-            <form action="/action_page.php">
+          <iframe name="frame" id="frame" style="display:none;"></iframe>
+            <form action="http://localhost:3000/manual.html" target="frame" method="POST">
                 <input type="text" name="fname" placeholder="Sudut Horizontal"><br>
                 <input type="text" name="lname" placeholder="Sudut Vertikal"><br>
                 <input type="submit" value="Submit">
-              </form>
+            </form>
         </div>
     </div>   
 </body>
