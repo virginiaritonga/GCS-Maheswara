@@ -3,6 +3,12 @@ function ChangeButtonOne(){
   document.getElementById("Graph").hidden = true;
   document.getElementById("Detail").hidden = true;
 }
+
+function toManual(){
+  document.getElementById("Manual").hidden = false;
+  document.getElementById("Graph").hidden = true;
+}
+
 function ChangeButtonTwo(){
   KotakSatu.style.opacity = "1";
   KotakSatu.style.cursor = "pointer";

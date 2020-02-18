@@ -148,16 +148,17 @@ body{
 .wrapper .main_container{
   width: (100% - 200px);
   height: 50%;
+  max-height: 50%;
   margin-top: 70px;
   margin-left: 200px;
   padding: 15px;
   transition: all 0.3s ease;
-  overflow:auto;
+  
 }
 
 .wrapper .main_container .item{
-  width: 46%;
-  height: 50%;
+  width: 47%;
+  height: 70%;
   background: #fff;
   margin-bottom: 10px;
   margin-left: 10px;
