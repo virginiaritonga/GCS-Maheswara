@@ -237,15 +237,8 @@
           // console.log(dataSerial);
           //chart.data.labels.push(counter);
           chart.data.datasets.forEach(dataset => {
-<<<<<<< HEAD
-            dataset.data.push(dataSerial.temps);
-            if(dataSerial.temps != 'undefined'){
-                document.getElementById('tmp').innerHTML = dataSerial.temps;
-            }
-=======
             dataset.data.push({x:dataSerial.temps,y:dataSerial.altitudes});
             document.getElementById('tmp').innerHTML = dataSerial.temps;
->>>>>>> 70821965dabbb3bdfcffc19eb5fb0805107f9130
           });
           chart.update();
         });

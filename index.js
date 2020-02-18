@@ -91,6 +91,7 @@ function sleep(milliseconds) {
   } while (currentDate - date < milliseconds);
 }
 
+var i=0;
 port.on('data', function(data) {
   //setInterval(function(){
   receivedData = data.toString();
@@ -109,7 +110,7 @@ port.on('data', function(data) {
   var lintang = k[8];
   var bujur = k[9];
   console.log(cleanData);
-  console.log("------------------------")
+  console.log("------------------------");
   io.emit('arduino:data', {
     temps: temp,
     humids: humid,
@@ -134,8 +135,11 @@ port.on('data', function(data) {
     bujur: k[9]
   })
   csvWriter.writeRecords(dataCSV).then(()=> console.log('CSV written'));
-  
   sleep(2000);
+  i++;
+  if(i %= 2 == 1){
+    port.flush(function(err,results){});
+  }
 });
 
 // portATS.on('arduino:data', function(data){
