@@ -217,42 +217,45 @@
         var ctx = document.getElementById('myChart').getContext('2d');
         var chart = new Chart(ctx, {
             // The type of chart we want to create
-            type: 'line',
+            type: 'scatter',
             // The data for our dataset
             data: {
-                labels: ["Serial"],
                 datasets: [{
                     label: "Temperature Data from Arduino",
+                    fill: false,
                     backgroundColor: 'rgb(52, 73, 94)',
                     borderColor: 'rgb(41, 128, 185)',
                     data: [],
                 }]
             },
             // Configuration options go here
-            options: {}
+            options: {
+                responsive:true
+            }
         });
-        let counter = 0 ;
         socket.on('arduino:data', function (dataSerial) {
           // console.log(dataSerial);
-          chart.data.labels.push(counter);
+          //chart.data.labels.push(counter);
           chart.data.datasets.forEach(dataset => {
+<<<<<<< HEAD
             dataset.data.push(dataSerial.temps);
             if(dataSerial.temps != 'undefined'){
                 document.getElementById('tmp').innerHTML = dataSerial.temps;
             }
+=======
+            dataset.data.push({x:dataSerial.temps,y:dataSerial.altitudes});
+            document.getElementById('tmp').innerHTML = dataSerial.temps;
+>>>>>>> 70821965dabbb3bdfcffc19eb5fb0805107f9130
           });
-          counter++;
           chart.update();
-          
         });
 
         var ctx2 = document.getElementById('myChart2').getContext('2d');
 	    var chart2 = new Chart(ctx2, {
 			// The type of chart we want to create
-			type: 'line',
+			type: 'scatter',
 			// The data for our dataset
 			data: {
-					labels: ["Serial"],
 					datasets: [{
 							label: "Kelembapan Data from Arduino",
 							backgroundColor: 'rgb(48, 166, 74)',
@@ -262,27 +265,27 @@
 					}]
 			},
 			// Configuration options go here
-			options: {}
+			options: {
+                responsive:true
+            }
 	});
-	let counter2 = 0 ;
 	socket.on('arduino:data', function (dataSerial) {
 		// console.log(dataSerial);
-		chart2.data.labels.push(counter);
 		chart2.data.datasets.forEach(dataset => {
-            dataset.data.push(dataSerial.altitudes);
-            document.getElementById('kel').innerHTML = dataSerial.altitudes;
+            dataset.data.push({
+                x:dataSerial.humids,y:dataSerial.altitudes
+            });
+            document.getElementById('kel').innerHTML = dataSerial.humids;
 		});
-		counter2++;
 		chart2.update();
 	});
 
 	var ctx3 = document.getElementById('myChart3').getContext('2d');
 	var chart3 = new Chart(ctx3, {
 			// The type of chart we want to create
-			type: 'line',
+			type: 'scatter',
 			// The data for our dataset
 			data: {
-					labels: ["Serial"],
 					datasets: [{
 							label: "Pressure Data from Arduino",
 							backgroundColor: 'rgb(37, 162, 183)',
@@ -292,27 +295,27 @@
 					}]
 			},
 			// Configuration options go here
-			options: {}
+			options: {
+                responsive:true
+            }
 	});
-	let counter3 = 0 ;
 	socket.on('arduino:data', function (dataSerial) {
 		// console.log(dataSerial);
-		chart3.data.labels.push(counter);
 		chart3.data.datasets.forEach(dataset => {
-            dataset.data.push(dataSerial.pressures);
+            dataset.data.push({
+                x:dataSerial.pressures,y:dataSerial.altitudes
+            });
             document.getElementById('tek').innerHTML = dataSerial.pressures;
 		});
-		counter3++;
 		chart3.update();
 	});
 
 	var ctx4 = document.getElementById('myChart4').getContext('2d');
 	var chart4 = new Chart(ctx4, {
 			// The type of chart we want to create
-			type: 'line',
+			type: 'scatter',
 			// The data for our dataset
 			data: {
-					labels: ["Serial"],
 					datasets: [{
 							label: "Arah Angin Data from Arduino",
 							backgroundColor: 'rgb(254, 192, 47)',
@@ -322,27 +325,27 @@
 					}]
 			},
 			// Configuration options go here
-			options: {}
+			options: {
+                responsive:true
+            }
 	});
-	let counter4 = 0 ;
 	socket.on('arduino:data', function (dataSerial) {
 		// console.log(dataSerial);
-		chart4.data.labels.push(counter);
 		chart4.data.datasets.forEach(dataset => {
-            dataset.data.push(dataSerial.windd);
+            dataset.data.push({
+                x:dataSerial.windd,y:dataSerial.altitudes
+            });
             document.getElementById('arah').innerHTML = dataSerial.windd;
 		});
-		counter4++;
 		chart4.update();
     });
     
     var ctx5 = document.getElementById('myChart5').getContext('2d');
 	var chart5 = new Chart(ctx5, {
 			// The type of chart we want to create
-			type: 'line',
+			type: 'scatter',
 			// The data for our dataset
 			data: {
-					labels: ["Serial"],
 					datasets: [{
 							label: "Kecepatan Angin Data from Arduino",
 							backgroundColor: 'rgb(254, 192, 47)',
@@ -352,17 +355,18 @@
 					}]
 			},
 			// Configuration options go here
-			options: {}
+			options: {
+                responsive:true
+            }
 	});
-	let counter5 = 0 ;
 	socket.on('arduino:data', function (dataSerial) {
 		// console.log(dataSerial);
-		chart5.data.labels.push(counter);
 		chart5.data.datasets.forEach(dataset => {
-            dataset.data.push(dataSerial.winds);
-            document.getElementById('kec').innerHTML = dataSerial.temps;
+            dataset.data.push({
+                x:dataSerial.winds,y:dataSerial.altitudes
+            });
+            document.getElementById('kec').innerHTML = dataSerial.winds;
 		});
-		counter5++;
 		chart5.update();
 	});
 
