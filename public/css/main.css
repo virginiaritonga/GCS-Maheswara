@@ -20,6 +20,7 @@ body{
 .wrapper .top_navbar{
   width: calc(100% - 20px);
   height: 60px;
+  z-index: 999;
   display: flex;
   position: fixed;
   top: 10px;

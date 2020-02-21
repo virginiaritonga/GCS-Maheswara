@@ -49,7 +49,7 @@ const parser = new parsers.Readline({
   delimiter: '\r\n'
 });
 
-var port = new SerialPort('COM3', {
+var port = new SerialPort('/dev/cu.usbmodem14201', {
   baudRate: 38400
 });
 // var portATS = new SerialPort('COM3',{
@@ -109,8 +109,8 @@ port.on('data', function(data) {
   var wind_speed = k[7];
   var lintang = k[8];
   var bujur = k[9];
-  console.log(cleanData);
-  console.log("------------------------");
+  //console.log(cleanData);
+  //console.log("------------------------");
   io.emit('arduino:data', {
     temps: temp,
     humids: humid,
