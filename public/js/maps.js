@@ -20,7 +20,7 @@ $(document).ready(function () {
 	  map.dragging.enable();
 	})
 
-  map = L.map('map').setView([-7.654070, 107.689125], 16);
+  map = L.map('map').setView([-7.77126, 110.37338], 16);
   var baselayer = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 	maxZoom: 16,
 	attribution: 'Map data &copy; <a href="http://openstreetmap.org/copyright">OpenStreetMap</a> contributors'

@@ -49,12 +49,12 @@ const parser = new parsers.Readline({
   delimiter: '\r\n'
 });
 
-var port = new SerialPort('/dev/cu.usbmodem14201', {
+var port = new SerialPort('COM3', {
   baudRate: 38400
 });
-// var portATS = new SerialPort('COM3',{
-//   baudRate: 38400
-// });
+var portATS = new SerialPort('COM4',{
+  baudRate: 57600
+});
 
 var receivedData;
 var cleanData;
@@ -78,11 +78,6 @@ const csvWriter = createCsvWriter({
   ]
 });
 
-// test = function(Horizontal,Vertikal){
-//   var hasil = Horizontal + " " + Vertikal
-//   return hasil;
-// }
-
 function sleep(milliseconds) {
   const date = Date.now();
   let currentDate = null;
@@ -92,9 +87,9 @@ function sleep(milliseconds) {
 }
 
 var i=0;
-port.on('data', function(data) {
+port.on('data', function(datas) {
   //setInterval(function(){
-  receivedData = data.toString();
+  receivedData = datas.toString();
   var cleanData = receivedData.substring(receivedData.indexOf('\r\n')).replace(/(\r\n|\n|\r)/gm,"");
   k = cleanData.split(" ");
   var dataCSV = []
@@ -109,8 +104,9 @@ port.on('data', function(data) {
   var wind_speed = k[7];
   var lintang = k[8];
   var bujur = k[9];
-  //console.log(cleanData);
-  //console.log("------------------------");
+
+  console.log(cleanData);
+  console.log("------------------------");
   io.emit('arduino:data', {
     temps: temp,
     humids: humid,
@@ -121,6 +117,11 @@ port.on('data', function(data) {
     lintangs: lintang,
     bujurs: bujur
   });
+  portATS.emit('arduino:data1',{
+    lintangs: lintang,
+    bujurs: bujur,
+    altitudes: altitude
+  })
 
   dataCSV.push({
     idP: k[0],
@@ -142,15 +143,28 @@ port.on('data', function(data) {
   }
 });
 
-// portATS.on('arduino:data', function(data){
-//   //autotrack
-//   const autotrack = require('./Geo_calculator.js')
-//   //console.log(autotrack.data.calculate_compass_bearing(100,45,10,0))
-//   bearing = autotrack.data.calculate_compass_bearing(dataserial.lintangs,dataserial.bujurs,origin_latitude,origin_longitude);
-//   vertical = autotrack.data.calculate_vertical_angle(autotrack.data.calculate_distance(dataserial.lintangs,data.bujurs),origin_latitude,origin_longitude,dataserial.altitudes);
-//   Hasil_Autotrack = (Math.round(bearing)).toString() + " " + (Math.round(vertical)).toString();
-//   PortATS.write(Hasil_Autotrack);
-//     // });
-//   //
-//   });
+var j = 1;
+  portATS.on('arduino:data1', function(data){
+    //autotrack
+    const autotrack = require('./Geo_calculator.js')
+    //console.log(autotrack.data.calculate_compass_bearing(100,45,10,0))
+    bearing = autotrack.data.calculate_compass_bearing(data.lintangs,data.bujurs,origin_latitude,origin_longitude);
+    vertical = autotrack.data.calculate_vertical_angle(autotrack.data.calculate_distance(data.lintangs,data.bujurs,origin_latitude,origin_longitude),data.altitudes);
+    Hasil_Autotrack = (Math.round(bearing)).toString() + " " + (Math.round(vertical)).toString();
+    //console.log(Hasil_Autotrack);
+    // portATS.write(Hasil_Autotrack)
+    portATS.write(Hasil_Autotrack, function (err) {
+      if (err) {
+        return console.log('Error on write: ', err.message)
+      }
+      console.log(Hasil_Autotrack)
+    })
+
+    if(j % 5 == 0){
+      portATS.flush(function(err,results){});
+    }
+    j++;
+    
+    //
+})
 server.listen(3000)
