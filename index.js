@@ -49,12 +49,18 @@ const parser = new parsers.Readline({
   delimiter: '\r\n'
 });
 
+// const parserATS = new parsers.Readline({
+//   delimiter: '\r\n'
+// })
+
 var port = new SerialPort('COM3', {
-  baudRate: 38400
+  baudRate: 38400 
 });
-var portATS = new SerialPort('COM4',{
+port.pipe(parser)
+var portATS = new SerialPort('COM5',{
   baudRate: 57600
 });
+//portATS.pipe(parserATS);
 
 var receivedData;
 var cleanData;
@@ -86,10 +92,12 @@ function sleep(milliseconds) {
   } while (currentDate - date < milliseconds);
 }
 
-var i=0;
-port.on('data', function(datas) {
+//port.open();
+port.on('open', function() {});
+
+parser.on('data', function(data) {
   //setInterval(function(){
-  receivedData = datas.toString();
+  receivedData = data.toString();
   var cleanData = receivedData.substring(receivedData.indexOf('\r\n')).replace(/(\r\n|\n|\r)/gm,"");
   k = cleanData.split(" ");
   var dataCSV = []
@@ -136,14 +144,10 @@ port.on('data', function(datas) {
     bujur: k[9]
   })
   csvWriter.writeRecords(dataCSV).then(()=> console.log('CSV written'));
-  sleep(2000);
-  i++;
-  if(i %= 2 == 1){
-    port.flush(function(err,results){});
-  }
+  //port.close()
 });
 
-var j = 1;
+//var j = 1;
   portATS.on('arduino:data1', function(data){
     //autotrack
     const autotrack = require('./Geo_calculator.js')
@@ -151,8 +155,6 @@ var j = 1;
     bearing = autotrack.data.calculate_compass_bearing(data.lintangs,data.bujurs,origin_latitude,origin_longitude);
     vertical = autotrack.data.calculate_vertical_angle(autotrack.data.calculate_distance(data.lintangs,data.bujurs,origin_latitude,origin_longitude),data.altitudes);
     Hasil_Autotrack = (Math.round(bearing)).toString() + " " + (Math.round(vertical)).toString();
-    //console.log(Hasil_Autotrack);
-    // portATS.write(Hasil_Autotrack)
     portATS.write(Hasil_Autotrack, function (err) {
       if (err) {
         return console.log('Error on write: ', err.message)
@@ -160,10 +162,11 @@ var j = 1;
       console.log(Hasil_Autotrack)
     })
 
-    if(j % 5 == 0){
-      portATS.flush(function(err,results){});
-    }
-    j++;
+    // if(j % 5 == 0){
+    //   portATS.flush(function(err,results){});
+    //   //portATS.disconnect()
+    // }
+    // j++;
     
     //
 })
