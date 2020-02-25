@@ -28,18 +28,20 @@ app.get('/manual.html',(req, res)=>{
 app.get('/setting.html',(req, res)=>{
   res.sendFile(__dirname + '/setting.html');
 });
-// app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: true }));
 // app.post('/manual.html', (req,res)=>{
 //   // console.log(req.body.fname,req.body.lname)
 //   test(req.body.fname,req.body.lname);
 // })
-// app.post('/detail.html', (req,res)=>{
-//   test();
-// })
+app.post('/', (req,res)=>{
+  if(req.body.Connect == "Disconnect"){
+    ConnectPort();
+  }
+  else if(req.body.Connect == "Connect"){
+    DisconnectPort();
+  }
+})
 
-// static files
-//app.use(express.static(path.join(__dirname, 'public')));
-//app.use(express.static('public'));
 app.use(express.static(__dirname + '/public'));
 
 var SerialPort = require('serialport');
@@ -49,18 +51,20 @@ const parser = new parsers.Readline({
   delimiter: '\r\n'
 });
 
-// const parserATS = new parsers.Readline({
-//   delimiter: '\r\n'
-// })
+const parserATS = new parsers.Readline({
+  delimiter: '\r\n'
+})
 
 var port = new SerialPort('COM3', {
+  autoOpen: false,
   baudRate: 38400 
 });
 port.pipe(parser)
 var portATS = new SerialPort('COM5',{
+  autoOpen: false,
   baudRate: 57600
 });
-//portATS.pipe(parserATS);
+portATS.pipe(parserATS);
 
 var receivedData;
 var cleanData;
@@ -84,16 +88,28 @@ const csvWriter = createCsvWriter({
   ]
 });
 
-function sleep(milliseconds) {
-  const date = Date.now();
-  let currentDate = null;
-  do {
-    currentDate = Date.now();
-  } while (currentDate - date < milliseconds);
+// function sleep(milliseconds) {
+//   const date = Date.now();
+//   let currentDate = null;
+//   do {
+//     currentDate = Date.now();
+//   } while (currentDate - date < milliseconds);
+// }
+
+port.on('open', function() {});
+portATS.on('open', function() {});
+
+function ConnectPort(){
+  console.log("Connected")
+  port.open();
+  portATS.open();
 }
 
-//port.open();
-port.on('open', function() {});
+function DisconnectPort(){
+  console.log("Disconnected")
+  port.close();
+  portATS.close();
+}
 
 parser.on('data', function(data) {
   //setInterval(function(){
@@ -125,7 +141,7 @@ parser.on('data', function(data) {
     lintangs: lintang,
     bujurs: bujur
   });
-  portATS.emit('arduino:data1',{
+  parserATS.emit('arduino:data1',{
     lintangs: lintang,
     bujurs: bujur,
     altitudes: altitude
@@ -144,11 +160,9 @@ parser.on('data', function(data) {
     bujur: k[9]
   })
   csvWriter.writeRecords(dataCSV).then(()=> console.log('CSV written'));
-  //port.close()
 });
 
-//var j = 1;
-  portATS.on('arduino:data1', function(data){
+  parserATS.on('arduino:data1', function(data){
     //autotrack
     const autotrack = require('./Geo_calculator.js')
     //console.log(autotrack.data.calculate_compass_bearing(100,45,10,0))
@@ -161,13 +175,5 @@ parser.on('data', function(data) {
       }
       console.log(Hasil_Autotrack)
     })
-
-    // if(j % 5 == 0){
-    //   portATS.flush(function(err,results){});
-    //   //portATS.disconnect()
-    // }
-    // j++;
-    
-    //
 })
 server.listen(3000)
