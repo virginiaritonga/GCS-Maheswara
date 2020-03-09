@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="css/jquery-ui.css">
     <!-- <link rel="stylesheet" href="leaflet/leaflet.css"> -->
     <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/custom.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
    integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
    crossorigin=""/>
@@ -215,17 +216,20 @@
 
                 <!-- Tab 2 -->
                 <!-- Map -->
-                <div class="tab-pane fade" id="pills-map" role="tabpanel" aria-labelledby="pills-map-tab">
+                <div class="tab-pane fade active" id="pills-map" role="tabpanel" aria-labelledby="pills-map-tab">
                     <div id="Map">      
                         <button id="autohand" class="btn btn-success" onclick="map_auto()">Auto</button>
                         <div id="map">
+                        <div id="basemapslidercontainer">
+                          <div id="basemapslider">
+                          </div>
                         </div>
                         </div>
                         <table style="width: 100%;">
                           <tr>
-                            <td style="font-size:25px;">Ketinggian:<br><a id="map_tinggi">-</a></td>
-                            <td style="font-size:25px;">Latitude:<br><a id="map_latitude">-</a></td>
-                            <td style="font-size:25px;">Longitude:<br><a id="map_longitude">-</a></td>
+                            <td style="font-size:25px;">Ketinggian:<br><a id="map_tinggi"> -</a></td>
+                            <td style="font-size:25px;">Latitude:<br><a id="map_latitude"> -</a></td>
+                            <td style="font-size:25px;">Longitude:<br><a id="map_longitude"> -</a></td>
                           </tr>
                         </table>
                     </div>
@@ -287,8 +291,9 @@
 
                 <!-- Tab 4 -->
                 <!-- Manual -->
-                <div class="tab-pane fadee" id="pills-manual" role="tabpanel" aria-labelledby="pills-manual-tab">
-                    <form action="/action_page.php">
+                <div class="tab-pane fade" id="pills-manual" role="tabpanel" aria-labelledby="pills-manual-tab">
+                    <iframe name="dframe" id="dframe" style="display: none;"></iframe>
+                    <form action="http://localhost:3000/" target="dframe" method="POST">
                         <input type="text" name="fname" placeholder="Sudut Horizontal"><br>
                         <input type="text" name="lname" placeholder="Sudut Vertikal"><br>
                         <input type="submit" value="Submit">
@@ -376,14 +381,18 @@
           // console.log(dataSerial);
           //chart.data.labels.push(counter);
           chart.data.datasets.forEach(dataset => {
-            dataset.data.push({x:dataSerial.temps,y:dataSerial.altitudes});
+            //dataset.data.push({x:dataSerial.temps,y:dataSerial.altitudes});
             document.getElementById('tmp').innerHTML = dataSerial.temps;
             document.getElementById('map_tinggi').innerHTML = dataSerial.altitudes;
             document.getElementById('map_latitude').innerHTML = dataSerial.lintangs;
             document.getElementById('map_longitude').innerHTML = dataSerial.bujurs;
-            
           });
-          chart.update();
+          if(dataSerial.pause % 5 == 0){
+            chart.data.datasets.forEach(dataset => {
+                dataset.data.push({x:dataSerial.temps,y:dataSerial.altitudes});
+            });
+            chart.update(); 
+          }
         });
 
         var ctx2 = document.getElementById('myChart2').getContext('2d');
@@ -408,12 +417,19 @@
 	socket.on('arduino:data', function (dataSerial) {
 		// console.log(dataSerial);
 		chart2.data.datasets.forEach(dataset => {
-            dataset.data.push({
-                x:dataSerial.humids,y:dataSerial.altitudes
-            });
+            // dataset.data.push({
+            //     x:dataSerial.humids,y:dataSerial.altitudes
+            // });
             document.getElementById('kel').innerHTML = dataSerial.humids;
 		});
-		chart2.update();
+		if(dataSerial.pause % 5 == 0){
+            chart2.data.datasets.forEach(dataset => {
+                dataset.data.push({
+                    x:dataSerial.windd,y:dataSerial.altitudes
+                });
+            });
+            chart2.update(); 
+          }
 	});
 
 	var ctx3 = document.getElementById('myChart3').getContext('2d');
@@ -438,12 +454,19 @@
 	socket.on('arduino:data', function (dataSerial) {
 		// console.log(dataSerial);
 		chart3.data.datasets.forEach(dataset => {
-            dataset.data.push({
-                x:dataSerial.pressures,y:dataSerial.altitudes
-            });
+            // dataset.data.push({
+            //     x:dataSerial.pressures,y:dataSerial.altitudes
+            // });
             document.getElementById('tek').innerHTML = dataSerial.pressures;
 		});
-		chart3.update();
+		if(dataSerial.pause % 5 == 0){
+            chart3.data.datasets.forEach(dataset => {
+                dataset.data.push({
+                    x:dataSerial.windd,y:dataSerial.altitudes
+                });
+            });
+            chart3.update(); 
+          }
 	});
 
 	var ctx4 = document.getElementById('myChart4').getContext('2d');
@@ -468,12 +491,19 @@
 	socket.on('arduino:data', function (dataSerial) {
 		// console.log(dataSerial);
 		chart4.data.datasets.forEach(dataset => {
-            dataset.data.push({
-                x:dataSerial.windd,y:dataSerial.altitudes
-            });
+            // dataset.data.push({
+            //     x:dataSerial.windd,y:dataSerial.altitudes
+            // });
             document.getElementById('arah').innerHTML = dataSerial.windd;
 		});
-		chart4.update();
+		if(dataSerial.pause % 5 == 0){
+            chart4.data.datasets.forEach(dataset => {
+                dataset.data.push({
+                    x:dataSerial.windd,y:dataSerial.altitudes
+                });
+            });
+            chart4.update(); 
+          }
     });
     
     var ctx5 = document.getElementById('myChart5').getContext('2d');
@@ -498,12 +528,19 @@
 	socket.on('arduino:data', function (dataSerial) {
 		// console.log(dataSerial);
 		chart5.data.datasets.forEach(dataset => {
-            dataset.data.push({
-                x:dataSerial.winds,y:dataSerial.altitudes
-            });
+            // dataset.data.push({
+            //     x:dataSerial.winds,y:dataSerial.altitudes
+            // });
             document.getElementById('kec').innerHTML = dataSerial.winds;
 		});
-		chart5.update();
+		if(dataSerial.pause % 5 == 0){
+            chart5.data.datasets.forEach(dataset => {
+                dataset.data.push({
+                    x:dataSerial.windd,y:dataSerial.altitudes
+                });
+            });
+            chart5.update(); 
+        }
 	});
 
      </script>

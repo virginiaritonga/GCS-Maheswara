@@ -1,5 +1,5 @@
 function ChangeButtonOne(){
-  document.getElementById("Map").hidden = false;
+  //document.getElementById("Map").hidden = false;
   document.getElementById("Graph").hidden = true;
   document.getElementById("Detail").hidden = true;
 }
@@ -22,7 +22,7 @@ function ChangeButtonTwo(){
   KotakTiga.style.cursor = "pointer";
   KotakTiga.disabled = false;
 
-  document.getElementById("Map").hidden = true;
+  //document.getElementById("Map").hidden = true;
   document.getElementById("Graph").hidden = false;
   document.getElementById("Detail").hidden = true;
 }
@@ -39,7 +39,7 @@ function ChangeButtonThree(){
   KotakTiga.style.cursor = "default";
   KotakTiga.disabled = true;
 
-  document.getElementById("Map").hidden = true;
+  //document.getElementById("Map").hidden = true;
   document.getElementById("Graph").hidden = true;
   document.getElementById("Detail").hidden = false;
 

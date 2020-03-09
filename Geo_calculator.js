@@ -2,7 +2,7 @@ var methods = {};
 
 methods = {
     calculate_compass_bearing: function(target_latitude, target_longitude, origin_latitude, origin_longitude){
-        let diff_longitude = target_longitude - origin_longitude;
+        let diff_longitude = degrees_to_radians(target_longitude - origin_longitude);
         let x = Math.sin(diff_longitude) * Math.cos(degrees_to_radians(target_latitude));
         let y = Math.cos(degrees_to_radians(origin_latitude)) * Math.sin(degrees_to_radians(target_latitude)) - (Math.sin(degrees_to_radians(origin_latitude)) * Math.cos(degrees_to_radians(target_latitude))*Math.cos(diff_longitude))
         let bearing = Math.atan2(x, y)
