@@ -1,3 +1,9 @@
+var d = new Date();
+var date = d.toString().substring(0,15);
+var time = d.toString().substring(16,21);
+document.getElementById("date").innerHTML = date;
+document.getElementById("time").innerHTML = time;
+
 function ChangeButtonOne(){
   //document.getElementById("Map").hidden = false;
   document.getElementById("Graph").hidden = true;

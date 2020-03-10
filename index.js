@@ -40,7 +40,7 @@ const parserATS = new parsers.Readline({
   delimiter: '\r\n'
 })
 
-var port = new SerialPort('COM3', {
+var port = new SerialPort('/dev/cu.usbmodem14101', {
   baudRate: 57600 
 });
 port.pipe(parser)
@@ -132,6 +132,8 @@ parser.on('data', function(data) {
     winds: wind_speed,
     lintangs: lintang,
     bujurs: bujur,
+    lintangawal: lintang[1],
+    bujurawal: bujur[1],
     pause : i
   });
   i++;
