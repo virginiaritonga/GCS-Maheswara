@@ -9,13 +9,26 @@ const app = express();
 const server = http.createServer(app);
 const io = socketIo.listen(server);
 
+<<<<<<< HEAD
+=======
+app.use(bodyParser.urlencoded({ extended: true }));
+
+>>>>>>> 74d1144ef25322f2b009845719cfdd1f97ee6bd8
 //routes
 app.get("/", (req, res) => {
   res.sendFile(__dirname + "/index.html");
 });
+<<<<<<< HEAD
 app.get("/index.html", (req, res) => {
   res.sendFile(__dirname + "/index.html");
+=======
+
+app.post("/", function (req, res) {
+  console.log(req.body.port_muatan);
+  console.log(req.body.baudrate_muatan);
+>>>>>>> 74d1144ef25322f2b009845719cfdd1f97ee6bd8
 });
+
 // app.post('/', (req,res)=>{
 //   if(req.body.Connect == "Disconnect"){
 //     ConnectPort();

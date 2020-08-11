@@ -56,14 +56,25 @@
     <link rel="stylesheet" href="css/main.css" />
     <!-- Click Menu -->
     <script>
+<<<<<<< HEAD
       /*$(document).ready(function(){
+=======
+		$(document).ready(function(){
+>>>>>>> 74d1144ef25322f2b009845719cfdd1f97ee6bd8
 			$(".hamburger").click(function(){
-			   $(".wrapper").toggleClass("collapse");
+			   $(".sidebar").toggleClass("collapse");
 			});
+<<<<<<< HEAD
         });*/
     </script>
   </head>
   <body>
+=======
+        });
+	</script>
+</head>
+<body>
+>>>>>>> 74d1144ef25322f2b009845719cfdd1f97ee6bd8
     <div class="wrapper">
       <div class="top_navbar">
         <div class="hamburger">
@@ -340,6 +351,7 @@
               </div>
             </div>
 
+<<<<<<< HEAD
             <!-- Tab 3-->
             <!-- Detail -->
             <div
@@ -413,6 +425,51 @@
                     </h5>
                   </ul>
                   <hr />
+=======
+                <!-- Tab 5-->
+                <!-- Setting -->
+                <div class="tab-pane fade " id="pills-setting" role="tabpanel" aria-labelledby="pills-setting-tab">
+                    <div class="modal-body">
+                        <form class="ui form" action="/" method="POST">
+                        <h5><font color="black">Port Muatan</font></h5>
+                        <input type="text" id="port_muatan" placeholder="COM 3" name="port_muatan">
+            
+                        <h5><font color="black"> Baudrate Muatan</font></h5>
+                        <input list="BRate" id="baudrate_muatan" placeholder="-" name="baudrate_muatan">
+            
+                        <br>
+                        <h5><font color="black">Port ATS</font></h5>
+                        <input type="text" id="port_ats" placeholder="COM 3" name="port_ats">
+            
+                        <h5><font color="black"> Baudrate ATS</font></h5>
+                        <input list="BRate" id="baudrate_ats" placeholder="-" name="baudrate_ats">
+                        
+                        <h5><font color="black"> Latitude ATS</font></h5>
+                        <input list="number" step="any" id="latitude_ats" placeholder="-" name="latitude_ats">
+                        
+                        <h5><font color="black"> Longitude ATS</font></h5>
+                        <input list="number" step="any" id="longitude_ats" placeholder="-" name="longitude_ats">
+            
+                        <datalist id="BRate">
+                          <option value="300">
+                          <option value="600">
+                          <option value="1200">
+                          <option value="2400">
+                          <option value="4800">
+                          <option value="9600">
+                          <option value="14400">
+                          <option value="19200">
+                          <option value="28800">
+                          <option value="38400">
+                          <option value="57600">
+                          <option value="115200">
+                        </datalist>
+
+                        <input class="ui inverted big violet button"type="submit">
+                    </form>
+                      </div>
+                      
+>>>>>>> 74d1144ef25322f2b009845719cfdd1f97ee6bd8
                 </div>
 
                 <a onclick="download_csv()">
