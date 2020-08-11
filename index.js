@@ -9,15 +9,18 @@ const app = express();
 const server = http.createServer(app);
 const io = socketIo.listen(server);
 
-
+app.use(bodyParser.urlencoded({ extended: true }));
 
 //routes
 app.get('/', (req, res) => {
   res.sendFile(__dirname +'/index.html');
 });
-app.get('/index.html',(req, res)=>{
-  res.sendFile(__dirname + '/index.html');
+
+app.post("/", function (req, res) {
+  console.log(req.body.port_muatan);
+  console.log(req.body.baudrate_muatan);
 });
+
 // app.post('/', (req,res)=>{
 //   if(req.body.Connect == "Disconnect"){
 //     ConnectPort();

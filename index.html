@@ -37,11 +37,11 @@
     <link rel="stylesheet" href="css/main.css">
     <!-- Click Menu -->
     <script>
-		/*$(document).ready(function(){
+		$(document).ready(function(){
 			$(".hamburger").click(function(){
-			   $(".wrapper").toggleClass("collapse");
+			   $(".sidebar").toggleClass("collapse");
 			});
-        });*/
+        });
 	</script>
 </head>
 <body>
@@ -304,24 +304,25 @@
                 <!-- Setting -->
                 <div class="tab-pane fade " id="pills-setting" role="tabpanel" aria-labelledby="pills-setting-tab">
                     <div class="modal-body">
+                        <form class="ui form" action="/" method="POST">
                         <h5><font color="black">Port Muatan</font></h5>
-                        <input type="text" id="port_muatan" placeholder="COM 3">
+                        <input type="text" id="port_muatan" placeholder="COM 3" name="port_muatan">
             
                         <h5><font color="black"> Baudrate Muatan</font></h5>
-                        <input list="BRate" id="baudrate_muatan" placeholder="-">
+                        <input list="BRate" id="baudrate_muatan" placeholder="-" name="baudrate_muatan">
             
                         <br>
                         <h5><font color="black">Port ATS</font></h5>
-                        <input type="text" id="port_ats" placeholder="COM 3">
+                        <input type="text" id="port_ats" placeholder="COM 3" name="port_ats">
             
                         <h5><font color="black"> Baudrate ATS</font></h5>
-                        <input list="BRate" id="baudrate_ats" placeholder="-">
+                        <input list="BRate" id="baudrate_ats" placeholder="-" name="baudrate_ats">
                         
                         <h5><font color="black"> Latitude ATS</font></h5>
-                        <input list="number" step="any" id="latitude_ats" placeholder="-">
+                        <input list="number" step="any" id="latitude_ats" placeholder="-" name="latitude_ats">
                         
                         <h5><font color="black"> Longitude ATS</font></h5>
-                        <input list="number" step="any" id="longitude_ats" placeholder="-">
+                        <input list="number" step="any" id="longitude_ats" placeholder="-" name="longitude_ats">
             
                         <datalist id="BRate">
                           <option value="300">
@@ -337,8 +338,11 @@
                           <option value="57600">
                           <option value="115200">
                         </datalist>
-            
+
+                        <input class="ui inverted big violet button"type="submit">
+                    </form>
                       </div>
+                      
                 </div>
               </div>
          <div class="tab-content">   
