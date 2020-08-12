@@ -9,29 +9,6 @@ const app = express();
 const server = http.createServer(app);
 const io = socketIo.listen(server);
 
-app.use(bodyParser.urlencoded({ extended: true }));
-
-//routes
-app.get('/', (req, res) => {
-  res.sendFile(__dirname +'/index.html');
-});
-
-app.post("/", function (req, res) {
-  console.log(req.body.port_muatan);
-  console.log(req.body.baudrate_muatan);
-});
-
-// app.post('/', (req,res)=>{
-//   if(req.body.Connect == "Disconnect"){
-//     ConnectPort();
-//   }
-//   else if(req.body.Connect == "Connect"){
-//     DisconnectPort();
-//   }
-// })
-
-app.use(express.static(__dirname + '/public'));
-
 var SerialPort = require('serialport');
 const parsers = SerialPort.parsers;
 
@@ -43,9 +20,38 @@ const parserATS = new parsers.Readline({
   delimiter: '\r\n'
 })
 
+
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static(__dirname + '/public'));
+
 var port = new SerialPort('/dev/cu.usbmodem14101', {
   baudRate: 57600 
 });
+
+// Routes
+app.get('/', (req, res) => {
+  res.sendFile(__dirname +'/index.html');
+});
+
+app.post("/", function (req, res) {
+ port_mutan = req.body.port_muatan;
+  baudrate_muatan = req.body.baudrate_muatan;
+  var port = new SerialPort(port_muatan, {
+    baudRate: baudrate_muatan 
+
+
+    });
+});
+
+// app.post('/', (req,res)=>{
+//   if(req.body.Connect == "Disconnect"){
+//     ConnectPort();
+//   }
+//   else if(req.body.Connect == "Connect"){
+//     DisconnectPort();
+//   }
+// })
+
 port.pipe(parser)
 var portATS = new SerialPort('COM12',{
   baudRate: 57600
@@ -198,4 +204,7 @@ parser.on('data', function(data) {
       })
     }
 })
+
+// Start server
 server.listen(3000)
+
