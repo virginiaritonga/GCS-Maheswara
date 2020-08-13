@@ -8,14 +8,16 @@
     <title>GCS Maheswara</title>
     <!-- Bootstrap and Icons plugin -->
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-    <script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
-
+    <script src="css/all.css"></script>
+    <script src="js/all.js"></script>
     <!-- Chart.js plugin -->
     <script src="js/Chart.bundle.min.js"></script>
     <link rel="stylesheet" href="css/jquery-ui.css">
     <!-- <link rel="stylesheet" href="leaflet/leaflet.css"> -->
-    <link rel="stylesheet" href="css/bootstrap.css">
-    <link rel="stylesheet" href="css/custom.css">
+    <!-- <link rel="stylesheet" href="css/bootstrap.css"> -->
+    <link rel="stylesheet" href="js/bootstrap.bundle.js">
+    <link rel="stylesheet" href="js/bootstrap.js">
+
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
         integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
         crossorigin="" />
@@ -61,6 +63,10 @@
         .icon {
             margin-left: 10px;
         }
+
+        .nav-pills .nav-link {
+            border-radius: 0;
+        }
     </style>
 </head>
 
@@ -84,8 +90,7 @@
 
         <div class="sidebar">
 
-            <ul class="nav nav-pills nav-fill flex-commb-3" id="pills-tab" role="tablist">
-
+            <ul class="nav nav-pills flex-column" id="pills-tab" role="tablist">
                 <li class="nav-item">
                     <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab"
                         aria-controls="pills-home" aria-selected="true">
@@ -122,13 +127,13 @@
 
         <!-- Main container -->
         <div class="main_container">
-            <div class="tab-content" id="pills-tabContent">
+            <div class="tab-content" id="v-pills-tabContent">
                 <!-- Tab 1-->
                 <!-- Graph -->
                 <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-                    <div class="row" id="graph" class="tab-pane fade in active overflow-auto">
+                    <div class="row" id="graph">
                         <!-- Temperature Card -->
-                        <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
                             <div class="card border-left-primary shadow h-100 py-2">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
@@ -144,7 +149,7 @@
                             </div>
                         </div>
                         <!-- Kelembapan Card -->
-                        <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
                             <div class="card border-left-success shadow h-100 py-2">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
@@ -161,7 +166,7 @@
                             </div>
                         </div>
                         <!-- Tekanan Card -->
-                        <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
                             <div class="card border-left-info shadow h-100 py-2">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
@@ -181,7 +186,7 @@
                             </div>
                         </div>
                         <!-- Arah Angin Card -->
-                        <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
                             <div class="card border-left-warning shadow h-100 py-2">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
@@ -200,7 +205,7 @@
                             </div>
                         </div>
                         <!-- Kecepatan Angin Card -->
-                        <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
                             <div class="card border-left-warning shadow h-100 py-2">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
