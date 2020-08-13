@@ -9,8 +9,22 @@ const app = express();
 const server = http.createServer(app);
 const io = socketIo.listen(server);
 
-app.use(bodyParser.urlencoded({ extended: true }));
+var SerialPort = require('serialport');
+const parsers = SerialPort.parsers;
 
+const parser = new parsers.Readline({
+  delimiter: '\r\n'
+});
+
+const parserATS = new parsers.Readline({
+  delimiter: '\r\n'
+})
+
+
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static(__dirname + '/public'));
+
+<<<<<<< HEAD
 //routes
 app.get("/", (req, res) => {
   res.sendFile(__dirname + "/index.html");
@@ -27,6 +41,25 @@ app.post("/", function (req, res) {
   arduinoSerialPort.on("open", function () {
     console.log("Serial Port " + arduinoCOMPort + " is opened.");
   });
+=======
+var port = new SerialPort('/dev/cu.usbmodem14101', {
+  baudRate: 57600 
+});
+
+// Routes
+app.get('/', (req, res) => {
+  res.sendFile(__dirname +'/index.html');
+});
+
+app.post("/", function (req, res) {
+ port_mutan = req.body.port_muatan;
+  baudrate_muatan = req.body.baudrate_muatan;
+  var port = new SerialPort(port_muatan, {
+    baudRate: baudrate_muatan 
+
+
+    });
+>>>>>>> 0529ccf851aed9d7120c877b85e27592b5e7966a
 });
 
 // app.post('/', (req,res)=>{
@@ -38,6 +71,7 @@ app.post("/", function (req, res) {
 //   }
 // })
 
+<<<<<<< HEAD
 app.use(express.static(__dirname + "/public"));
 
 var SerialPort = require("serialport");
@@ -59,6 +93,11 @@ port.pipe(parser);
 
 var portATS = new SerialPort("COM12", {
   baudRate: 57600,
+=======
+port.pipe(parser)
+var portATS = new SerialPort('COM12',{
+  baudRate: 57600
+>>>>>>> 0529ccf851aed9d7120c877b85e27592b5e7966a
 });
 portATS.pipe(parserATS);
 
@@ -237,5 +276,37 @@ parserATS.on("arduino:data1", function (data) {
   }
 });
 
+<<<<<<< HEAD
 */
 server.listen(3000);
+=======
+  parserATS.on('arduino:data1', function(data){
+    //autotrack
+    const autotrack = require('./Geo_calculator.js')
+    //console.log(autotrack.data.calculate_compass_bearing(100,45,10,0))
+    if(data.Horizontal != undefined || data.Vertikal != undefined){
+      Hasil_Autotrack = data.Horizontal.toString() + " " + data.Vertikal.toString()
+      portATS.write(Hasil_Autotrack + "\n", function (err) {
+        if (err) {
+          return console.log('Error on write: ', err.message)
+        }
+        console.log(Hasil_Autotrack)
+      })
+    }
+    else{
+      bearing = autotrack.data.calculate_compass_bearing(data.lintangs,data.bujurs,origin_latitude,origin_longitude);
+      vertical = autotrack.data.calculate_vertical_angle(autotrack.data.calculate_distance(data.lintangs,data.bujurs,origin_latitude,origin_longitude),data.altitudes);
+      Hasil_Autotrack = (Math.round(bearing)).toString() + " " + (Math.round(vertical)).toString();
+      portATS.write(Hasil_Autotrack + "\n", function (err) {
+        if (err) {
+          return console.log('Error on write: ', err.message)
+        }
+        console.log(Hasil_Autotrack)
+      })
+    }
+})
+
+// Start server
+server.listen(3000)
+
+>>>>>>> 0529ccf851aed9d7120c877b85e27592b5e7966a

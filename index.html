@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,20 +9,20 @@
     <!-- Bootstrap and Icons plugin -->
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
     <script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-    
-    <!-- Chart.js plugin -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 
+    <!-- Chart.js plugin -->
+    <script src="js/Chart.bundle.min.js"></script>
     <link rel="stylesheet" href="css/jquery-ui.css">
     <!-- <link rel="stylesheet" href="leaflet/leaflet.css"> -->
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/custom.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
-   integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
-   crossorigin=""/>
+        integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+        crossorigin="" />
 
-    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js" integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew==" crossorigin=""></script>   
+    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+        integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+        crossorigin=""></script>
     <script type="text/javascript" src="js/script.js"></script>
     <script type="text/javascript" src="js/fileSaver.js"></script>
     <script type="text/javascript" src="js/ease.js"></script>
@@ -29,72 +30,95 @@
     <script type="text/javascript" src="js/socket.io.js"></script>
     <script type="text/javascript" src="js/papaparse.min.js"></script>
     <script type="text/javascript" src="js/jquery-ui.js"></script>
+    <script type="text/javascript" src="js/gauge.min.js"></script>
     <!-- <script type="text/javascript" src="js/leaflet.js"></script> -->
     <script type="text/javascript" src="js/chartjs.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
 
     <link rel="stylesheet" href="css/main.css">
     <!-- Click Menu -->
     <script>
-		$(document).ready(function(){
-			$(".hamburger").click(function(){
-			   $(".sidebar").toggleClass("collapse");
-			});
+        $(document).ready(function () {
+            $(".hamburger").click(function () {
+                $(".wrapper-show").toggleClass("collapse-show");
+            });
         });
-	</script>
+    </script>
+    <style>
+        .nav-link {
+            text-align: start;
+        }
+
+        .title {
+            margin-left: 25px;
+        }
+
+        .icon {
+            margin-left: 10px;
+        }
+    </style>
 </head>
+
 <body>
-    <div class="wrapper">
+    <div class="wrapper-show collapse-show">
         <div class="top_navbar">
-          <div class="hamburger">
-             <div class="one"></div>
-             <div class="two"></div>
-             <div class="three"></div>
-          </div>
-          <div class="top_menu">
-            <div class="logo">
-               <img src="logo/GMAT.png" class="GMAT">
+            <div class="hamburger">
+                <div class="one"></div>
+                <div class="two"></div>
+                <div class="three"></div>
             </div>
-            <div class="team">
-                Maheswara
+            <div class="top_menu">
+                <div class="logo">
+                    <img src="logo/GMAT.png" class="GMAT">
+                </div>
+                <div class="team">
+                    Maheswara
+                </div>
             </div>
-          </div>
         </div>
-        
+
         <div class="sidebar">
-            <div class="nav-wrapper">
-                <ul class="nav nav-pills nav-fill flex-commb-3" id="pills-tab" role="tablist">
-                    <li class="nav-item">
-                    <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">
-                        <span class="icon"><i class="fas fa-map-marked-alt"></i></span>
-                        <span class="title">Graph</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="pills-map-tab" data-toggle="pill" href="#pills-map" role="tab" aria-controls="pills-map" aria-selected="false">
+
+            <ul class="nav nav-pills nav-fill flex-commb-3" id="pills-tab" role="tablist">
+
+                <li class="nav-item">
+                    <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab"
+                        aria-controls="pills-home" aria-selected="true">
                         <span class="icon"><i class="fas fa-chart-line"></i></span>
+                        <span class="title">Graph</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="pills-map-tab" data-toggle="pill" href="#pills-map" role="tab"
+                        aria-controls="pills-map" aria-selected="false">
+                        <span class="icon"><i class="fas fa-map-marked-alt"></i></span>
                         <span class="title">Map</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="pills-detail-tab" data-toggle="pill" href="#pills-detail" role="tab" aria-controls="pills-detail" aria-selected="false">
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="pills-detail-tab" data-toggle="pill" href="#pills-detail" role="tab"
+                        aria-controls="pills-detail" aria-selected="false">
                         <span class="icon"><i class="fas fa-info-circle"></i></span>
                         <span class="title">Detail</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="pills-manual-tab" data-toggle="pill" href="#pills-manual" role="tab" aria-controls="pills-manual" aria-selected="false">
-                            <span class="icon"><i class="fas fa-hdd"></i></span>
-                            <span class="title">Manual</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="pills-setting-tab" data-toggle="pill" href="#pills-setting" role="tab" aria-controls="pills-setting" aria-selected="false">
-                            <span class="icon"><i class="fas fa-cog"></i></span>
-                            <span class="title">Setting</span></a>
-                    </li>
-                </ul>
-            </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="pills-manual-tab" data-toggle="pill" href="#pills-manual" role="tab"
+                        aria-controls="pills-manual" aria-selected="false">
+                        <span class="icon"><i class="fas fa-hdd"></i></span>
+                        <span class="title">Manual</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="pills-setting-tab" data-toggle="pill" href="#pills-setting" role="tab"
+                        aria-controls="pills-setting" aria-selected="false">
+                        <span class="icon"><i class="fas fa-cog"></i></span>
+                        <span class="title">Setting</span></a>
+                </li>
+            </ul>
+
         </div>
-    
-        <div>
 
         <!-- Main container -->
         <div class="main_container">
@@ -102,29 +126,31 @@
                 <!-- Tab 1-->
                 <!-- Graph -->
                 <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-                    <div class="row" id="graph" class="tab-pane fade in active">
+                    <div class="row" id="graph" class="tab-pane fade in active overflow-auto">
                         <!-- Temperature Card -->
                         <div class="col-xl-3 col-md-6 mb-4">
                             <div class="card border-left-primary shadow h-100 py-2">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
-                                    <div class="col mr-2">
-                                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Temperatur</div>
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                            <span id="tmp">305</span><span>°C</span>
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                                Temperatur</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                                <span id="tmp">305</span><span>°C</span>
+                                            </div>
                                         </div>
-                                    </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                         <!-- Kelembapan Card -->
-                         <div class="col-xl-3 col-md-6 mb-4">
+                        <!-- Kelembapan Card -->
+                        <div class="col-xl-3 col-md-6 mb-4">
                             <div class="card border-left-success shadow h-100 py-2">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Kelembapan
+                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                                Kelembapan
                                             </div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">
                                                 <span id="kel">305</span><span>%</span>
@@ -137,154 +163,186 @@
                         <!-- Tekanan Card -->
                         <div class="col-xl-3 col-md-6 mb-4">
                             <div class="card border-left-info shadow h-100 py-2">
-                            <div class="card-body">
-                                <div class="row no-gutters align-items-center">
-                                <div class="col mr-2">
-                                    <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Tekanan</div>
+                                <div class="card-body">
                                     <div class="row no-gutters align-items-center">
-                                    <div class="col-auto">
-                                        <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">
-                                            <span id="tek">45</span><span> mbar</span>
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                                Tekanan</div>
+                                            <div class="row no-gutters align-items-center">
+                                                <div class="col-auto">
+                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">
+                                                        <span id="tek">45</span><span> mbar</span>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                    </div>
                                 </div>
-                                
-                                </div>
-                            </div>
                             </div>
                         </div>
                         <!-- Arah Angin Card -->
                         <div class="col-xl-3 col-md-6 mb-4">
                             <div class="card border-left-warning shadow h-100 py-2">
-                            <div class="card-body">
-                                <div class="row no-gutters align-items-center">
-                                <div class="col mr-2">
-                                    <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Arah Angin</div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                        <span id="arah">45</span><span>°</span>
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                                Arah Angin</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                                <span id="arah">45</span><span>°</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-auto">
+
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-auto">
-                                 
-                                </div>
-                                </div>
                             </div>
-                            </div>
-                        </div>  
+                        </div>
                         <!-- Kecepatan Angin Card -->
                         <div class="col-xl-3 col-md-6 mb-4">
                             <div class="card border-left-warning shadow h-100 py-2">
-                            <div class="card-body">
-                                <div class="row no-gutters align-items-center">
-                                <div class="col mr-2">
-                                    <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Kecepatan Angin</div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                      <span id="kec">45</span><span> m/s</span>
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                                Kecepatan Angin</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                                <span id="kec">45</span><span> m/s</span>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                                
-                                </div>
                             </div>
-                            </div>
-                        </div>  
-                     </div>
-        
-                     <div class="row" id="Graph">
+                        </div>
+                    </div>
+
+                    <div class="row" id="Graph">
                         <div class="item">
                             Temperature Graph
-                                  <canvas id="myChart"></canvas>
-                          </div>
-                          <div class="item">
+                            <canvas id="myChart"></canvas>
+                        </div>
+                        <div class="item">
                             Kelembapan Graph
-                                  <canvas id="myChart2"></canvas>
-                          </div>
-                          <div class="item">
-                                  Pressure Graph
-                              <canvas id="myChart3"></canvas>
-                          </div>
-                          <div class="item">
+                            <canvas id="myChart2"></canvas>
+                        </div>
+                        <div class="item">
+                            Pressure Graph
+                            <canvas id="myChart3"></canvas>
+                        </div>
+                        <div class="item">
                             Arah Angin Graph
-                                <canvas id="myChart4"></canvas>
-                          </div>
-                          <div class="item">
+                            <canvas id="myChart4"></canvas>
+                        </div>
+                        <div class="item">
                             Kecepatan Angin Graph
-                                  <canvas id="myChart5"></canvas>
-                          </div>
-                     </div>
+                            <canvas id="myChart5"></canvas>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Tab 2 -->
                 <!-- Map -->
-                <div class="tab-pane fade active" id="pills-map" role="tabpanel" aria-labelledby="pills-map-tab">
-                    <div id="Map">      
-                        <button id="autohand" class="btn btn-success" onclick="map_auto()">Auto</button>
-                        <div id="map">
-                        <div id="basemapslidercontainer">
-                          <div id="basemapslider">
-                          </div>
+                <div class="tab-pane fade active overflow-auto" id="pills-map" role="tabpanel"
+                    aria-labelledby="pills-map-tab">
+                    <div class="row">
+                        <div class="col-md-10" id="Map">
+
+                            <button id="autohand" class="btn btn-success" onclick="map_auto()">Auto</button>
+                            <div id="map">
+                                <div id="basemapslidercontainer">
+                                    <div id="basemapslider">
+                                    </div>
+                                </div>
+                            </div>
+                            <table style="width: 100%;">
+                                <tr>
+                                    <td style="font-size:25px;">Ketinggian:<br><a id="map_tinggi"> -</a></td>
+                                    <td style="font-size:25px;">Latitude:<br><a id="map_latitude"> -</a></td>
+                                    <td style="font-size:25px;">Longitude:<br><a id="map_longitude"> -</a></td>
+                                </tr>
+                            </table>
+
                         </div>
+                        <div class="col-md-2">
+                            <canvas id="compass" style="height: 100%;
+                                width: 100%" data-type="radial-gauge" data-min-value="0" data-max-value="360"
+                                data-major-ticks="N,NE,E,SE,S,SW,W,NW,N" data-minor-ticks="22" data-ticks-angle="360"
+                                data-start-angle="180" data-stroke-ticks="false" data-highlights="false"
+                                data-color-plate="#222" data-color-major-ticks="#f5f5f5" data-color-minor-ticks="#ddd"
+                                data-color-numbers="#ccc" data-color-needle="rgba(240, 128, 128, 1)"
+                                data-color-needle-end="rgba(255, 160, 122, .9)" data-value-box="false"
+                                data-value-text-shadow="false" data-color-circle-inner="#fff"
+                                data-color-needle-circle-outer="#ccc" data-needle-circle-size="15"
+                                data-needle-circle-outer="false" data-animation-rule="linear" data-needle-type="line"
+                                data-needle-start="75" data-needle-end="99" data-needle-width="3" data-borders="true"
+                                data-border-inner-width="0" data-border-middle-width="0" data-border-outer-width="10"
+                                data-color-border-outer="#ccc" data-color-border-outer-end="#ccc"
+                                data-color-needle-shadow-down="#222" data-border-shadow-width="0"
+                                data-animation-target="plate" data-animation-duration="1500" data-value="45.5"
+                                data-animate-on-init="true"></canvas>
+                            <input id="degree" type="text" placeholder="90">
+                            <input id="compp" type="button" value="GO" onclick="change()">
+
                         </div>
-                        <table style="width: 100%;">
-                          <tr>
-                            <td style="font-size:25px;">Ketinggian:<br><a id="map_tinggi"> -</a></td>
-                            <td style="font-size:25px;">Latitude:<br><a id="map_latitude"> -</a></td>
-                            <td style="font-size:25px;">Longitude:<br><a id="map_longitude"> -</a></td>
-                          </tr>
-                        </table>
                     </div>
                 </div>
 
                 <!-- Tab 3-->
                 <!-- Detail -->
                 <div class="tab-pane fade" id="pills-detail" role="tabpanel" aria-labelledby="pills-detail-tab">
-                    <div id="Detail" >
+                    <div id="Detail">
                         <div id="DetailText">
-                      <img src="misc/Exclamation.png" id="Exclamation">
+                            <img src="misc/Exclamation.png" id="Exclamation">
                             <h2 style="display:inline;">Informasi Peluncuran</h2>
-                      <!-- Connect -->
-                      <!-- <button id="Connect" class="btn tombolconnect" onclick="test()">Connect</button> -->
-                      <iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
-                      <form action="http://localhost:3000/" target="dummyframe" method="POST">
-                        <input id="Connect" name ="Connect"class="btn tombolconnect" type="submit" value="Connect" onclick="ChangeConnect()">
-                    </form>
-                    <script>
-                        function ChangeConnect(){
-                            if(document.getElementById("Connect").value == "Connect"){
-                                document.getElementById("Connect").value = "Disconnect";
-                            }
-                            else if(document.getElementById("Connect").value == "Disconnect"){
-                                document.getElementById("Connect").value = "Connect";
-                            }
-                        }
-                    </script>
-                      <!------------>
+                            <!-- Connect -->
+                            <!-- <button id="Connect" class="btn tombolconnect" onclick="test()">Connect</button> -->
+                            <iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
+                            <form action="http://localhost:3000/" target="dummyframe" method="POST">
+                                <input id="Connect" name="Connect" class="btn tombolconnect" type="submit"
+                                    value="Connect" onclick="ChangeConnect()">
+                            </form>
+                            <script>
+                                function ChangeConnect() {
+                                    if (document.getElementById("Connect").value == "Connect") {
+                                        document.getElementById("Connect").value = "Disconnect";
+                                    }
+                                    else if (document.getElementById("Connect").value == "Disconnect") {
+                                        document.getElementById("Connect").value = "Connect";
+                                    }
+                                }
+                            </script>
+                            <!------------>
                             <hr>
-                      <img src="misc/Clock.png" id="Clock">
+                            <img src="misc/Clock.png" id="Clock">
                             <h3 style="display:inline;">Waktu Peluncuran</h3>
                             <ul>
-                            <h5 id="init_tanggal">Tanggal Peluncuran:<p id="date"></p></h5> 
-                            <h5 id="init_time">Waktu Peluncuran:<p id="time"></p></h5>
+                                <h5 id="init_tanggal">Tanggal Peluncuran:<p id="date"></p>
+                                </h5>
+                                <h5 id="init_time">Waktu Peluncuran:<p id="time"></p>
+                                </h5>
                             </ul>
-                      <img src="misc/GLocation.png" id="GLocation">
+                            <img src="misc/GLocation.png" id="GLocation">
                             <h3 style="display:inline;">Lokasi Peluncuran</h3>
                             <ul>
-                            <h5>Latitude:<p id="init_latitude"></p></h5> 
-                            <h5>Longitude:<p id="init_longitude"></p></h5>
+                                <h5>Latitude:<p id="init_latitude"></p>
+                                </h5>
+                                <h5>Longitude:<p id="init_longitude"></p>
+                                </h5>
                             </ul>
                             <hr>
                         </div>
-                
-                    <a onclick=download_csv()>
-                    <img src="misc/GDownload.png" id="Download">
-                    <h3 id="DownloadCSV"> CSV </h3>
-                    </a>
-                    <hr>
-                    
-                    <img src="misc/Monitor.png" id="Monitor">
-                    <h2 style="display:inline;">Terminal</h2>
-                    <br>
-                    <textarea class="scrollabletextbox" id="terminal" readonly>
+
+                        <a onclick=download_csv()>
+                            <img src="misc/GDownload.png" id="Download">
+                            <h3 id="DownloadCSV"> CSV </h3>
+                        </a>
+                        <hr>
+
+                        <img src="misc/Monitor.png" id="Monitor">
+                        <h2 style="display:inline;">Terminal</h2>
+                        <br>
+                        <textarea class="scrollabletextbox" id="terminal" readonly>
                     </textarea>
                     </div>
                 </div>
@@ -305,61 +363,61 @@
                 <div class="tab-pane fade " id="pills-setting" role="tabpanel" aria-labelledby="pills-setting-tab">
                     <div class="modal-body">
                         <form class="ui form" action="/" method="POST">
-                        <h5><font color="black">Port Muatan</font></h5>
-                        <input type="text" id="port_muatan" placeholder="COM 3" name="port_muatan">
-            
-                        <h5><font color="black"> Baudrate Muatan</font></h5>
-                        <input list="BRate" id="baudrate_muatan" placeholder="-" name="baudrate_muatan">
-            
-                        <br>
-                        <h5><font color="black">Port ATS</font></h5>
-                        <input type="text" id="port_ats" placeholder="COM 3" name="port_ats">
-            
-                        <h5><font color="black"> Baudrate ATS</font></h5>
-                        <input list="BRate" id="baudrate_ats" placeholder="-" name="baudrate_ats">
-                        
-                        <h5><font color="black"> Latitude ATS</font></h5>
-                        <input list="number" step="any" id="latitude_ats" placeholder="-" name="latitude_ats">
-                        
-                        <h5><font color="black"> Longitude ATS</font></h5>
-                        <input list="number" step="any" id="longitude_ats" placeholder="-" name="longitude_ats">
-            
-                        <datalist id="BRate">
-                          <option value="300">
-                          <option value="600">
-                          <option value="1200">
-                          <option value="2400">
-                          <option value="4800">
-                          <option value="9600">
-                          <option value="14400">
-                          <option value="19200">
-                          <option value="28800">
-                          <option value="38400">
-                          <option value="57600">
-                          <option value="115200">
-                        </datalist>
+                            <h5>
+                                <font color="black">Port Muatan</font>
+                            </h5>
+                            <input type="text" id="port_muatan" placeholder="COM 3" name="port_muatan">
 
-                        <input class="ui inverted big violet button"type="submit">
-                    </form>
-                      </div>
-                      
+                            <h5>
+                                <font color="black"> Baudrate Muatan</font>
+                            </h5>
+                            <input list="BRate" id="baudrate_muatan" placeholder="-" name="baudrate_muatan">
+
+                            <br>
+                            <h5>
+                                <font color="black">Port ATS</font>
+                            </h5>
+                            <input type="text" id="port_ats" placeholder="COM 3" name="port_ats">
+
+                            <h5>
+                                <font color="black"> Baudrate ATS</font>
+                            </h5>
+                            <input list="BRate" id="baudrate_ats" placeholder="-" name="baudrate_ats">
+
+                            <h5>
+                                <font color="black"> Latitude ATS</font>
+                            </h5>
+                            <input list="number" step="any" id="latitude_ats" placeholder="-" name="latitude_ats">
+
+                            <h5>
+                                <font color="black"> Longitude ATS</font>
+                            </h5>
+                            <input list="number" step="any" id="longitude_ats" placeholder="-" name="longitude_ats">
+
+                            <datalist id="BRate">
+                                <option value="300">
+                                <option value="600">
+                                <option value="1200">
+                                <option value="2400">
+                                <option value="4800">
+                                <option value="9600">
+                                <option value="14400">
+                                <option value="19200">
+                                <option value="28800">
+                                <option value="38400">
+                                <option value="57600">
+                                <option value="115200">
+                            </datalist>
+
+                            <input class="ui inverted big violet button" type="submit">
+                        </form>
+                    </div>
                 </div>
-              </div>
-         <div class="tab-content">   
-             <!-- Content Row-->
-            
-        
-       
-
+            </div>
         </div>
-        <!-- Main container -->
-
     </div>
-             
-      </div>
-    </div>
-      <script src="/socket.io/socket.io.js" charset="utf-8"></script>
-      <script type="text/javascript">
+    <script src="/socket.io/socket.io.js" charset="utf-8"></script>
+    <script type="text/javascript">
         const socket = io();
 
         var ctx = document.getElementById('myChart').getContext('2d');
@@ -378,177 +436,238 @@
             },
             // Configuration options go here
             options: {
-                responsive:true
+                responsive: true
             }
         });
         socket.on('arduino:data', function (dataSerial) {
-          // console.log(dataSerial);
-          //chart.data.labels.push(counter);
-          chart.data.datasets.forEach(dataset => {
-            //dataset.data.push({x:dataSerial.temps,y:dataSerial.altitudes});
-            document.getElementById('tmp').innerHTML = dataSerial.temps;
-            document.getElementById('map_tinggi').innerHTML = dataSerial.altitudes;
-            document.getElementById('map_latitude').innerHTML = dataSerial.lintangs;
-            document.getElementById('map_longitude').innerHTML = dataSerial.bujurs;
-          });
-          if(dataSerial.pause % 5 == 0){
+            // console.log(dataSerial);
+            //chart.data.labels.push(counter);
             chart.data.datasets.forEach(dataset => {
-                dataset.data.push({x:dataSerial.temps,y:dataSerial.altitudes});
+                //dataset.data.push({x:dataSerial.temps,y:dataSerial.altitudes});
+                document.getElementById('tmp').innerHTML = dataSerial.temps;
+                document.getElementById('map_tinggi').innerHTML = dataSerial.altitudes;
+                document.getElementById('map_latitude').innerHTML = dataSerial.lintangs;
+                document.getElementById('map_longitude').innerHTML = dataSerial.bujurs;
             });
-            chart.update(); 
-          }
+            if (dataSerial.pause % 5 == 0) {
+                chart.data.datasets.forEach(dataset => {
+                    dataset.data.push({ x: dataSerial.temps, y: dataSerial.altitudes });
+                });
+                chart.update();
+            }
         });
 
         var ctx2 = document.getElementById('myChart2').getContext('2d');
-	    var chart2 = new Chart(ctx2, {
-			// The type of chart we want to create
-			type: 'scatter',
-			// The data for our dataset
-			data: {
-					datasets: [{
-							label: "Kelembapan Data from Arduino",
-							backgroundColor: 'rgb(48, 166, 74)',
-							borderColor: 'rgb(48, 166, 74)',
-							fill: false,
-							data: [],
-					}]
-			},
-			// Configuration options go here
-			options: {
-                responsive:true
+        var chart2 = new Chart(ctx2, {
+            // The type of chart we want to create
+            type: 'scatter',
+            // The data for our dataset
+            data: {
+                datasets: [{
+                    label: "Kelembapan Data from Arduino",
+                    backgroundColor: 'rgb(48, 166, 74)',
+                    borderColor: 'rgb(48, 166, 74)',
+                    fill: false,
+                    data: [],
+                }]
+            },
+            // Configuration options go here
+            options: {
+                responsive: true
             }
-	});
-	socket.on('arduino:data', function (dataSerial) {
-		// console.log(dataSerial);
-		chart2.data.datasets.forEach(dataset => {
-            // dataset.data.push({
-            //     x:dataSerial.humids,y:dataSerial.altitudes
-            // });
-            document.getElementById('kel').innerHTML = dataSerial.humids;
-		});
-		if(dataSerial.pause % 5 == 0){
+        });
+        socket.on('arduino:data', function (dataSerial) {
+            // console.log(dataSerial);
             chart2.data.datasets.forEach(dataset => {
-                dataset.data.push({
-                    x:dataSerial.windd,y:dataSerial.altitudes
-                });
+                // dataset.data.push({
+                //     x:dataSerial.humids,y:dataSerial.altitudes
+                // });
+                document.getElementById('kel').innerHTML = dataSerial.humids;
             });
-            chart2.update(); 
-          }
-	});
-
-	var ctx3 = document.getElementById('myChart3').getContext('2d');
-	var chart3 = new Chart(ctx3, {
-			// The type of chart we want to create
-			type: 'scatter',
-			// The data for our dataset
-			data: {
-					datasets: [{
-							label: "Pressure Data from Arduino",
-							backgroundColor: 'rgb(37, 162, 183)',
-							borderColor: 'rgb(37, 162, 183)',
-							fill: false,
-							data: [],
-					}]
-			},
-			// Configuration options go here
-			options: {
-                responsive:true
+            if (dataSerial.pause % 5 == 0) {
+                chart2.data.datasets.forEach(dataset => {
+                    dataset.data.push({
+                        x: dataSerial.windd, y: dataSerial.altitudes
+                    });
+                });
+                chart2.update();
             }
-	});
-	socket.on('arduino:data', function (dataSerial) {
-		// console.log(dataSerial);
-		chart3.data.datasets.forEach(dataset => {
-            // dataset.data.push({
-            //     x:dataSerial.pressures,y:dataSerial.altitudes
-            // });
-            document.getElementById('tek').innerHTML = dataSerial.pressures;
-		});
-		if(dataSerial.pause % 5 == 0){
+        });
+
+        var ctx3 = document.getElementById('myChart3').getContext('2d');
+        var chart3 = new Chart(ctx3, {
+            // The type of chart we want to create
+            type: 'scatter',
+            // The data for our dataset
+            data: {
+                datasets: [{
+                    label: "Pressure Data from Arduino",
+                    backgroundColor: 'rgb(37, 162, 183)',
+                    borderColor: 'rgb(37, 162, 183)',
+                    fill: false,
+                    data: [],
+                }]
+            },
+            // Configuration options go here
+            options: {
+                responsive: true
+            }
+        });
+        socket.on('arduino:data', function (dataSerial) {
+            // console.log(dataSerial);
             chart3.data.datasets.forEach(dataset => {
-                dataset.data.push({
-                    x:dataSerial.windd,y:dataSerial.altitudes
-                });
+                // dataset.data.push({
+                //     x:dataSerial.pressures,y:dataSerial.altitudes
+                // });
+                document.getElementById('tek').innerHTML = dataSerial.pressures;
             });
-            chart3.update(); 
-          }
-	});
-
-	var ctx4 = document.getElementById('myChart4').getContext('2d');
-	var chart4 = new Chart(ctx4, {
-			// The type of chart we want to create
-			type: 'scatter',
-			// The data for our dataset
-			data: {
-					datasets: [{
-							label: "Arah Angin Data from Arduino",
-							backgroundColor: 'rgb(254, 192, 47)',
-							borderColor: 'rgb(254, 192, 47)',
-							fill: false,
-							data: [],
-					}]
-			},
-			// Configuration options go here
-			options: {
-                responsive:true
+            if (dataSerial.pause % 5 == 0) {
+                chart3.data.datasets.forEach(dataset => {
+                    dataset.data.push({
+                        x: dataSerial.windd, y: dataSerial.altitudes
+                    });
+                });
+                chart3.update();
             }
-	});
-	socket.on('arduino:data', function (dataSerial) {
-		// console.log(dataSerial);
-		chart4.data.datasets.forEach(dataset => {
-            // dataset.data.push({
-            //     x:dataSerial.windd,y:dataSerial.altitudes
-            // });
-            document.getElementById('arah').innerHTML = dataSerial.windd;
-		});
-		if(dataSerial.pause % 5 == 0){
+        });
+
+        var ctx4 = document.getElementById('myChart4').getContext('2d');
+        var chart4 = new Chart(ctx4, {
+            // The type of chart we want to create
+            type: 'scatter',
+            // The data for our dataset
+            data: {
+                datasets: [{
+                    label: "Arah Angin Data from Arduino",
+                    backgroundColor: 'rgb(254, 192, 47)',
+                    borderColor: 'rgb(254, 192, 47)',
+                    fill: false,
+                    data: [],
+                }]
+            },
+            // Configuration options go here
+            options: {
+                responsive: true
+            }
+        });
+        socket.on('arduino:data', function (dataSerial) {
+            // console.log(dataSerial);
             chart4.data.datasets.forEach(dataset => {
-                dataset.data.push({
-                    x:dataSerial.windd,y:dataSerial.altitudes
-                });
+                // dataset.data.push({
+                //     x:dataSerial.windd,y:dataSerial.altitudes
+                // });
+                document.getElementById('arah').innerHTML = dataSerial.windd;
             });
-            chart4.update(); 
-          }
-    });
-    
-    var ctx5 = document.getElementById('myChart5').getContext('2d');
-	var chart5 = new Chart(ctx5, {
-			// The type of chart we want to create
-			type: 'scatter',
-			// The data for our dataset
-			data: {
-					datasets: [{
-							label: "Kecepatan Angin Data from Arduino",
-							backgroundColor: 'rgb(254, 192, 47)',
-							borderColor: 'rgb(254, 192, 47)',
-							fill: false,
-							data: [],
-					}]
-			},
-			// Configuration options go here
-			options: {
-                responsive:true
+            if (dataSerial.pause % 5 == 0) {
+                chart4.data.datasets.forEach(dataset => {
+                    dataset.data.push({
+                        x: dataSerial.windd, y: dataSerial.altitudes
+                    });
+                });
+                chart4.update();
             }
-	});
-	socket.on('arduino:data', function (dataSerial) {
-		// console.log(dataSerial);
-		chart5.data.datasets.forEach(dataset => {
-            // dataset.data.push({
-            //     x:dataSerial.winds,y:dataSerial.altitudes
-            // });
-            document.getElementById('kec').innerHTML = dataSerial.winds;
-		});
-		if(dataSerial.pause % 5 == 0){
-            chart5.data.datasets.forEach(dataset => {
-                dataset.data.push({
-                    x:dataSerial.windd,y:dataSerial.altitudes
-                });
-            });
-            chart5.update(); 
-        }
-	});
+        });
 
-     </script>
-     <script src="js/maps.js"></script> 
-     <script src="js/script.js"></script>
+        var ctx5 = document.getElementById('myChart5').getContext('2d');
+        var chart5 = new Chart(ctx5, {
+            // The type of chart we want to create
+            type: 'scatter',
+            // The data for our dataset
+            data: {
+                datasets: [{
+                    label: "Kecepatan Angin Data from Arduino",
+                    backgroundColor: 'rgb(254, 192, 47)',
+                    borderColor: 'rgb(254, 192, 47)',
+                    fill: false,
+                    data: [],
+                }]
+            },
+            // Configuration options go here
+            options: {
+                responsive: true
+            }
+        });
+        socket.on('arduino:data', function (dataSerial) {
+            // console.log(dataSerial);
+            chart5.data.datasets.forEach(dataset => {
+                // dataset.data.push({
+                //     x:dataSerial.winds,y:dataSerial.altitudes
+                // });
+                document.getElementById('kec').innerHTML = dataSerial.winds;
+            });
+            if (dataSerial.pause % 5 == 0) {
+                chart5.data.datasets.forEach(dataset => {
+                    dataset.data.push({
+                        x: dataSerial.windd, y: dataSerial.altitudes
+                    });
+                });
+                chart5.update();
+            }
+        });
+
+
+        function change() {
+            var derajat = document.getElementById("degree").value
+            document.getElementById("#compass")[0].setAttribute("data-value", derajat);
+            var x = document.getElementById("#compass")[0].getAttribute("data-value");
+            console.log(x)
+        }
+
+        var gauge = new RadialGauge({
+            renderTo: 'canvas-id',
+            minValue: 0,
+            maxValue: 360,
+            majorTicks: [
+                "N",
+                "NE",
+                "E",
+                "SE",
+                "S",
+                "SW",
+                "W",
+                "NW",
+                "N"
+            ],
+            minorTicks: 22,
+            ticksAngle: 360,
+            startAngle: 180,
+            strokeTicks: false,
+            highlights: false,
+            colorPlate: "#a33",
+            colorMajorTicks: "#f5f5f5",
+            colorMinorTicks: "#ddd",
+            colorNumbers: "#ccc",
+            colorNeedle: "rgba(240, 128, 128, 1)",
+            colorNeedleEnd: "rgba(255, 160, 122, .9)",
+            valueBox: false,
+            valueTextShadow: false,
+            colorCircleInner: "#fff",
+            colorNeedleCircleOuter: "#ccc",
+            needleCircleSize: 15,
+            needleCircleOuter: false,
+            animationRule: "linear",
+            needleType: "line",
+            needleStart: 75,
+            needleEnd: 99,
+            needleWidth: 3,
+            borders: true,
+            borderInnerWidth: 0,
+            borderMiddleWidth: 0,
+            borderOuterWidth: 10,
+            colorBorderOuter: "#ccc",
+            colorBorderOuterEnd: "#ccc",
+            colorNeedleShadowDown: "#222",
+            borderShadowWidth: 0,
+            animationTarget: "plate",
+            animationDuration: 1500,
+            value: 45.5,
+            animateOnInit: true
+        }).draw();
+
+
+    </script>
+    <script src="js/maps.js"></script>
+    <script src="js/script.js"></script>
 </body>
+
 </html>
