@@ -9,24 +9,24 @@ const app = express();
 const server = http.createServer(app);
 const io = socketIo.listen(server);
 
-<<<<<<< HEAD
-=======
 app.use(bodyParser.urlencoded({ extended: true }));
 
->>>>>>> 74d1144ef25322f2b009845719cfdd1f97ee6bd8
 //routes
 app.get("/", (req, res) => {
   res.sendFile(__dirname + "/index.html");
 });
-<<<<<<< HEAD
-app.get("/index.html", (req, res) => {
-  res.sendFile(__dirname + "/index.html");
-=======
 
 app.post("/", function (req, res) {
   console.log(req.body.port_muatan);
   console.log(req.body.baudrate_muatan);
->>>>>>> 74d1144ef25322f2b009845719cfdd1f97ee6bd8
+  var arduinoCOMPort = req.body.port_muatan;
+  var arduinoSerialPort = new SerialPort(arduinoCOMPort, {
+    baudrate: 9600,
+  });
+
+  arduinoSerialPort.on("open", function () {
+    console.log("Serial Port " + arduinoCOMPort + " is opened.");
+  });
 });
 
 // app.post('/', (req,res)=>{
@@ -37,7 +37,6 @@ app.post("/", function (req, res) {
 //     DisconnectPort();
 //   }
 // })
-
 
 app.use(express.static(__dirname + "/public"));
 
@@ -52,8 +51,7 @@ const parserATS = new parsers.Readline({
   delimiter: "\r\n",
 });
 
-
-var port = new SerialPort("/dev/cu.usbmodem14101", {
+/*var port = new SerialPort("/dev/cu.usbmodem14101", {
   baudRate: 57600,
 });
 port.pipe(parser);
@@ -239,5 +237,5 @@ parserATS.on("arduino:data1", function (data) {
   }
 });
 
-
+*/
 server.listen(3000);
