@@ -24,24 +24,6 @@ const parserATS = new parsers.Readline({
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(__dirname + '/public'));
 
-<<<<<<< HEAD
-//routes
-app.get("/", (req, res) => {
-  res.sendFile(__dirname + "/index.html");
-});
-
-app.post("/", function (req, res) {
-  console.log(req.body.port_muatan);
-  console.log(req.body.baudrate_muatan);
-  var arduinoCOMPort = req.body.port_muatan;
-  var arduinoSerialPort = new SerialPort(arduinoCOMPort, {
-    baudrate: 9600,
-  });
-
-  arduinoSerialPort.on("open", function () {
-    console.log("Serial Port " + arduinoCOMPort + " is opened.");
-  });
-=======
 var port = new SerialPort('/dev/cu.usbmodem14101', {
   baudRate: 57600 
 });
@@ -59,7 +41,6 @@ app.post("/", function (req, res) {
 
 
     });
->>>>>>> 0529ccf851aed9d7120c877b85e27592b5e7966a
 });
 
 // app.post('/', (req,res)=>{
@@ -71,33 +52,9 @@ app.post("/", function (req, res) {
 //   }
 // })
 
-<<<<<<< HEAD
-app.use(express.static(__dirname + "/public"));
-
-var SerialPort = require("serialport");
-const parsers = SerialPort.parsers;
-
-const parser = new parsers.Readline({
-  delimiter: "\r\n",
-});
-
-const parserATS = new parsers.Readline({
-  delimiter: "\r\n",
-});
-
-/*var port = new SerialPort("/dev/cu.usbmodem14101", {
-  baudRate: 57600,
-});
-port.pipe(parser);
-
-
-var portATS = new SerialPort("COM12", {
-  baudRate: 57600,
-=======
 port.pipe(parser)
 var portATS = new SerialPort('COM12',{
   baudRate: 57600
->>>>>>> 0529ccf851aed9d7120c877b85e27592b5e7966a
 });
 portATS.pipe(parserATS);
 
@@ -276,10 +233,6 @@ parserATS.on("arduino:data1", function (data) {
   }
 });
 
-<<<<<<< HEAD
-*/
-server.listen(3000);
-=======
   parserATS.on('arduino:data1', function(data){
     //autotrack
     const autotrack = require('./Geo_calculator.js')
@@ -309,4 +262,3 @@ server.listen(3000);
 // Start server
 server.listen(3000)
 
->>>>>>> 0529ccf851aed9d7120c877b85e27592b5e7966a

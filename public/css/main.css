@@ -18,12 +18,14 @@ body{
 }
 
 .wrapper-show .top_navbar{
-  width: calc(100% - 20px);
+  width: calc(100%);
   height: 60px;
   z-index: 999;
   display: flex;
   position: fixed;
-  top: 10px;
+  top: 0px;
+  left: 0px;
+  right: 0px;
 }
 
 .wrapper-show .top_navbar .hamburger{
@@ -31,7 +33,6 @@ body{
   height: 100%;
   background: #fff;
   padding: 15px 17px;
-  border-top-left-radius: 20px;
   cursor: pointer;
 }
 
@@ -47,11 +48,11 @@ body{
   width: calc(100% - 70px);
   height: 100%;
   background: #172B4D;
-  border-top-right-radius: 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0 20px;
+  margin: 0;
   box-shadow: 0 1px 1px rgba(0,0,0,0.1);
 }
 
@@ -96,8 +97,8 @@ body{
 
 .wrapper-show .sidebar{
   position: fixed;
-  top: 70px;
-  left: 10px;
+  top: 60px;
+  left: 0px;
   background: #fff;
   width: 200px;
   height: calc(100% - 80px);
@@ -148,7 +149,7 @@ body{
 
 .wrapper-show .main_container{
   width: (100% - 200px);
-  height: 50%;
+  height: 0%;
   max-height: 50%;
   margin-top: 70px;
   margin-left: 200px;
@@ -167,6 +168,7 @@ body{
   padding: 15px;
   font-size: 14px;
   line-height: 22px;
+  
 }
 
 .wrapper-show.collapse-show .sidebar{
@@ -207,6 +209,16 @@ body{
 	top: 100px;
 }
 
+.tombolconnect {
+  background-color: #172B4D;
+  color: #fff;
+}
+
+.tombolconnect:hover,
+.tombolconnect:focus{
+  color: #172B4D;
+  background-color: #fff;
+}
 
 #Exclamation{
 	height: 50px;
