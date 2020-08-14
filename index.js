@@ -1,9 +1,9 @@
-const path = require('path');
-const express = require('express');
-const socketIo = require('socket.io');
-const http = require('http');
-const bodyParser = require('body-parser');
-const createCsvWriter = require('csv-writer').createObjectCsvWriter;
+const path = require("path");
+const express = require("express");
+const socketIo = require("socket.io");
+const http = require("http");
+const bodyParser = require("body-parser");
+const createCsvWriter = require("csv-writer").createObjectCsvWriter;
 
 const app = express();
 const server = http.createServer(app);
@@ -65,19 +65,19 @@ var origin_latitude = -7.77126;
 var origin_longitude = 110.37338;
 
 const csvWriter = createCsvWriter({
-  path: 'data.csv',
+  path: "data.csv",
   header: [
-    {id: 'idP', title: 'ID'},
-    {id: 'waktu', title: 'Waktu'},
-    {id: 'ketinggian', title: 'Ketinggian'},
-    {id: 'temperature', title: 'Temperatur'},
-    {id: 'kelembapan', title: 'Kelembapan'},
-    {id: 'tekanan', title: 'Tekanan'},
-    {id: 'arah_angin', title: 'Arah Angin'},
-    {id: 'kec_angin', title: 'Kecepatan Angin'},
-    {id: 'lintang', title: 'Lintang'},
-    {id: 'bujur', title: 'Bujur'}
-  ]
+    { id: "idP", title: "ID" },
+    { id: "waktu", title: "Waktu" },
+    { id: "ketinggian", title: "Ketinggian" },
+    { id: "temperature", title: "Temperatur" },
+    { id: "kelembapan", title: "Kelembapan" },
+    { id: "tekanan", title: "Tekanan" },
+    { id: "arah_angin", title: "Arah Angin" },
+    { id: "kec_angin", title: "Kecepatan Angin" },
+    { id: "lintang", title: "Lintang" },
+    { id: "bujur", title: "Bujur" },
+  ],
 });
 
 // function sleep(milliseconds) {
@@ -88,32 +88,34 @@ const csvWriter = createCsvWriter({
 //   } while (currentDate - date < milliseconds);
 // }
 
-port.on('open', function() {});
-portATS.on('open', function() {});
+port.on("open", function () {});
+portATS.on("open", function () {});
 
-function ConnectPort(){
-  console.log("Connected")
+function ConnectPort() {
+  console.log("Connected");
   port.open();
   portATS.open();
 }
 
-function DisconnectPort(){
-  console.log("Disconnected")
+function DisconnectPort() {
+  console.log("Disconnected");
   port.close();
   portATS.close();
 }
 
 var i = 0;
-parser.on('data', function(data) {
+parser.on("data", function (data) {
   //setInterval(function(){
   receivedData = data.toString();
-  var cleanData = receivedData.substring(receivedData.indexOf('\r\n')).replace(/(\r\n|\n|\r)/gm,"");
+  var cleanData = receivedData
+    .substring(receivedData.indexOf("\r\n"))
+    .replace(/(\r\n|\n|\r)/gm, "");
   k = cleanData.split(" ");
-  var dataCSV = []
+  var dataCSV = [];
 
   var ID_Peserta = k[0];
   var waktu = k[1];
-  var altitude = k[2]; 
+  var altitude = k[2];
   var temp = k[3];
   var humid = k[4];
   var pressure = k[5];
@@ -122,17 +124,31 @@ parser.on('data', function(data) {
   var lintang = k[8];
   var bujur = k[9];
 
-  const autotrack = require('./Geo_calculator.js')
-    //console.log(autotrack.data.calculate_compass_bearing(100,45,10,0))
-  bearing = autotrack.data.calculate_compass_bearing(lintang,bujur,origin_latitude,origin_longitude);
-  vertical = autotrack.data.calculate_vertical_angle(autotrack.data.calculate_distance(lintang,bujur,origin_latitude,origin_longitude),altitude);
-  Hasil_Autotrack = (Math.round(bearing)).toString() + " " + (Math.round(vertical)).toString();
+  const autotrack = require("./Geo_calculator.js");
+  //console.log(autotrack.data.calculate_compass_bearing(100,45,10,0))
+  bearing = autotrack.data.calculate_compass_bearing(
+    lintang,
+    bujur,
+    origin_latitude,
+    origin_longitude
+  );
+  vertical = autotrack.data.calculate_vertical_angle(
+    autotrack.data.calculate_distance(
+      lintang,
+      bujur,
+      origin_latitude,
+      origin_longitude
+    ),
+    altitude
+  );
+  Hasil_Autotrack =
+    Math.round(bearing).toString() + " " + Math.round(vertical).toString();
 
   console.log(cleanData);
   //console.log(Hasil_Autotrack)
   console.log("------------------------");
 
-  io.emit('arduino:data', {
+  io.emit("arduino:data", {
     temps: temp,
     humids: humid,
     altitudes: altitude,
@@ -141,16 +157,14 @@ parser.on('data', function(data) {
     winds: wind_speed,
     lintangs: lintang,
     bujurs: bujur,
-    lintangawal: lintang[1],
-    bujurawal: bujur[1],
-    pause : i
+    pause: i,
   });
   i++;
-  parserATS.emit('arduino:data1',{
+  parserATS.emit("arduino:data1", {
     lintangs: lintang,
     bujurs: bujur,
-    altitudes: altitude
-  })
+    altitudes: altitude,
+  });
 
   dataCSV.push({
     idP: k[0],
@@ -162,21 +176,61 @@ parser.on('data', function(data) {
     arah_angin: k[6],
     kec_angin: k[7],
     lintang: k[8],
-    bujur: k[9]
-  })
-  csvWriter.writeRecords(dataCSV).then(()=> console.log('CSV written'));
+    bujur: k[9],
+  });
+  csvWriter.writeRecords(dataCSV).then(() => console.log("CSV written"));
 
-  app.use(bodyParser.urlencoded({extended: true }));
-  app.post('/', (req,res)=>{
-  console.log(req.body.fname,req.body.lname)
-  parserATS.emit('arduino:data1',{
+  app.use(bodyParser.urlencoded({ extended: true }));
+  app.post("/", (req, res) => {
+    console.log(req.body.fname, req.body.lname);
+    parserATS.emit("arduino:data1", {
       Horizontal: req.body.fname,
       Vertikal: req.body.lname,
       lintangs: lintang,
       bujurs: bujur,
-      altitudes: altitude
-    })
-  })
+      altitudes: altitude,
+    });
+  });
+});
+
+parserATS.on("arduino:data1", function (data) {
+  //autotrack
+  const autotrack = require("./Geo_calculator.js");
+  //console.log(autotrack.data.calculate_compass_bearing(100,45,10,0))
+  if (data.Horizontal != undefined || data.Vertikal != undefined) {
+    Hasil_Autotrack =
+      data.Horizontal.toString() + " " + data.Vertikal.toString();
+    portATS.write(Hasil_Autotrack + "\n", function (err) {
+      if (err) {
+        return console.log("Error on write: ", err.message);
+      }
+      console.log(Hasil_Autotrack);
+    });
+  } else {
+    bearing = autotrack.data.calculate_compass_bearing(
+      data.lintangs,
+      data.bujurs,
+      origin_latitude,
+      origin_longitude
+    );
+    vertical = autotrack.data.calculate_vertical_angle(
+      autotrack.data.calculate_distance(
+        data.lintangs,
+        data.bujurs,
+        origin_latitude,
+        origin_longitude
+      ),
+      data.altitudes
+    );
+    Hasil_Autotrack =
+      Math.round(bearing).toString() + " " + Math.round(vertical).toString();
+    portATS.write(Hasil_Autotrack + "\n", function (err) {
+      if (err) {
+        return console.log("Error on write: ", err.message);
+      }
+      console.log(Hasil_Autotrack);
+    });
+  }
 });
 
   parserATS.on('arduino:data1', function(data){
