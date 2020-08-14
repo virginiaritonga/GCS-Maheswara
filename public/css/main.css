@@ -6,7 +6,7 @@
   list-style: none;
   text-decoration: none;
   box-sizing: border-box;
-  font-family: 'Montserrat', sans-serif;
+  font-family:'Gilroy-Medium ☞';
 }
 
 body{
@@ -191,6 +191,11 @@ body{
 .wrapper-show.collapse-show .main_container{
   width: (100% - 70px);
   margin-left: 70px;
+}
+
+.card{
+  border-radius: 1.5rem; 
+  border: none;
 }
 
 #Map{

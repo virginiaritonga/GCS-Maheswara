@@ -93,7 +93,7 @@ function updateMap(dataLintang,dataBujur){
 	var Garis = [TitikAwal,TitikSekarang]; 
 
 	if ($('#autohand').html() == 'Auto'){
-		map.setView([LatitudeMuatan, LongitudeMuatan], 18) 
+		map.setView([LatitudeMuatan, LongitudeMuatan], 16) 
 	}
 	var firstpolyline = new L.Polyline(Garis, { 
 		color: 'red', 

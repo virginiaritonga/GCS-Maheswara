@@ -24,7 +24,7 @@ const parserATS = new parsers.Readline({
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(__dirname + '/public'));
 
-var port = new SerialPort('/dev/cu.usbmodem1413201', {
+var port = new SerialPort('/dev/cu.usbmodem14201', {
   baudRate: 57600 
 });
 
