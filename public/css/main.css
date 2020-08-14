@@ -210,6 +210,12 @@ body{
 	top: 100px;
 }
 
+#DetailText{
+
+	padding: 10px;
+
+}
+
 .tombolconnect {
   background-color: #172B4D;
   color: #fff;
