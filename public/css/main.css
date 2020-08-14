@@ -154,6 +154,7 @@ body{
   margin-left: 200px;
   padding: 15px;
   transition: all 0.3s ease;
+  background: #e1ecf2;
   
 }
 
@@ -192,8 +193,8 @@ body{
 
 #Map{
 	width: 1030px;
-	padding: 20px;
-	top: 100px;
+	padding: 0 20px;
+	top: 0px;
 }
 
 #map{
@@ -205,6 +206,12 @@ body{
 	width: 1060px;
 	padding: 30px;
 	top: 100px;
+}
+
+#DetailText{
+
+	padding: 10px;
+
 }
 
 
@@ -238,5 +245,5 @@ body{
 }
 #DownloadCSV{
 	display: inline;
-	cursor: pointer;
+  cursor: pointer;
 }

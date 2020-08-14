@@ -11,12 +11,15 @@
     <script src="css/all.css"></script>
     <script src="js/all.js"></script>
     <!-- Chart.js plugin -->
-    <script src="js/Chart.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+    <!-- <script src="js/Chart.bundle.min.js"></script> -->
     <link rel="stylesheet" href="css/jquery-ui.css">
-    <!-- <link rel="stylesheet" href="leaflet/leaflet.css"> -->
+    <link rel="stylesheet" href="leaflet/leaflet.css">
     <!-- <link rel="stylesheet" href="css/bootstrap.css"> -->
     <link rel="stylesheet" href="js/bootstrap.bundle.js">
     <link rel="stylesheet" href="js/bootstrap.js">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" type="text/css" href="css/font-gilroy.css" />
 
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
         integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
@@ -33,7 +36,7 @@
     <script type="text/javascript" src="js/papaparse.min.js"></script>
     <script type="text/javascript" src="js/jquery-ui.js"></script>
     <script type="text/javascript" src="js/gauge.min.js"></script>
-    <!-- <script type="text/javascript" src="js/leaflet.js"></script> -->
+    <script type="text/javascript" src="js/leaflet.js"></script>
     <script type="text/javascript" src="js/chartjs.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
         integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
@@ -248,18 +251,18 @@
 
                 <!-- Tab 2 -->
                 <!-- Map -->
-                <div class="tab-pane fade active overflow-auto" id="pills-map" role="tabpanel"
-                    aria-labelledby="pills-map-tab">
+                <div class="tab-pane fade active" id="pills-map" role="tabpanel" aria-labelledby="pills-map-tab" style="height: 100%;
+                    width: 100%">
                     <div class="row">
                         <div class="col-md-10" id="Map">
 
-                            <button id="autohand" class="btn btn-success" onclick="map_auto()">Auto</button>
                             <div id="map">
                                 <div id="basemapslidercontainer">
                                     <div id="basemapslider">
                                     </div>
                                 </div>
                             </div>
+                            <button id="autohand" class="btn btn-success" onclick="map_auto()">Auto</button>
                             <table style="width: 100%;">
                                 <tr>
                                     <td style="font-size:25px;">Ketinggian:<br><a id="map_tinggi"> -</a></td>
@@ -296,383 +299,446 @@
                 <!-- Tab 3-->
                 <!-- Detail -->
                 <div class="tab-pane fade" id="pills-detail" role="tabpanel" aria-labelledby="pills-detail-tab">
-                    <div id="Detail">
-                        <div id="DetailText">
-                            <img src="misc/Exclamation.png" id="Exclamation">
-                            <h2 style="display:inline;">Informasi Peluncuran</h2>
-                            <!-- Connect -->
-                            <!-- <button id="Connect" class="btn tombolconnect" onclick="test()">Connect</button> -->
-                            <iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
-                            <form action="http://localhost:3000/" target="dummyframe" method="POST">
-                                <input id="Connect" name="Connect" class="btn tombolconnect" type="submit"
-                                    value="Connect" onclick="ChangeConnect()">
-                            </form>
-                            <script>
-                                function ChangeConnect() {
-                                    if (document.getElementById("Connect").value == "Connect") {
-                                        document.getElementById("Connect").value = "Disconnect";
-                                    }
-                                    else if (document.getElementById("Connect").value == "Disconnect") {
-                                        document.getElementById("Connect").value = "Connect";
-                                    }
-                                }
-                            </script>
-                            <!------------>
-                            <hr>
-                            <img src="misc/Clock.png" id="Clock">
-                            <h3 style="display:inline;">Waktu Peluncuran</h3>
-                            <ul>
-                                <h5 id="init_tanggal">Tanggal Peluncuran:<p id="date"></p>
-                                </h5>
-                                <h5 id="init_time">Waktu Peluncuran:<p id="time"></p>
-                                </h5>
-                            </ul>
-                            <img src="misc/GLocation.png" id="GLocation">
-                            <h3 style="display:inline;">Lokasi Peluncuran</h3>
-                            <ul>
-                                <h5>Latitude:<p id="init_latitude"></p>
-                                </h5>
-                                <h5>Longitude:<p id="init_longitude"></p>
-                                </h5>
-                            </ul>
-                            <hr>
+                    <div class="row">
+                        <div class="col-sm-8 ">
+                            <div class="card" style="border-radius: 1.5rem; border: none;">
+                                <div id="DetailText">
+                                    <div class="card-body" style="padding-bottom: 0;">
+                                        <h2 class="box-title"
+                                            style="display:inline;font-family:'Gilroy-Bold ☞';font-weight:normal;font-size:30px">
+                                            <i class="fas fa-info-circle"
+                                                style="color:#4360b5; margin-right: 20px;"></i>Informasi Peluncuran</h2>
+                                               
+                                    </div>
+                                    <hr style="margin-right: 20px; margin-left: 20px;">
+                                    
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="row">
+                                                <div class="col-lg-1">
+                                                    <div class="card-body">
+                                                        <div class="card shadow"
+                                                            style="width: fit-content;height: fit-content;border: none;">
+                                                            <i class="far fa-calendar" style="margin:8px;"></i>
+                                                        </div>
+                                                        <div class="card shadow"
+                                                            style="width: fit-content;height: fit-content;border: none;">
+                                                            <i class="far fa-clock" style="margin:8px;"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-10">
+                                                    <div class="card-body">
+                                                        <p style="font-family:'Gilroy-Bold ☞'; margin: 0px; font-size: 20px;"
+                                                                id="date">
+                                                            </p>
+                                                        <h5 id="init_tanggal" style="font-family:'Gilroy-Regular ☞';font-size: 15px; color: gray;">
+                                                            Tanggal peluncuran
+                                                        </h5>
+                                                        <p style="font-family:'Gilroy-Bold ☞'; margin: 0px; font-size: 20px;"
+                                                        id="time">
+                                                    </p>
+                                                        <h5 id="init_time" style="font-family:'Gilroy-Regular ☞';font-size: 15px; color: gray;">Waktu
+                                                            peluncuran
+                                                        </h5>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="row">
+                                                <div class="col-lg-1">
+                                                    <div class="card-body">
+                                                        <div class="card shadow"
+                                                            style="width: fit-content;height: fit-content;border: none;">
+                                                            <i class="far fa-calendar" style="margin:8px;"></i>
+                                                        </div>
+                                                        <div class="card shadow"
+                                                            style="width: fit-content;height: fit-content;border: none;">
+                                                            <i class="far fa-clock" style="margin:8px;"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-10">
+                                                    <div class="card-body">
+                                                        <p id="init_latitude" style="font-family:'Gilroy-Bold ☞'; margin: 0px; font-size: 20px;">WOW</p>
+                                                        <h5 style="font-family:'Gilroy-Regular ☞';font-size: 15px; color: gray;">Latitude
+                                                        </h5>
+                                                        <p id="init_longitude" style="font-family:'Gilroy-Bold ☞'; margin: 0px; font-size: 20px;">WOW</p>
+                                                        <h5 style="font-family:'Gilroy-Regular ☞';font-size: 15px; color: gray;">Longitude
+                                                        </h5>
+                                                    </div>
+                                                </div>
+                                            </div>                                    
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                                
+
+                                <!-- <img src="misc/Monitor.png" id="Monitor">
+                                <h2 style="display:inline;">Terminal</h2>
+                                <br>
+                                <textarea class="scrollabletextbox" id="terminal" readonly></textarea> -->
+                            </div>
+
                         </div>
-
-                        <a onclick=download_csv()>
-                            <img src="misc/GDownload.png" id="Download">
-                            <h3 id="DownloadCSV"> CSV </h3>
-                        </a>
-                        <hr>
-
-                        <img src="misc/Monitor.png" id="Monitor">
-                        <h2 style="display:inline;">Terminal</h2>
-                        <br>
-                        <textarea class="scrollabletextbox" id="terminal" readonly>
-                    </textarea>
+                        <div class="col-sm-4 ">
+                            <div class="card" style="border-radius: 1.5rem; border: none; height: 50%;">
+                                
+                                <div class="DetailText">
+                                    <a onclick=download_csv() class="btn btn-secondary" id="DownloadCSV"
+                                        style="color: white;">CSV
+                                        <img src="misc/GDownload.png" id="Download"
+                                            style="width: 15px;height: 15px; margin: 0;">
+                                    </a>
+                                    <!-- Connect -->
+                                    <!-- <button id="Connect" class="btn tombolconnect" onclick="test()">Connect</button> -->
+                                    <iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
+                                    <form action="http://localhost:3000/" target="dummyframe" method="POST">
+                                        <input id="Connect" name="Connect" class="btn btn-secondary tombolconnect"
+                                            type="submit" value="Connect" onclick="ChangeConnect()">
+                                    </form>
+                                    <script>
+                                        function ChangeConnect() {
+                                            if (document.getElementById("Connect").value == "Connect") {
+                                                document.getElementById("Connect").value = "Disconnect";
+                                            }
+                                            else if (document.getElementById("Connect").value == "Disconnect") {
+                                                document.getElementById("Connect").value = "Connect";
+                                            }
+                                        }
+                                    </script>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
 
-                <!-- Tab 4 -->
-                <!-- Manual -->
-                <div class="tab-pane fade" id="pills-manual" role="tabpanel" aria-labelledby="pills-manual-tab">
-                    <iframe name="dframe" id="dframe" style="display: none;"></iframe>
-                    <form action="http://localhost:3000/" target="dframe" method="POST">
-                        <input type="text" name="fname" placeholder="Sudut Horizontal"><br>
-                        <input type="text" name="lname" placeholder="Sudut Vertikal"><br>
-                        <input type="submit" value="Submit">
-                    </form>
-                </div>
+                    <!-- Tab 4 -->
+                    <!-- Manual -->
+                    <div class="tab-pane fade" id="pills-manual" role="tabpanel" aria-labelledby="pills-manual-tab">
 
-                <!-- Tab 5-->
-                <!-- Setting -->
-                <div class="tab-pane fade " id="pills-setting" role="tabpanel" aria-labelledby="pills-setting-tab">
-                    <div class="modal-body">
-                        <form class="ui form" action="/" method="POST">
-                            <h5>
-                                <font color="black">Port Muatan</font>
-                            </h5>
-                            <input type="text" id="port_muatan" placeholder="COM 3" name="port_muatan">
-
-                            <h5>
-                                <font color="black"> Baudrate Muatan</font>
-                            </h5>
-                            <input list="BRate" id="baudrate_muatan" placeholder="-" name="baudrate_muatan">
-
-                            <br>
-                            <h5>
-                                <font color="black">Port ATS</font>
-                            </h5>
-                            <input type="text" id="port_ats" placeholder="COM 3" name="port_ats">
-
-                            <h5>
-                                <font color="black"> Baudrate ATS</font>
-                            </h5>
-                            <input list="BRate" id="baudrate_ats" placeholder="-" name="baudrate_ats">
-
-                            <h5>
-                                <font color="black"> Latitude ATS</font>
-                            </h5>
-                            <input list="number" step="any" id="latitude_ats" placeholder="-" name="latitude_ats">
-
-                            <h5>
-                                <font color="black"> Longitude ATS</font>
-                            </h5>
-                            <input list="number" step="any" id="longitude_ats" placeholder="-" name="longitude_ats">
-
-                            <datalist id="BRate">
-                                <option value="300">
-                                <option value="600">
-                                <option value="1200">
-                                <option value="2400">
-                                <option value="4800">
-                                <option value="9600">
-                                <option value="14400">
-                                <option value="19200">
-                                <option value="28800">
-                                <option value="38400">
-                                <option value="57600">
-                                <option value="115200">
-                            </datalist>
-
-                            <input class="ui inverted big violet button" type="submit">
+                        <form action="http://localhost:3000/" target="dframe" method="POST">
+                            <input type="text" name="fname" placeholder="Sudut Horizontal"><br>
+                            <input type="text" name="lname" placeholder="Sudut Vertikal"><br>
+                            <input type="submit" value="Submit">
                         </form>
+                    </div>
+
+                    <!-- Tab 5-->
+                    <!-- Setting -->
+                    <div class="tab-pane fade " id="pills-setting" role="tabpanel" aria-labelledby="pills-setting-tab">
+                        <div class="modal-body">
+                            <form class="ui form" action="/" method="POST">
+                                <h5>
+                                    <font color="black">Port Muatan</font>
+                                </h5>
+                                <input type="text" id="port_muatan" placeholder="COM 3" name="port_muatan">
+
+                                <h5>
+                                    <font color="black"> Baudrate Muatan</font>
+                                </h5>
+                                <input list="BRate" id="baudrate_muatan" placeholder="-" name="baudrate_muatan">
+
+                                <br>
+                                <h5>
+                                    <font color="black">Port ATS</font>
+                                </h5>
+                                <input type="text" id="port_ats" placeholder="COM 3" name="port_ats">
+
+                                <h5>
+                                    <font color="black"> Baudrate ATS</font>
+                                </h5>
+                                <input list="BRate" id="baudrate_ats" placeholder="-" name="baudrate_ats">
+
+                                <h5>
+                                    <font color="black"> Latitude ATS</font>
+                                </h5>
+                                <input list="number" step="any" id="latitude_ats" placeholder="-" name="latitude_ats">
+
+                                <h5>
+                                    <font color="black"> Longitude ATS</font>
+                                </h5>
+                                <input list="number" step="any" id="longitude_ats" placeholder="-" name="longitude_ats">
+
+                                <datalist id="BRate">
+                                    <option value="300">
+                                    <option value="600">
+                                    <option value="1200">
+                                    <option value="2400">
+                                    <option value="4800">
+                                    <option value="9600">
+                                    <option value="14400">
+                                    <option value="19200">
+                                    <option value="28800">
+                                    <option value="38400">
+                                    <option value="57600">
+                                    <option value="115200">
+                                </datalist>
+
+                                <input class="ui inverted big violet button" type="submit">
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <script src="/socket.io/socket.io.js" charset="utf-8"></script>
-    <script type="text/javascript">
-        const socket = io();
+        <script src="/socket.io/socket.io.js" charset="utf-8"></script>
+        <script type="text/javascript">
+            const socket = io();
 
-        var ctx = document.getElementById('myChart').getContext('2d');
-        var chart = new Chart(ctx, {
-            // The type of chart we want to create
-            type: 'scatter',
-            // The data for our dataset
-            data: {
-                datasets: [{
-                    label: "Temperature Data from Arduino",
-                    fill: false,
-                    backgroundColor: 'rgb(52, 73, 94)',
-                    borderColor: 'rgb(41, 128, 185)',
-                    data: [],
-                }]
-            },
-            // Configuration options go here
-            options: {
-                responsive: true
-            }
-        });
-        socket.on('arduino:data', function (dataSerial) {
-            // console.log(dataSerial);
-            //chart.data.labels.push(counter);
-            chart.data.datasets.forEach(dataset => {
-                //dataset.data.push({x:dataSerial.temps,y:dataSerial.altitudes});
-                document.getElementById('tmp').innerHTML = dataSerial.temps;
-                document.getElementById('map_tinggi').innerHTML = dataSerial.altitudes;
-                document.getElementById('map_latitude').innerHTML = dataSerial.lintangs;
-                document.getElementById('map_longitude').innerHTML = dataSerial.bujurs;
+            var ctx = document.getElementById('myChart').getContext('2d');
+            var chart = new Chart(ctx, {
+                // The type of chart we want to create
+                type: 'scatter',
+                // The data for our dataset
+                data: {
+                    datasets: [{
+                        label: "Temperature Data from Arduino",
+                        fill: false,
+                        backgroundColor: 'rgb(52, 73, 94)',
+                        borderColor: 'rgb(41, 128, 185)',
+                        data: [],
+                    }]
+                },
+                // Configuration options go here
+                options: {
+                    responsive: true
+                }
             });
-            if (dataSerial.pause % 5 == 0) {
+            socket.on('arduino:data', function (dataSerial) {
+                // console.log(dataSerial);
+                //chart.data.labels.push(counter);
                 chart.data.datasets.forEach(dataset => {
-                    dataset.data.push({ x: dataSerial.temps, y: dataSerial.altitudes });
+                    //dataset.data.push({x:dataSerial.temps,y:dataSerial.altitudes});
+                    document.getElementById('tmp').innerHTML = dataSerial.temps;
+                    document.getElementById('map_tinggi').innerHTML = dataSerial.altitudes;
+                    document.getElementById('map_latitude').innerHTML = dataSerial.lintangs;
+                    document.getElementById('map_longitude').innerHTML = dataSerial.bujurs;
                 });
-                chart.update();
-            }
-        });
-
-        var ctx2 = document.getElementById('myChart2').getContext('2d');
-        var chart2 = new Chart(ctx2, {
-            // The type of chart we want to create
-            type: 'scatter',
-            // The data for our dataset
-            data: {
-                datasets: [{
-                    label: "Kelembapan Data from Arduino",
-                    backgroundColor: 'rgb(48, 166, 74)',
-                    borderColor: 'rgb(48, 166, 74)',
-                    fill: false,
-                    data: [],
-                }]
-            },
-            // Configuration options go here
-            options: {
-                responsive: true
-            }
-        });
-        socket.on('arduino:data', function (dataSerial) {
-            // console.log(dataSerial);
-            chart2.data.datasets.forEach(dataset => {
-                // dataset.data.push({
-                //     x:dataSerial.humids,y:dataSerial.altitudes
-                // });
-                document.getElementById('kel').innerHTML = dataSerial.humids;
+                if (dataSerial.pause % 5 == 0) {
+                    chart.data.datasets.forEach(dataset => {
+                        dataset.data.push({ x: dataSerial.temps, y: dataSerial.altitudes });
+                    });
+                    chart.update();
+                }
             });
-            if (dataSerial.pause % 5 == 0) {
+
+            var ctx2 = document.getElementById('myChart2').getContext('2d');
+            var chart2 = new Chart(ctx2, {
+                // The type of chart we want to create
+                type: 'scatter',
+                // The data for our dataset
+                data: {
+                    datasets: [{
+                        label: "Kelembapan Data from Arduino",
+                        backgroundColor: 'rgb(48, 166, 74)',
+                        borderColor: 'rgb(48, 166, 74)',
+                        fill: false,
+                        data: [],
+                    }]
+                },
+                // Configuration options go here
+                options: {
+                    responsive: true
+                }
+            });
+            socket.on('arduino:data', function (dataSerial) {
+                // console.log(dataSerial);
                 chart2.data.datasets.forEach(dataset => {
-                    dataset.data.push({
-                        x: dataSerial.windd, y: dataSerial.altitudes
-                    });
+                    // dataset.data.push({
+                    //     x:dataSerial.humids,y:dataSerial.altitudes
+                    // });
+                    document.getElementById('kel').innerHTML = dataSerial.humids;
                 });
-                chart2.update();
-            }
-        });
-
-        var ctx3 = document.getElementById('myChart3').getContext('2d');
-        var chart3 = new Chart(ctx3, {
-            // The type of chart we want to create
-            type: 'scatter',
-            // The data for our dataset
-            data: {
-                datasets: [{
-                    label: "Pressure Data from Arduino",
-                    backgroundColor: 'rgb(37, 162, 183)',
-                    borderColor: 'rgb(37, 162, 183)',
-                    fill: false,
-                    data: [],
-                }]
-            },
-            // Configuration options go here
-            options: {
-                responsive: true
-            }
-        });
-        socket.on('arduino:data', function (dataSerial) {
-            // console.log(dataSerial);
-            chart3.data.datasets.forEach(dataset => {
-                // dataset.data.push({
-                //     x:dataSerial.pressures,y:dataSerial.altitudes
-                // });
-                document.getElementById('tek').innerHTML = dataSerial.pressures;
+                if (dataSerial.pause % 5 == 0) {
+                    chart2.data.datasets.forEach(dataset => {
+                        dataset.data.push({
+                            x: dataSerial.windd, y: dataSerial.altitudes
+                        });
+                    });
+                    chart2.update();
+                }
             });
-            if (dataSerial.pause % 5 == 0) {
+
+            var ctx3 = document.getElementById('myChart3').getContext('2d');
+            var chart3 = new Chart(ctx3, {
+                // The type of chart we want to create
+                type: 'scatter',
+                // The data for our dataset
+                data: {
+                    datasets: [{
+                        label: "Pressure Data from Arduino",
+                        backgroundColor: 'rgb(37, 162, 183)',
+                        borderColor: 'rgb(37, 162, 183)',
+                        fill: false,
+                        data: [],
+                    }]
+                },
+                // Configuration options go here
+                options: {
+                    responsive: true
+                }
+            });
+            socket.on('arduino:data', function (dataSerial) {
+                // console.log(dataSerial);
                 chart3.data.datasets.forEach(dataset => {
-                    dataset.data.push({
-                        x: dataSerial.windd, y: dataSerial.altitudes
-                    });
+                    // dataset.data.push({
+                    //     x:dataSerial.pressures,y:dataSerial.altitudes
+                    // });
+                    document.getElementById('tek').innerHTML = dataSerial.pressures;
                 });
-                chart3.update();
-            }
-        });
-
-        var ctx4 = document.getElementById('myChart4').getContext('2d');
-        var chart4 = new Chart(ctx4, {
-            // The type of chart we want to create
-            type: 'scatter',
-            // The data for our dataset
-            data: {
-                datasets: [{
-                    label: "Arah Angin Data from Arduino",
-                    backgroundColor: 'rgb(254, 192, 47)',
-                    borderColor: 'rgb(254, 192, 47)',
-                    fill: false,
-                    data: [],
-                }]
-            },
-            // Configuration options go here
-            options: {
-                responsive: true
-            }
-        });
-        socket.on('arduino:data', function (dataSerial) {
-            // console.log(dataSerial);
-            chart4.data.datasets.forEach(dataset => {
-                // dataset.data.push({
-                //     x:dataSerial.windd,y:dataSerial.altitudes
-                // });
-                document.getElementById('arah').innerHTML = dataSerial.windd;
+                if (dataSerial.pause % 5 == 0) {
+                    chart3.data.datasets.forEach(dataset => {
+                        dataset.data.push({
+                            x: dataSerial.windd, y: dataSerial.altitudes
+                        });
+                    });
+                    chart3.update();
+                }
             });
-            if (dataSerial.pause % 5 == 0) {
+
+            var ctx4 = document.getElementById('myChart4').getContext('2d');
+            var chart4 = new Chart(ctx4, {
+                // The type of chart we want to create
+                type: 'scatter',
+                // The data for our dataset
+                data: {
+                    datasets: [{
+                        label: "Arah Angin Data from Arduino",
+                        backgroundColor: 'rgb(254, 192, 47)',
+                        borderColor: 'rgb(254, 192, 47)',
+                        fill: false,
+                        data: [],
+                    }]
+                },
+                // Configuration options go here
+                options: {
+                    responsive: true
+                }
+            });
+            socket.on('arduino:data', function (dataSerial) {
+                // console.log(dataSerial);
                 chart4.data.datasets.forEach(dataset => {
-                    dataset.data.push({
-                        x: dataSerial.windd, y: dataSerial.altitudes
-                    });
+                    // dataset.data.push({
+                    //     x:dataSerial.windd,y:dataSerial.altitudes
+                    // });
+                    document.getElementById('arah').innerHTML = dataSerial.windd;
                 });
-                chart4.update();
-            }
-        });
-
-        var ctx5 = document.getElementById('myChart5').getContext('2d');
-        var chart5 = new Chart(ctx5, {
-            // The type of chart we want to create
-            type: 'scatter',
-            // The data for our dataset
-            data: {
-                datasets: [{
-                    label: "Kecepatan Angin Data from Arduino",
-                    backgroundColor: 'rgb(254, 192, 47)',
-                    borderColor: 'rgb(254, 192, 47)',
-                    fill: false,
-                    data: [],
-                }]
-            },
-            // Configuration options go here
-            options: {
-                responsive: true
-            }
-        });
-        socket.on('arduino:data', function (dataSerial) {
-            // console.log(dataSerial);
-            chart5.data.datasets.forEach(dataset => {
-                // dataset.data.push({
-                //     x:dataSerial.winds,y:dataSerial.altitudes
-                // });
-                document.getElementById('kec').innerHTML = dataSerial.winds;
+                if (dataSerial.pause % 5 == 0) {
+                    chart4.data.datasets.forEach(dataset => {
+                        dataset.data.push({
+                            x: dataSerial.windd, y: dataSerial.altitudes
+                        });
+                    });
+                    chart4.update();
+                }
             });
-            if (dataSerial.pause % 5 == 0) {
+
+            var ctx5 = document.getElementById('myChart5').getContext('2d');
+            var chart5 = new Chart(ctx5, {
+                // The type of chart we want to create
+                type: 'scatter',
+                // The data for our dataset
+                data: {
+                    datasets: [{
+                        label: "Kecepatan Angin Data from Arduino",
+                        backgroundColor: 'rgb(254, 192, 47)',
+                        borderColor: 'rgb(254, 192, 47)',
+                        fill: false,
+                        data: [],
+                    }]
+                },
+                // Configuration options go here
+                options: {
+                    responsive: true
+                }
+            });
+            socket.on('arduino:data', function (dataSerial) {
+                // console.log(dataSerial);
                 chart5.data.datasets.forEach(dataset => {
-                    dataset.data.push({
-                        x: dataSerial.windd, y: dataSerial.altitudes
-                    });
+                    // dataset.data.push({
+                    //     x:dataSerial.winds,y:dataSerial.altitudes
+                    // });
+                    document.getElementById('kec').innerHTML = dataSerial.winds;
                 });
-                chart5.update();
+                if (dataSerial.pause % 5 == 0) {
+                    chart5.data.datasets.forEach(dataset => {
+                        dataset.data.push({
+                            x: dataSerial.windd, y: dataSerial.altitudes
+                        });
+                    });
+                    chart5.update();
+                }
+            });
+
+
+            function change() {
+                var derajat = document.getElementById("degree").value
+                document.getElementById("#compass")[0].setAttribute("data-value", derajat);
+                var x = document.getElementById("#compass")[0].getAttribute("data-value");
+                console.log(x)
             }
-        });
+
+            var gauge = new RadialGauge({
+                renderTo: 'canvas-id',
+                minValue: 0,
+                maxValue: 360,
+                majorTicks: [
+                    "N",
+                    "NE",
+                    "E",
+                    "SE",
+                    "S",
+                    "SW",
+                    "W",
+                    "NW",
+                    "N"
+                ],
+                minorTicks: 22,
+                ticksAngle: 360,
+                startAngle: 180,
+                strokeTicks: false,
+                highlights: false,
+                colorPlate: "#a33",
+                colorMajorTicks: "#f5f5f5",
+                colorMinorTicks: "#ddd",
+                colorNumbers: "#ccc",
+                colorNeedle: "rgba(240, 128, 128, 1)",
+                colorNeedleEnd: "rgba(255, 160, 122, .9)",
+                valueBox: false,
+                valueTextShadow: false,
+                colorCircleInner: "#fff",
+                colorNeedleCircleOuter: "#ccc",
+                needleCircleSize: 15,
+                needleCircleOuter: false,
+                animationRule: "linear",
+                needleType: "line",
+                needleStart: 75,
+                needleEnd: 99,
+                needleWidth: 3,
+                borders: true,
+                borderInnerWidth: 0,
+                borderMiddleWidth: 0,
+                borderOuterWidth: 10,
+                colorBorderOuter: "#ccc",
+                colorBorderOuterEnd: "#ccc",
+                colorNeedleShadowDown: "#222",
+                borderShadowWidth: 0,
+                animationTarget: "plate",
+                animationDuration: 1500,
+                value: 45.5,
+                animateOnInit: true
+            }).draw();
 
 
-        function change() {
-            var derajat = document.getElementById("degree").value
-            document.getElementById("#compass")[0].setAttribute("data-value", derajat);
-            var x = document.getElementById("#compass")[0].getAttribute("data-value");
-            console.log(x)
-        }
-
-        var gauge = new RadialGauge({
-            renderTo: 'canvas-id',
-            minValue: 0,
-            maxValue: 360,
-            majorTicks: [
-                "N",
-                "NE",
-                "E",
-                "SE",
-                "S",
-                "SW",
-                "W",
-                "NW",
-                "N"
-            ],
-            minorTicks: 22,
-            ticksAngle: 360,
-            startAngle: 180,
-            strokeTicks: false,
-            highlights: false,
-            colorPlate: "#a33",
-            colorMajorTicks: "#f5f5f5",
-            colorMinorTicks: "#ddd",
-            colorNumbers: "#ccc",
-            colorNeedle: "rgba(240, 128, 128, 1)",
-            colorNeedleEnd: "rgba(255, 160, 122, .9)",
-            valueBox: false,
-            valueTextShadow: false,
-            colorCircleInner: "#fff",
-            colorNeedleCircleOuter: "#ccc",
-            needleCircleSize: 15,
-            needleCircleOuter: false,
-            animationRule: "linear",
-            needleType: "line",
-            needleStart: 75,
-            needleEnd: 99,
-            needleWidth: 3,
-            borders: true,
-            borderInnerWidth: 0,
-            borderMiddleWidth: 0,
-            borderOuterWidth: 10,
-            colorBorderOuter: "#ccc",
-            colorBorderOuterEnd: "#ccc",
-            colorNeedleShadowDown: "#222",
-            borderShadowWidth: 0,
-            animationTarget: "plate",
-            animationDuration: 1500,
-            value: 45.5,
-            animateOnInit: true
-        }).draw();
-
-
-    </script>
-    <script src="js/maps.js"></script>
-    <script src="js/script.js"></script>
+        </script>
+        <script src="js/maps.js"></script>
+        <script src="js/script.js"></script>
 </body>
 
 </html>

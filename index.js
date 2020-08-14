@@ -24,7 +24,7 @@ const parserATS = new parsers.Readline({
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(__dirname + '/public'));
 
-var port = new SerialPort('/dev/cu.usbmodem14101', {
+var port = new SerialPort('/dev/cu.usbmodem1413201', {
   baudRate: 57600 
 });
 
@@ -33,15 +33,15 @@ app.get('/', (req, res) => {
   res.sendFile(__dirname +'/index.html');
 });
 
-app.post("/", function (req, res) {
- port_mutan = req.body.port_muatan;
-  baudrate_muatan = req.body.baudrate_muatan;
-  var port = new SerialPort(port_muatan, {
-    baudRate: baudrate_muatan 
+// app.post("/", function (req, res) {
+//  port_mutan = req.body.port_muatan;
+//   baudrate_muatan = req.body.baudrate_muatan;
+//   var port = new SerialPort(port_muatan, {
+//     baudRate: baudrate_muatan 
 
 
-    });
-});
+//     });
+// });
 
 // app.post('/', (req,res)=>{
 //   if(req.body.Connect == "Disconnect"){
