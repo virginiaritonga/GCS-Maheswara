@@ -225,27 +225,88 @@
                         </div>
                     </div>
 
-                    <div class="row" id="Graph">
-                        <div class="item">
-                            Temperature Graph
-                            <canvas id="myChart"></canvas>
+                    <div class="col-sm-12" id="Graph">
+                        <div class="card">
+                            <div id="DetailText">
+                                <div class="card-body" style="padding-bottom: 0;">
+                                    <h2 class="box-title"
+                                    style="display:inline;font-family:'Gilroy-Bold ☞';font-weight:normal;font-size:30px">
+                                    <i class="fas fa-chart-line"
+                                        style="color:#4360b5; margin-right: 20px;"></i>Temperature Graph</h2>
+                                </div>
+                                <hr style="margin-right: 20px; margin-left: 20px;">
+                                <div class="row">
+                                    <div class="item">
+                                        <canvas id="myChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="item">
-                            Kelembapan Graph
-                            <canvas id="myChart2"></canvas>
+                        <div class="card">
+                            <div id="DetailText">
+                                <div class="card-body" style="padding-bottom: 0;">
+                                    <h2 class="box-title"
+                                    style="display:inline;font-family:'Gilroy-Bold ☞';font-weight:normal;font-size:30px">
+                                    <i class="fas fa-chart-line"
+                                        style="color:#4360b5; margin-right: 20px;"></i>Kelembapan Graph</h2>
+                                </div>
+                                <hr style="margin-right: 20px; margin-left: 20px;">
+                                <div class="row">
+                                    <div class="item">
+                                        <canvas id="myChart2"></canvas>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="item">
-                            Pressure Graph
-                            <canvas id="myChart3"></canvas>
+                        <div class="card">
+                            <div id="DetailText">
+                                <div class="card-body" style="padding-bottom: 0;">
+                                    <h2 class="box-title"
+                                    style="display:inline;font-family:'Gilroy-Bold ☞';font-weight:normal;font-size:30px">
+                                    <i class="fas fa-chart-line"
+                                        style="color:#4360b5; margin-right: 20px;"></i>Tekanan Graph</h2>
+                                </div>
+                                <hr style="margin-right: 20px; margin-left: 20px;">
+                                <div class="row">
+                                    <div class="item">
+                                        <canvas id="myChart3"></canvas>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="item">
-                            Arah Angin Graph
-                            <canvas id="myChart4"></canvas>
+                        <div class="card">
+                            <div id="DetailText">
+                                <div class="card-body" style="padding-bottom: 0;">
+                                    <h2 class="box-title"
+                                    style="display:inline;font-family:'Gilroy-Bold ☞';font-weight:normal;font-size:30px">
+                                    <i class="fas fa-chart-line"
+                                        style="color:#4360b5; margin-right: 20px;"></i>Arah Angin Graph</h2>
+                                </div>
+                                <hr style="margin-right: 20px; margin-left: 20px;">
+                                <div class="row">
+                                    <div class="item">
+                                        <canvas id="myChart4"></canvas>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="item">
-                            Kecepatan Angin Graph
-                            <canvas id="myChart5"></canvas>
+                        <div class="card">
+                            <div id="DetailText">
+                                <div class="card-body" style="padding-bottom: 0;">
+                                    <h2 class="box-title"
+                                    style="display:inline;font-family:'Gilroy-Bold ☞';font-weight:normal;font-size:30px">
+                                    <i class="fas fa-chart-line"
+                                        style="color:#4360b5; margin-right: 20px;"></i>Kecepatan Angin Graph</h2>
+                                </div>
+                                <hr style="margin-right: 20px; margin-left: 20px;">
+                                <div class="row">
+                                    <div class="item">
+                                        <canvas id="myChart5"></canvas>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+
                     </div>
                 </div>
 
@@ -338,8 +399,6 @@
                                             data-color-needle-shadow-down="#222" data-border-shadow-width="0"
                                             data-animation-target="plate" data-animation-duration="1500" data-value="45.5"
                                             data-animate-on-init="true"></canvas>
-                                        <input id="degree" type="text" placeholder="90">
-                                        <input id="compp" type="button" value="GO" onclick="change()">
                                         </div>
                                     </div>
                                     
@@ -879,6 +938,13 @@
                     //     x:dataSerial.winds,y:dataSerial.altitudes
                     // });
                     document.getElementById('kec').innerHTML = dataSerial.winds;
+
+                    //Setting Compass
+                    var derajat = dataSerial.bearings;
+                    var test = document.getElementsByTagName("canvas")[5].setAttribute("data-value",derajat); 
+                    console.log(test);
+                    var x = document.getElementsByTagName("canvas")[5].getAttribute("data-value"); 
+                    console.log(x);
                 });
                 if (dataSerial.pause % 5 == 0) {
                     chart5.data.datasets.forEach(dataset => {
@@ -889,15 +955,6 @@
                     chart5.update();
                 }
             });
-
-
-            function change() {
-                var derajat = document.getElementById("degree").value
-                var test = document.getElementsByTagName("canvas")[5].setAttribute("data-value",derajat); 
-                console.log(test);
-                var x = document.getElementsByTagName("canvas")[5].getAttribute("data-value"); 
-                console.log(x)
-            }
 
             var gauge = new RadialGauge({
                 renderTo: 'canvas-id',

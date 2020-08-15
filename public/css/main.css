@@ -196,6 +196,7 @@ body{
 .card{
   border-radius: 1.5rem; 
   border: none;
+  margin-bottom: 20px;
 }
 
 #Map{

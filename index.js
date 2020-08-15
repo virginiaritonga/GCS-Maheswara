@@ -147,6 +147,8 @@ parser.on("data", function (data) {
   console.log(cleanData);
   //console.log(Hasil_Autotrack)
   console.log("------------------------");
+  console.log(bearing);
+  console.log("------------------------");
 
   io.emit("arduino:data", {
     temps: temp,
@@ -158,6 +160,7 @@ parser.on("data", function (data) {
     lintangs: lintang,
     bujurs: bujur,
     pause: i,
+    bearings: bearing
   });
   i++;
   parserATS.emit("arduino:data1", {
