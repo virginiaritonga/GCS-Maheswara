@@ -259,3 +259,16 @@ body{
 	display: inline;
   cursor: pointer;
 }
+
+#form-label{
+  font-family: 'Gilroy-Regular ☞';
+  font-size: 18px;
+  font-weight: 800;
+
+}
+
+.input-label {
+  font-family: 'Gilroy-Light ☞';
+  margin-bottom: 20px;
+
+}

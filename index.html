@@ -112,7 +112,7 @@
                         <span class="icon"><i class="fas fa-info-circle"></i></span>
                         <span class="title">Detail</span></a>
                 </li>
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a class="nav-link" id="pills-manual-tab" data-toggle="pill" href="#pills-manual" role="tab"
                         aria-controls="pills-manual" aria-selected="false">
                         <span class="icon"><i class="fas fa-hdd"></i></span>
@@ -123,7 +123,7 @@
                         aria-controls="pills-setting" aria-selected="false">
                         <span class="icon"><i class="fas fa-cog"></i></span>
                         <span class="title">Setting</span></a>
-                </li>
+                </li> -->
             </ul>
 
         </div>
@@ -299,8 +299,8 @@
                 <!-- Tab 3-->
                 <!-- Detail -->
                 <div class="tab-pane fade" id="pills-detail" role="tabpanel" aria-labelledby="pills-detail-tab">
-                    <div class="row">
-                        <div class="col-sm-8 ">
+                    <div class="row" style="padding-bottom: 25px;">
+                        <div class="col-lg-8 col-sm-12 ">
                             <div class="card" style="border-radius: 1.5rem; border: none;">
                                 <div id="DetailText">
                                     <div class="card-body" style="padding-bottom: 0;">
@@ -308,10 +308,10 @@
                                             style="display:inline;font-family:'Gilroy-Bold ☞';font-weight:normal;font-size:30px">
                                             <i class="fas fa-info-circle"
                                                 style="color:#4360b5; margin-right: 20px;"></i>Informasi Peluncuran</h2>
-                                               
+
                                     </div>
                                     <hr style="margin-right: 20px; margin-left: 20px;">
-                                    
+
                                     <div class="row">
                                         <div class="col-6">
                                             <div class="row">
@@ -331,15 +331,18 @@
                                                 <div class="col-lg-10">
                                                     <div class="card-body">
                                                         <p style="font-family:'Gilroy-Bold ☞'; margin: 0px; font-size: 20px;"
-                                                                id="date">
-                                                            </p>
-                                                        <h5 id="init_tanggal" style="font-family:'Gilroy-Regular ☞';font-size: 15px; color: gray;">
+                                                            id="date">
+                                                        </p>
+                                                        <h5 id="init_tanggal"
+                                                            style="font-family:'Gilroy-Regular ☞';font-size: 15px; color: gray;">
                                                             Tanggal peluncuran
                                                         </h5>
                                                         <p style="font-family:'Gilroy-Bold ☞'; margin: 0px; font-size: 20px;"
-                                                        id="time">
-                                                    </p>
-                                                        <h5 id="init_time" style="font-family:'Gilroy-Regular ☞';font-size: 15px; color: gray;">Waktu
+                                                            id="time">
+                                                        </p>
+                                                        <h5 id="init_time"
+                                                            style="font-family:'Gilroy-Regular ☞';font-size: 15px; color: gray;">
+                                                            Waktu
                                                             peluncuran
                                                         </h5>
                                                     </div>
@@ -363,56 +366,214 @@
 
                                                 <div class="col-lg-10">
                                                     <div class="card-body">
-                                                        <p id="init_latitude" style="font-family:'Gilroy-Bold ☞'; margin: 0px; font-size: 20px;">WOW</p>
-                                                        <h5 style="font-family:'Gilroy-Regular ☞';font-size: 15px; color: gray;">Latitude
+                                                        <p id="init_latitude"
+                                                            style="font-family:'Gilroy-Bold ☞'; margin: 0px; font-size: 20px;">
+                                                            WOW</p>
+                                                        <h5
+                                                            style="font-family:'Gilroy-Regular ☞';font-size: 15px; color: gray;">
+                                                            Latitude
                                                         </h5>
-                                                        <p id="init_longitude" style="font-family:'Gilroy-Bold ☞'; margin: 0px; font-size: 20px;">WOW</p>
-                                                        <h5 style="font-family:'Gilroy-Regular ☞';font-size: 15px; color: gray;">Longitude
+                                                        <p id="init_longitude"
+                                                            style="font-family:'Gilroy-Bold ☞'; margin: 0px; font-size: 20px;">
+                                                            WOW</p>
+                                                        <h5
+                                                            style="font-family:'Gilroy-Regular ☞';font-size: 15px; color: gray;">
+                                                            Longitude
                                                         </h5>
                                                     </div>
                                                 </div>
-                                            </div>                                    
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-
-
-
-                                
-
-                                <!-- <img src="misc/Monitor.png" id="Monitor">
-                                <h2 style="display:inline;">Terminal</h2>
-                                <br>
-                                <textarea class="scrollabletextbox" id="terminal" readonly></textarea> -->
                             </div>
+                        </div>
+                        <div class="col-lg-4 col-sm-12">
+                            <div class="card" style="border-radius: 1.5rem; border: none;">
+                                <div id="DetailText">
+                                    <div class="card-body" style="padding-bottom: 0;">
+                                        <h2 class="box-title"
+                                            style="display:inline;font-family:'Gilroy-Bold ☞';font-weight:normal;font-size:25px">
+                                            <i class="fa fa-mouse-pointer"
+                                                style="color:#4360b5; margin-right: 20px;"></i>Buttons</h2>
+                                    </div>
+                                    <hr style="margin-right: 20px; margin-left: 20px;">
+                                    <div style="text-align: center;padding-bottom: 15px;">
+                                        <!-- Connect -->
+                                        <!-- <button id="Connect" class="btn tombolconnect" onclick="test()">Connect</button> -->
+                                        <iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
+                                        <form action="http://localhost:3000/" target="dummyframe" method="POST">
+                                            <input id="Connect" name="Connect" class="btn btn-secondary tombolconnect"
+                                                type="submit" value="Connect" onclick="ChangeConnect()">
+                                        </form>
+                                        <script>
+                                            function ChangeConnect() {
+                                                if (document.getElementById("Connect").value == "Connect") {
+                                                    document.getElementById("Connect").value = "Disconnect";
+                                                }
+                                                else if (document.getElementById("Connect").value == "Disconnect") {
+                                                    document.getElementById("Connect").value = "Connect";
+                                                }
+                                            }
+                                        </script>
+                                    </div>
+                                    <div style="text-align: center;padding-bottom: 15px;">
+                                        <a onclick=download_csv() class="btn btn-secondary" id="DownloadCSV"
+                                            style="color: white;">
 
+                                            <h2 class="box-title"
+                                                style="display:inline;font-family:'Gilroy-Medium ☞';font-weight:normal;font-size:15px">
+                                                <i class="fa fa-download"
+                                                    style="color:#ffffff; margin-right: 20px;"></i>Download CSV</h2>
+                                        </a>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-3 ">
+                            <div class="card" style="border-radius: 1.5rem; border: none;">
+
+                                <div id="DetailText">
+                                    <div class="card-body" style="padding-bottom: 0;">
+                                        <h2 class="box-title"
+                                            style="display:inline;font-family:'Gilroy-Bold ☞';font-weight:normal;font-size:30px">
+                                            <i class="fas fa-hdd" style="color:#4360b5; margin-right: 20px;"></i>Manual
+                                        </h2>
+
+                                    </div>
+                                    <hr style="margin-right: 20px; margin-left: 20px;">
+
+                                    <form action="http://localhost:3000/" target="dframe" method="POST">
+                                        <div style="padding-left: 60px;">
+                                            <h5 id="form-label">
+                                                Sudut horizontal
+                                            </h5>
+                                            <input class="input-label" type="text" name="fname"><br>
+                                            <h5 id="form-label">
+                                                Sudut vertikal
+                                            </h5>
+                                            <input class="input-label" type="text" name="lname"><br>
+                                        </div>
+                                        <div style="text-align: center;">
+                                            <input class="btn btn-secondary" type="submit" value="Submit">
+                                        </div>
+                                    </form>
+
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-sm-5 ">
+                            <div class="card" style="border-radius: 1.5rem; border: none;">
+
+                                <div id="DetailText">
+                                    <div class="card-body" style="padding-bottom: 0;">
+                                        <h2 class="box-title"
+                                            style="display:inline;font-family:'Gilroy-Bold ☞';font-weight:normal;font-size:30px">
+                                            <i class="fas fa-cog"
+                                                style="color:#4360b5; margin-right: 20px;"></i>Settings</h2>
+
+                                    </div>
+                                    <hr style="margin-right: 20px; margin-left: 20px;">
+
+                                    <div class="modal-body">
+
+
+                                        <form class="ui form" action="/" method="POST">
+                                            <div class="row">
+                                                <div class="col-sm-6" style="padding-left: 73px;">
+
+
+                                                    <h5 id="form-label">
+                                                        Port Muatan
+                                                    </h5>
+                                                    <input class="input-label" type="text" id="port_muatan"
+                                                        placeholder="COM 3" name="port_muatan">
+
+                                                    <h5 id="form-label">
+                                                        Baudrate Muatan
+                                                    </h5>
+                                                    <input class="input-label" list="BRate" id="baudrate_muatan"
+                                                        placeholder="-" name="baudrate_muatan">
+
+
+                                                    <h5 id="form-label">
+                                                        Port ATS
+                                                    </h5>
+                                                    <input class="input-label" type="text" id="port_ats"
+                                                        placeholder="COM 3" name="port_ats">
+
+                                                </div>
+                                                <div class="col-sm-6 ">
+                                                    <form class="ui form" action="/" method="POST">
+
+                                                        <h5 id="form-label">
+                                                            Baudrate ATS
+                                                        </h5>
+                                                        <input class="input-label" list="BRate" id="baudrate_ats"
+                                                            placeholder="-" name="baudrate_ats">
+
+                                                        <h5 id="form-label">
+                                                            Latitude ATS
+                                                        </h5>
+                                                        <input class="input-label" list="number" step="any"
+                                                            id="latitude_ats" placeholder="-" name="latitude_ats">
+
+                                                        <h5 id="form-label">
+                                                            Longitude ATS
+                                                        </h5>
+                                                        <input class="input-label" list="number" step="any"
+                                                            id="longitude_ats" placeholder="-" name="longitude_ats">
+
+                                                        <datalist id="BRate">
+                                                            <option value="300">
+                                                            <option value="600">
+                                                            <option value="1200">
+                                                            <option value="2400">
+                                                            <option value="4800">
+                                                            <option value="9600">
+                                                            <option value="14400">
+                                                            <option value="19200">
+                                                            <option value="28800">
+                                                            <option value="38400">
+                                                            <option value="57600">
+                                                            <option value="115200">
+                                                        </datalist>
+                                                </div>
+
+
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-12" style="text-align: center;">
+
+                                                    <input class="btn btn-secondary" type="submit">
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+
+                            </div>
                         </div>
                         <div class="col-sm-4 ">
-                            <div class="card" style="border-radius: 1.5rem; border: none; height: 50%;">
-                                
-                                <div class="DetailText">
-                                    <a onclick=download_csv() class="btn btn-secondary" id="DownloadCSV"
-                                        style="color: white;">CSV
-                                        <img src="misc/GDownload.png" id="Download"
-                                            style="width: 15px;height: 15px; margin: 0;">
-                                    </a>
-                                    <!-- Connect -->
-                                    <!-- <button id="Connect" class="btn tombolconnect" onclick="test()">Connect</button> -->
-                                    <iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
-                                    <form action="http://localhost:3000/" target="dummyframe" method="POST">
-                                        <input id="Connect" name="Connect" class="btn btn-secondary tombolconnect"
-                                            type="submit" value="Connect" onclick="ChangeConnect()">
-                                    </form>
-                                    <script>
-                                        function ChangeConnect() {
-                                            if (document.getElementById("Connect").value == "Connect") {
-                                                document.getElementById("Connect").value = "Disconnect";
-                                            }
-                                            else if (document.getElementById("Connect").value == "Disconnect") {
-                                                document.getElementById("Connect").value = "Connect";
-                                            }
-                                        }
-                                    </script>
+                            <div class="card" style="border-radius: 1.5rem; border: none;">
+
+                                <div id="DetailText">
+                                    <div class="card-body" style="padding-bottom: 0;">
+                                        <h2 class="box-title"
+                                            style="display:inline;font-family:'Gilroy-Bold ☞';font-weight:normal;font-size:30px">
+                                            <i class="fas fa-terminal"
+                                                style="color:#4360b5; margin-right: 20px;"></i>Terminal</h2>
+                
+                                        
+                                    </div>
+                                    <hr style="margin-right: 20px; margin-left: 20px;">
+                                    <textarea class="scrollabletextbox" id="terminal" readonly></textarea>
+
                                 </div>
                             </div>
                         </div>
@@ -420,18 +581,18 @@
 
                     <!-- Tab 4 -->
                     <!-- Manual -->
-                    <div class="tab-pane fade" id="pills-manual" role="tabpanel" aria-labelledby="pills-manual-tab">
+                    <!-- <div class="tab-pane fade" id="pills-manual" role="tabpanel" aria-labelledby="pills-manual-tab">
 
                         <form action="http://localhost:3000/" target="dframe" method="POST">
                             <input type="text" name="fname" placeholder="Sudut Horizontal"><br>
                             <input type="text" name="lname" placeholder="Sudut Vertikal"><br>
                             <input type="submit" value="Submit">
                         </form>
-                    </div>
+                    </div> -->
 
                     <!-- Tab 5-->
                     <!-- Setting -->
-                    <div class="tab-pane fade " id="pills-setting" role="tabpanel" aria-labelledby="pills-setting-tab">
+                    <!-- <div class="tab-pane fade " id="pills-setting" role="tabpanel" aria-labelledby="pills-setting-tab">
                         <div class="modal-body">
                             <form class="ui form" action="/" method="POST">
                                 <h5>
@@ -483,7 +644,7 @@
                                 <input class="ui inverted big violet button" type="submit">
                             </form>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
