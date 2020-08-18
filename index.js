@@ -8,6 +8,11 @@ const createCsvWriter = require("csv-writer").createObjectCsvWriter;
 const app = express();
 const server = http.createServer(app);
 const io = socketIo.listen(server);
+const fs = require('fs') 
+
+var sys   = require('sys'),
+    spawn = require('child_process').spawn,
+    dummy  = spawn('python', ['Joystick.py']); 
 
 var SerialPort = require('serialport');
 const parsers = SerialPort.parsers;
@@ -20,11 +25,15 @@ const parserATS = new parsers.Readline({
   delimiter: '\r\n'
 })
 
+const parserATSManual = new parsers.Readline({
+  delimiter: '\r\n'
+})
+
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(__dirname + '/public'));
 
-var port = new SerialPort('COM8', {
+var port = new SerialPort('COM10', {
   baudRate: 57600 
 });
 
@@ -52,9 +61,15 @@ app.post('/', (req,res)=>{
   else if(req.body.Connect == "Connect"){
     DisconnectPort();
   }
+  if(req.body.ConnectManual == "Disconnect"){
+    ConnectManualPort();
+  }
+  else if(req.body.ConnectManual == "Connect"){
+    DisconnectManualPort();
+  }
 })
 
-var portATS = new SerialPort('COM7',{
+var portATS = new SerialPort('COM9',{
   baudRate: 57600
 });
 
@@ -106,6 +121,105 @@ function DisconnectPort(){
   port.close();
   portATS.close();
 }
+
+function ConnectManualPort(){
+  console.log("Connected");
+  portATS.pipe(parserATSManual);
+  portATS.on('open', function(){});
+}
+
+function DisconnectManualPort(){
+  console.log("Disconnected");
+  portATS.close();
+}
+
+// var HoriTemp = 0;
+// var VerTemp = 0;
+var iii = 0;
+var Horizontal = 0
+var Vertikal = 0
+parserATSManual.on('data',function(data){
+  receivedData = data.toString();
+  var cleanData = receivedData
+    .substring(receivedData.indexOf("\r\n"))
+    .replace(/(\r\n|\n|\r)/gm, "");
+  k = cleanData.split(" ");
+  console.log(cleanData)
+
+  // fs.readFile('Input.txt', (err, data) => { 
+  //   if (err) throw err;
+  //   if(data == "ATAS") {
+  //     VerTemp++
+  //     // console.log(Math.round(vertical),VerTemp)
+  //   }
+  //   else if(data == "KANAN"){
+  //     HoriTemp++
+  //     // console.log(Math.round(bearing),HoriTemp)
+  //   }
+  //   else if(data == "BAWAH"){
+  //     VerTemp--
+  //     // console.log(Math.round(vertical),VerTemp)
+  //   }
+  //   else if(data == "KIRI"){
+  //     HoriTemp--
+  //     // console.log(Math.round(bearing),HoriTemp)
+  //   }
+  //   console.log(data.toString()); 
+  //   // console.log(Horizontal,Vertikal)
+  //   //Manual form
+  //   // parserATS.emit('arduino:data1',{
+  //   //   Verti: VerTemp,
+  //   //   Hori:HoriTemp,
+  //   //   Arah: data
+  //   // })
+  // })
+   fs.readFile('Input.txt', 'utf-8', function(err, data) {
+      if (err) throw err;
+      var newValue = "empty";
+      if(data == "ATAS") {
+        newValue = data.replace(/ATAS/gim, 'empty');
+        Vertikal += 3
+      }
+      else if(data == "KANAN"){   
+        newValue = data.replace(/KANAN/gim, 'empty');
+        Horizontal = Math.abs(Horizontal + 3 + 360) % 360;
+      }
+      else if(data == "BAWAH"){
+        newValue = data.replace(/BAWAH/gim, 'empty');
+        Vertikal -= 3
+      }
+      else if(data == "KIRI"){
+        var newValue = data.replace(/KIRI/gim, 'empty');
+        Horizontal =  Math.abs(Horizontal - 3 + 360) % 360;
+      }
+      fs.writeFile('Input.txt', newValue, 'utf-8', function(err, data) {
+          if (err) throw err;
+          console.log('Done!');
+      })
+  })
+  if(Vertikal < 0 ){
+    Vertikal = 0;
+  }
+  else if(Vertikal > 90){
+    Vertikal = 90;
+  }
+  if(iii % 6 == 0){
+    Hasil_Manual = Math.round(Horizontal) + " " + Math.round(Vertikal);
+    portATS.write(Hasil_Manual, function (err) {
+    if (err) {
+      return console.log("Error on write: ", err.message);
+    }
+    console.log(Hasil_Manual);
+  });
+  }
+  iii++;
+
+
+  // app.post('/', (req,res)=>{
+  //   console.log(req.body.fname + " " + req.body.lname)
+  //   booll = false;
+  // })
+})
 
 var i = 0;
 parser.on("data", function (data) {
@@ -251,4 +365,3 @@ parserATS.on("arduino:data1", function (data) {
 
 // Start server
 server.listen(3000)
-
