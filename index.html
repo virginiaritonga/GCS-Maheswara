@@ -562,24 +562,51 @@
                                     <div style="text-align: center;padding-bottom: 15px;">
                                         <!-- Connect -->
                                         <!-- <button id="Connect" class="btn tombolconnect" onclick="test()">Connect</button> -->
+                                        <h4>Autotrack</h4>
                                         <iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
                                         <form action="http://localhost:3000/" target="dummyframe" method="POST">
                                             <input id="Connect" name="Connect" class="btn btn-secondary tombolconnect"
-                                                type="submit" value="Connect" onclick="ChangeConnect()">
+                                                type="submit" value="Connect" onclick="ChangeConnectAuto()">
                                         </form>
                                         <script>
-                                            function ChangeConnect() {
+                                            function ChangeConnectAuto() {
                                                 if (document.getElementById("Connect").value == "Connect") {
                                                     document.getElementById("Connect").value = "Disconnect";
+                                                    document.getElementById("ConnectManual").disabled = true;
                                                 }
                                                 else if (document.getElementById("Connect").value == "Disconnect") {
                                                     document.getElementById("Connect").value = "Connect";
+                                                    document.getElementById("ConnectManual").disabled = false;
                                                 }
                                             }
                                         </script>
                                     </div>
+
                                     <div style="text-align: center;padding-bottom: 15px;">
-                                        <a onclick=download_csv() class="btn btn-secondary" id="DownloadCSV"
+                                        <!-- Connect -->
+                                        <!-- <button id="Connect" class="btn tombolconnect" onclick="test()">Connect</button> -->
+                                        <h4>Manual</h4>
+                                        <iframe name="dummyframe2" id="dummyframe2" style="display: none;"></iframe>
+                                        <form action="http://localhost:3000/" target="dummyframe2" method="POST">
+                                            <input id="ConnectManual" name="ConnectManual" class="btn btn-secondary tombolconnect"
+                                                type="submit" value="Connect" onclick="ChangeConnectManual()">
+                                        </form>
+                                        <script>
+                                            function ChangeConnectManual() {
+                                                if (document.getElementById("ConnectManual").value == "Connect") {
+                                                    document.getElementById("ConnectManual").value = "Disconnect";
+                                                    document.getElementById("Connect").disabled = true;
+                                                }
+                                                else if (document.getElementById("ConnectManual").value == "Disconnect") {
+                                                    document.getElementById("ConnectManual").value = "Connect";
+                                                    document.getElementById("Connect").disabled = false;
+                                                }
+                                            }
+                                        </script>
+                                    </div>
+
+                                    <div style="text-align: center;padding-bottom: 15px;">
+                                        <a onclick=download_csv class="btn btn-secondary" id="DownloadCSV"
                                             style="color: white;">
 
                                             <h2 class="box-title"
@@ -609,7 +636,7 @@
                                     <hr style="margin-right: 20px; margin-left: 20px;">
 
                                     <iframe name="dframe" id="dframe" style="display: none;"></iframe>
-                                    <form action="/" target="dframe" method="POST">
+                                    <form action="http://localhost:3000/" target="dframe" method="POST">
                                         <div style="padding-left: 60px;">
                                             <h5 id="form-label">
                                                 Sudut horizontal
