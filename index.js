@@ -70,9 +70,7 @@ const parserATSManual = new parsers.Readline({
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(__dirname + "/public"));
 
-var port = new SerialPort("/dev/cu.usbmodem14201", {
-  baudRate: 57600,
-});
+var port = 0;
 
 // Routes
 app.get("/", (req, res) => {
@@ -90,32 +88,29 @@ app.get("/", (req, res) => {
 //     });
 // });
 
-port.pipe(parser);
 
-// app.post('/', (req,res)=>{
-//   if(req.body.Connect == "Disconnect"){
-//     ConnectPort();
-//   }
-//   else if(req.body.Connect == "Connect"){
-//     DisconnectPort();
-//   }
-//   if(req.body.ConnectManual == "Disconnect"){
-//     ConnectManualPort();
-//   }
-//   else if(req.body.ConnectManual == "Connect"){
-//     DisconnectManualPort();
-//   }
-// })
+app.post('/', (req,res)=>{
+  if(req.body.Connect == "Disconnect"){
+    ConnectPort();
+  }
+  else if(req.body.Connect == "Connect"){
+    DisconnectPort();
+  }
+  if(req.body.ConnectManual == "Disconnect"){
+    ConnectManualPort();
+  }
+  else if(req.body.ConnectManual == "Connect"){
+    DisconnectManualPort();
+  }
+})
 
-var portATS = new SerialPort("/dev/cu.usbmodem14101", {
-  baudRate: 57600,
-});
+var portATS = 0;
 
 var receivedData;
 var cleanData;
 
-var origin_latitude = -7.77126;
-var origin_longitude = 110.37338;
+//var origin_latitude = -7.77126;
+//var origin_longitude = 110.37338;
 
 const csvWriter = createCsvWriter({
   path: "CSV/data.csv",
@@ -145,38 +140,75 @@ const csvWriter = createCsvWriter({
 // portATS.on("open", function () { });
 
 var j = 0;
-function ConnectPort() {
-  console.log("Connected2");
-  if (j == 0) {
-    console.log("Connected");
-    port.pipe(parser);
+var reconnect = false;
+var noportmuatan = 'COM3';
+var noportats = 'COM7';
+function ConnectPort(){
+  if(reconnect){
+    port = new SerialPort(noportmuatan, {
+      baudRate: 57600 
+    });
+    portATS = new SerialPort(noportats,{
+      baudRate: 57600
+    });
+    port.pipe(parser)
     portATS.pipe(parserATS);
-    port.on("open", function () {});
-    portATS.on("open", function () {});
+    port.on('open', function() {});
+    portATS.on('open', function() {});
+    reconnect = false;
+  }
+  if(j == 0){
+    port = new SerialPort(noportmuatan, {
+      baudRate: 57600 
+    });
+    portATS = new SerialPort(noportats,{
+      baudRate: 57600
+    });
+    console.log("Connected")
+    port.pipe(parser)
+    portATS.pipe(parserATS);
+    port.on('open', function() {});
+    portATS.on('open', function() {});
   }
   j++;
-}
-
-function DisconnectPort() {
-  console.log("Disconnected");
+} 
+function DisconnectPort(){
+  console.log("Disconnected")
   port.close();
   portATS.close();
+  reconnect = true;
+}
+var reconnectmanual = false;
+var jj = 0;
+function ConnectManualPort(){
+  if(reconnectmanual){
+    portATS = new SerialPort(noportats,{
+      baudRate: 57600
+    });
+    portATS.pipe(parserATSManual);
+    portATS.on('open', function() {});
+    reconnectmanual = false;
+  }
+  if(jj == 0){
+    portATS = new SerialPort(noportats,{
+      baudRate: 57600
+    });
+    console.log("Connected");
+    portATS.pipe(parserATSManual);
+    portATS.on('open', function(){});  
+  }
+  jj++;
 }
 
-function ConnectManualPort() {
-  console.log("Connected");
-  portATS.pipe(parserATSManual);
-  portATS.on("open", function () {});
-}
-
-function DisconnectManualPort() {
+function DisconnectManualPort(){
   console.log("Disconnected");
   portATS.close();
+  reconnectmanual = true;
 }
 
 // var HoriTemp = 0;
 // var VerTemp = 0;
-var iii = 0;
+var delay = 0;
 var Horizontal = 0;
 var Vertikal = 0;
 parserATSManual.on("data", function (data) {
@@ -186,34 +218,6 @@ parserATSManual.on("data", function (data) {
     .replace(/(\r\n|\n|\r)/gm, "");
   k = cleanData.split(" ");
   console.log(cleanData);
-
-  // fs.readFile('Input.txt', (err, data) => {
-  //   if (err) throw err;
-  //   if(data == "ATAS") {
-  //     VerTemp++
-  //     // console.log(Math.round(vertical),VerTemp)
-  //   }
-  //   else if(data == "KANAN"){
-  //     HoriTemp++
-  //     // console.log(Math.round(bearing),HoriTemp)
-  //   }
-  //   else if(data == "BAWAH"){
-  //     VerTemp--
-  //     // console.log(Math.round(vertical),VerTemp)
-  //   }
-  //   else if(data == "KIRI"){
-  //     HoriTemp--
-  //     // console.log(Math.round(bearing),HoriTemp)
-  //   }
-  //   console.log(data.toString());
-  //   // console.log(Horizontal,Vertikal)
-  //   //Manual form
-  //   // parserATS.emit('arduino:data1',{
-  //   //   Verti: VerTemp,
-  //   //   Hori:HoriTemp,
-  //   //   Arah: data
-  //   // })
-  // })
   fs.readFile("Input.txt", "utf-8", function (err, data) {
     if (err) throw err;
     var newValue = "empty";
@@ -240,7 +244,7 @@ parserATSManual.on("data", function (data) {
   } else if (Vertikal > 90) {
     Vertikal = 90;
   }
-  if (iii % 6 == 0) {
+  if (delay % 6 == 0) {
     Hasil_Manual = Math.round(Horizontal) + " " + Math.round(Vertikal);
     portATS.write(Hasil_Manual, function (err) {
       if (err) {
@@ -249,7 +253,7 @@ parserATSManual.on("data", function (data) {
       console.log(Hasil_Manual);
     });
   }
-  iii++;
+  delay++;
 
   // app.post('/', (req,res)=>{
   //   console.log(req.body.fname + " " + req.body.lname)
@@ -332,8 +336,8 @@ parser.on("data", function (data) {
     Setting.collection.update(
       {},
       {
-        // port_muatan: req.body.port_muatan,
-        // baudrate_muatan: req.body.baudrate_muatan,
+        port_muatan: req.body.port_muatan,
+        baudrate_muatan: req.body.baudrate_muatan,
         port_ats: req.body.port_ats,
         baudrate_ats: req.body.baudrate_ats,
         //latitude: req.body.latitude_ats,
