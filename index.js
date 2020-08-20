@@ -4,34 +4,35 @@ const socketIo = require("socket.io");
 const http = require("http");
 const bodyParser = require("body-parser");
 const createCsvWriter = require("csv-writer").createObjectCsvWriter;
-var mongoose = require('mongoose');
+var mongoose = require("mongoose");
 
 const app = express();
 const server = http.createServer(app);
 const io = socketIo.listen(server);
-const fs = require('fs') 
+const fs = require("fs");
 
-var sys   = require('sys'),
-    spawn = require('child_process').spawn,
-    dummy  = spawn('python', ['Joystick.py']); 
+var sys = require("sys"),
+  spawn = require("child_process").spawn,
+  dummy = spawn("python", ["Joystick.py"]);
 
-var SerialPort = require('serialport');
+var SerialPort = require("serialport");
 const parsers = SerialPort.parsers;
 
 const parser = new parsers.Readline({
-  delimiter: '\r\n'
+  delimiter: "\r\n",
 });
 
 const parserATS = new parsers.Readline({
-  delimiter: '\r\n'
-})
+  delimiter: "\r\n",
+});
 
-mongoose.connect('mongodb://localhost:27017/gcs_maheswara', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-})
-  .then(() => console.log('Connected to DB!'))
-  .catch(error => console.log(error.message));
+mongoose
+  .connect("mongodb://localhost:27017/gcs_maheswara", {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => console.log("Connected to DB!"))
+  .catch((error) => console.log(error.message));
 
 // POST - title, content
 
@@ -41,36 +42,41 @@ var settingSchema = new mongoose.Schema({
   port_ats: String,
   baudrate_ats: Number,
   latitude: Number,
-  longitude: Number
+  longitude: Number,
 });
 
 var Setting = mongoose.model("Setting", settingSchema);
 
-const parserATSManual = new parsers.Readline({
-  delimiter: '\r\n'
-})
+var set = new Setting({
+  port_muatan: "req.body.port_muatan",
+  baudrate_muatan: 1232,
+  port_ats: "req.body.port_ats",
+  baudrate_ats: 132123,
+  latitude: 134,
+  longitude: 23423,
+});
+set.save(function (err, setting) {
+  if (err) {
+    console.log("something went wrong");
+  } else {
+    console.log(setting);
+  }
+});
 
+const parserATSManual = new parsers.Readline({
+  delimiter: "\r\n",
+});
 
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static(__dirname + '/public'));
+app.use(express.static(__dirname + "/public"));
 
-var port = new SerialPort('/dev/cu.usbmodem1413101', {
-  baudRate: 57600
+var port = new SerialPort("/dev/cu.usbmodem14201", {
+  baudRate: 57600,
 });
 
 // Routes
-app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/index.html');
-  Setting.findOne({}, function (err, foundSetting) {
-    if (err) {
-      console.log(err)
-    } else {
-      parserATS.emit("arduino:data1", {
-        origin_latitude: foundSetting.latitude,
-        origin_longitude: foundSetting.longitude
-      });
-    }
-  });
+app.get("/", (req, res) => {
+  res.sendFile(__dirname + "/index.html");
 });
 
 // app.post("/", function (req, res) {
@@ -79,38 +85,37 @@ app.get('/', (req, res) => {
 // console.log(port_muatan);
 
 //   var port = new SerialPort(port_muatan, {
-//     baudRate: baudrate_muatan 
-
+//     baudRate: baudrate_muatan
 
 //     });
 // });
 
-port.pipe(parser)
+port.pipe(parser);
 
-app.post('/', (req,res)=>{
-  if(req.body.Connect == "Disconnect"){
-    ConnectPort();
-  }
-  else if(req.body.Connect == "Connect"){
-    DisconnectPort();
-  }
-  if(req.body.ConnectManual == "Disconnect"){
-    ConnectManualPort();
-  }
-  else if(req.body.ConnectManual == "Connect"){
-    DisconnectManualPort();
-  }
-})
+// app.post('/', (req,res)=>{
+//   if(req.body.Connect == "Disconnect"){
+//     ConnectPort();
+//   }
+//   else if(req.body.Connect == "Connect"){
+//     DisconnectPort();
+//   }
+//   if(req.body.ConnectManual == "Disconnect"){
+//     ConnectManualPort();
+//   }
+//   else if(req.body.ConnectManual == "Connect"){
+//     DisconnectManualPort();
+//   }
+// })
 
-var portATS = new SerialPort('COM9',{
-  baudRate: 57600
+var portATS = new SerialPort("/dev/cu.usbmodem14101", {
+  baudRate: 57600,
 });
 
 var receivedData;
 var cleanData;
 
-// var origin_latitude = -7.77126;
-// var origin_longitude = 110.37338;
+var origin_latitude = -7.77126;
+var origin_longitude = 110.37338;
 
 const csvWriter = createCsvWriter({
   path: "CSV/data.csv",
@@ -140,31 +145,31 @@ const csvWriter = createCsvWriter({
 // portATS.on("open", function () { });
 
 var j = 0;
-function ConnectPort(){
-  console.log("Connected2")
-  if(j == 0){
-    console.log("Connected")
-    port.pipe(parser)
+function ConnectPort() {
+  console.log("Connected2");
+  if (j == 0) {
+    console.log("Connected");
+    port.pipe(parser);
     portATS.pipe(parserATS);
-    port.on('open', function() {});
-    portATS.on('open', function() {});
+    port.on("open", function () {});
+    portATS.on("open", function () {});
   }
   j++;
-} 
+}
 
-function DisconnectPort(){
-  console.log("Disconnected")
+function DisconnectPort() {
+  console.log("Disconnected");
   port.close();
   portATS.close();
 }
 
-function ConnectManualPort(){
+function ConnectManualPort() {
   console.log("Connected");
   portATS.pipe(parserATSManual);
-  portATS.on('open', function(){});
+  portATS.on("open", function () {});
 }
 
-function DisconnectManualPort(){
+function DisconnectManualPort() {
   console.log("Disconnected");
   portATS.close();
 }
@@ -172,17 +177,17 @@ function DisconnectManualPort(){
 // var HoriTemp = 0;
 // var VerTemp = 0;
 var iii = 0;
-var Horizontal = 0
-var Vertikal = 0
-parserATSManual.on('data',function(data){
+var Horizontal = 0;
+var Vertikal = 0;
+parserATSManual.on("data", function (data) {
   receivedData = data.toString();
   var cleanData = receivedData
     .substring(receivedData.indexOf("\r\n"))
     .replace(/(\r\n|\n|\r)/gm, "");
   k = cleanData.split(" ");
-  console.log(cleanData)
+  console.log(cleanData);
 
-  // fs.readFile('Input.txt', (err, data) => { 
+  // fs.readFile('Input.txt', (err, data) => {
   //   if (err) throw err;
   //   if(data == "ATAS") {
   //     VerTemp++
@@ -200,7 +205,7 @@ parserATSManual.on('data',function(data){
   //     HoriTemp--
   //     // console.log(Math.round(bearing),HoriTemp)
   //   }
-  //   console.log(data.toString()); 
+  //   console.log(data.toString());
   //   // console.log(Horizontal,Vertikal)
   //   //Manual form
   //   // parserATS.emit('arduino:data1',{
@@ -209,44 +214,40 @@ parserATSManual.on('data',function(data){
   //   //   Arah: data
   //   // })
   // })
-   fs.readFile('Input.txt', 'utf-8', function(err, data) {
+  fs.readFile("Input.txt", "utf-8", function (err, data) {
+    if (err) throw err;
+    var newValue = "empty";
+    if (data == "ATAS") {
+      newValue = data.replace(/ATAS/gim, "empty");
+      Vertikal += 3;
+    } else if (data == "KANAN") {
+      newValue = data.replace(/KANAN/gim, "empty");
+      Horizontal = Math.abs(Horizontal + 3 + 360) % 360;
+    } else if (data == "BAWAH") {
+      newValue = data.replace(/BAWAH/gim, "empty");
+      Vertikal -= 3;
+    } else if (data == "KIRI") {
+      var newValue = data.replace(/KIRI/gim, "empty");
+      Horizontal = Math.abs(Horizontal - 3 + 360) % 360;
+    }
+    fs.writeFile("Input.txt", newValue, "utf-8", function (err, data) {
       if (err) throw err;
-      var newValue = "empty";
-      if(data == "ATAS") {
-        newValue = data.replace(/ATAS/gim, 'empty');
-        Vertikal += 3
-      }
-      else if(data == "KANAN"){   
-        newValue = data.replace(/KANAN/gim, 'empty');
-        Horizontal = Math.abs(Horizontal + 3 + 360) % 360;
-      }
-      else if(data == "BAWAH"){
-        newValue = data.replace(/BAWAH/gim, 'empty');
-        Vertikal -= 3
-      }
-      else if(data == "KIRI"){
-        var newValue = data.replace(/KIRI/gim, 'empty');
-        Horizontal =  Math.abs(Horizontal - 3 + 360) % 360;
-      }
-      fs.writeFile('Input.txt', newValue, 'utf-8', function(err, data) {
-          if (err) throw err;
-          console.log('Done!');
-      })
-  })
-  if(Vertikal < 0 ){
+      console.log("Done!");
+    });
+  });
+  if (Vertikal < 0) {
     Vertikal = 0;
-  }
-  else if(Vertikal > 90){
+  } else if (Vertikal > 90) {
     Vertikal = 90;
   }
-  if(iii % 6 == 0){
+  if (iii % 6 == 0) {
     Hasil_Manual = Math.round(Horizontal) + " " + Math.round(Vertikal);
     portATS.write(Hasil_Manual, function (err) {
-    if (err) {
-      return console.log("Error on write: ", err.message);
-    }
-    console.log(Hasil_Manual);
-  });
+      if (err) {
+        return console.log("Error on write: ", err.message);
+      }
+      console.log(Hasil_Manual);
+    });
   }
   iii++;
 
@@ -254,7 +255,7 @@ parserATSManual.on('data',function(data){
   //   console.log(req.body.fname + " " + req.body.lname)
   //   booll = false;
   // })
-})
+});
 
 var i = 0;
 parser.on("data", function (data) {
@@ -282,7 +283,7 @@ parser.on("data", function (data) {
 
   bearing = 0;
 
-  if(k.length == 10){
+  if (k.length == 10) {
     io.emit("arduino:data", {
       temps: temp,
       humids: humid,
@@ -293,13 +294,21 @@ parser.on("data", function (data) {
       lintangs: lintang,
       bujurs: bujur,
       pause: i,
-      bearings: bearing
+      bearings: bearing,
     });
     i++;
-    parserATS.emit("arduino:data1", {
-      lintangs: lintang,
-      bujurs: bujur,
-      altitudes: altitude,
+    Setting.findOne({}, function (err, foundSetting) {
+      if (err) {
+        console.log(err);
+      } else {
+        parserATS.emit("arduino:data1", {
+          origin_latitude: foundSetting.latitude,
+          origin_longitude: foundSetting.longitude,
+          lintangs: lintang,
+          bujurs: bujur,
+          altitudes: altitude,
+        });
+      }
     });
   }
 
@@ -320,47 +329,52 @@ parser.on("data", function (data) {
   app.use(bodyParser.urlencoded({ extended: true }));
   app.post("/", (req, res) => {
     console.log(req.body.fname, req.body.lname, req.body.latitude_ats);
-    Setting.collection.update({}, {
-      port_muatan: req.body.port_muatan,
-      baudrate_muatan: req.body.baudrate_muatan,
-      port_ats: req.body.port_ats,
-      baudrate_ats: req.body.baudrate_ats,
-      latitude: req.body.latitude_ats,
-      longitude: req.body.longitude_ats
-    }, function (err, setting) {
-      Setting.findOne({}, function (err, foundSetting) {
-        if (err) {
-          console.log(err)
-        } else {
-          console.log(foundSetting);
-          parserATS.emit("arduino:data1", {
-            Horizontal: req.body.fname,
-            Vertikal: req.body.lname,
-            lintangs: lintang,
-            bujurs: bujur,
-            altitudes: altitude,
-            port_muatan: foundSetting.port_muatan,
-            baudrate_muatan: foundSetting.baudrate_muatan,
-            port_ats: foundSetting.port_ats,
-            baudrate_ats: foundSetting.baudrate_ats,
-            origin_latitude: foundSetting.latitude,
-            origin_longitude: foundSetting.longitude
-          });
-        }
-      });
-    });
-
+    Setting.collection.update(
+      {},
+      {
+        // port_muatan: req.body.port_muatan,
+        // baudrate_muatan: req.body.baudrate_muatan,
+        port_ats: req.body.port_ats,
+        baudrate_ats: req.body.baudrate_ats,
+        //latitude: req.body.latitude_ats,
+        //longitude: req.body.longitude_ats,
+      },
+      function (err, setting) {
+        Setting.findOne({}, function (err, foundSetting) {
+          if (err) {
+            console.log(err);
+          } else {
+            //console.log(foundSetting);
+            parserATS.emit("arduino:data1", {
+              Horizontal: req.body.fname,
+              Vertikal: req.body.lname,
+              lintangs: lintang,
+              bujurs: bujur,
+              altitudes: altitude,
+              port_muatan: foundSetting.port_muatan,
+              baudrate_muatan: foundSetting.baudrate_muatan,
+              port_ats: foundSetting.port_ats,
+              baudrate_ats: foundSetting.baudrate_ats,
+              origin_latitude: foundSetting.latitude,
+              origin_longitude: foundSetting.longitude,
+            });
+          }
+        });
+      }
+    );
   });
 });
 
 parserATS.on("arduino:data1", function (data) {
   //autotrack
+
   const autotrack = require("./Geo_calculator.js");
+  console.log("latitude: " + data.origin_latitude);
+  console.log("longitude: " + data.origin_longitude);
 
   //console.log(autotrack.data.calculate_compass_bearing(100,45,10,0))
   if (data.Horizontal != undefined || data.Vertikal != undefined) {
-    Hasil_Autotrack =
-      data.Horizontal + " " + data.Vertikal;
+    Hasil_Autotrack = data.Horizontal + " " + data.Vertikal;
     portATS.write(Hasil_Autotrack, function (err) {
       if (err) {
         return console.log("Error on write: ", err.message);
@@ -383,14 +397,18 @@ parserATS.on("arduino:data1", function (data) {
       ),
       data.altitudes
     );
+    console.log(
+      data.lintangs,
+      data.bujurs,
+      data.origin_latitude,
+      data.origin_longitude
+    );
     // console.log('port muatan: ' + data.port_muatan);
     // console.log('baudrate muatan: ' + data.baudrate_muatan);
     // console.log('port ats: ' + data.port_ats);
     // console.log('baudrate ats: ' + data.baudrate_ats);
-    console.log('latitude: ' + data.origin_latitude);
-    console.log('longitude: ' + data.origin_longitude);
-    Hasil_Autotrack =
-      Math.round(bearing) + " " + Math.round(vertical);
+
+    Hasil_Autotrack = Math.round(bearing) + " " + Math.round(vertical);
     portATS.write(Hasil_Autotrack, function (err) {
       if (err) {
         return console.log("Error on write: ", err.message);
@@ -400,31 +418,5 @@ parserATS.on("arduino:data1", function (data) {
   }
 });
 
-  parserATS.on('arduino:data1', function(data){
-    //autotrack
-    const autotrack = require('./Geo_calculator.js')
-    //console.log(autotrack.data.calculate_compass_bearing(100,45,10,0))
-    if(data.Horizontal != undefined || data.Vertikal != undefined){
-      Hasil_Autotrack = data.Horizontal + " " + data.Vertikal;
-      portATS.write(Hasil_Autotrack, function (err) {
-        if (err) {
-          return console.log('Error on write: ', err.message)
-        }
-        console.log(Hasil_Autotrack)
-      })
-    }
-    else{
-      bearing = autotrack.data.calculate_compass_bearing(data.lintangs,data.bujurs,data.origin_latitude,data.origin_longitude);
-      vertical = autotrack.data.calculate_vertical_angle(autotrack.data.calculate_distance(data.lintangs,data.bujurs,data.origin_latitude,data.origin_longitude),data.altitudes);
-      Hasil_Autotrack = (Math.round(bearing)) + " " + (Math.round(vertical));
-      portATS.write(Hasil_Autotrack, function (err) {
-        if (err) {
-          return console.log('Error on write: ', err.message)
-        }
-        console.log(Hasil_Autotrack)
-      })
-    }
-})
-
 // Start server
-server.listen(3000)
+server.listen(3000);
