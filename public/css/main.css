@@ -13,6 +13,11 @@ body{
   background: #e1ecf2;
 }
 
+.dark-mode {
+  background: black;
+  color: white;
+}
+
 .wrapper-show{
   margin: 10px;
 }
@@ -208,6 +213,11 @@ body{
 #map{
   width: 100%;
   height: 400px;
+}
+
+#mapATS{
+  width: 100%;
+  height: 180px;
 }
 
 #Detail{
