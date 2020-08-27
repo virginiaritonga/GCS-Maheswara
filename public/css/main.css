@@ -23,6 +23,12 @@ body{
   color: #eee;
 }
 
+[data-theme="dark"] .hamburger {
+  background-color: #383838 !important;
+  color: #eee;
+}
+
+
 [data-theme="dark"] .sidebar{
   background-color: #383838 !important;
   color: #eee;
