@@ -13,9 +13,43 @@ body{
   background: #e1ecf2;
 }
 
-.dark-mode {
-  background: black;
-  color: white;
+[data-theme="dark"] {
+  background-color: #111 !important;
+  color: #eee;
+}
+
+[data-theme="dark"] .top_navbar .top_menu {
+  background-color: #383838 !important;
+  color: #eee;
+}
+
+[data-theme="dark"] .sidebar{
+  background-color: #383838 !important;
+  color: #eee;
+}
+
+[data-theme="dark"] .sidebar ul li a {
+  color: #eee;
+}
+
+[data-theme="dark"] .card{
+  background-color: #383838 !important;
+  color: #eee;
+}
+
+[data-theme="dark"] .main_container{
+  background-color: #111 !important;
+  color: #eee;
+}
+
+[data-theme="dark"] .tab-content{
+  background-color: #111 !important;
+  color: #eee;
+}
+
+[data-theme="dark"] .tab-pane{
+  background-color: #111 !important;
+  color: #eee;
 }
 
 .wrapper-show{
