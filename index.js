@@ -1,35 +1,38 @@
-const path = require("path");
-const express = require("express");
-const socketIo = require("socket.io");
-const http = require("http");
-const bodyParser = require("body-parser");
-const createCsvWriter = require("csv-writer").createObjectCsvWriter;
-var mongoose = require("mongoose");
+const path              = require("path"),
+      express           = require("express"),
+      socketIo          = require("socket.io"),
+      SerialPort        = require("serialport"),
+      http              = require("http"),
+      bodyParser        = require("body-parser"),
+      createCsvWriter   = require("csv-writer").createObjectCsvWriter,
+      app               = express(),
+      server            = http.createServer(app),
+      io                = socketIo.listen(server),
+      fs                = require("fs"),
+      parsers           = SerialPort.parsers,
+      parser            = new parsers.Readline({
+                            delimiter: "\r\n",
+                          }),
+      parserATS         = new parsers.Readline({
+                            delimiter: "\r\n",
+                          }),
+      readline          = require("readline"),
+      rl                = readline.createInterface({
+                            input: process.stdin,
+                            output: process.stdout,
+                          }),
+      parserATSManual   = new parsers.Readline({
+                            delimiter: "\r\n",
+                          }),
+      parserManual      = new parsers.Readline({
+                            delimiter: "\r\n",
+                          });
 
-const app = express();
-const server = http.createServer(app);
-const io = socketIo.listen(server);
-const fs = require("fs");
-
-var sys = require("sys"),
-  spawn = require("child_process").spawn,
-  dummy = spawn("python", ["Joystick.py"]);
-
-var SerialPort = require("serialport");
-const parsers = SerialPort.parsers;
-
-const parser = new parsers.Readline({
-  delimiter: "\r\n",
-});
-
-const parserATS = new parsers.Readline({
-  delimiter: "\r\n",
-});
-
-const mapATS = new parsers.Readline({
-  delimiter: "\r\n",
-});
-
+var mongoose    = require("mongoose"),
+    sys         = require("sys"),
+    spawn       = require("child_process").spawn,
+    dummy       = spawn("python", ["Joystick/Joystick.py"]);
+                   
 mongoose
   .connect("mongodb://localhost:27017/gcs_maheswara", {
     useNewUrlParser: true,
@@ -38,24 +41,20 @@ mongoose
   .then(() => console.log("Connected to DB!"))
   .catch((error) => console.log(error.message));
 
-// POST - title, content
-
-var settingSchema = new mongoose.Schema({
-  port_muatan: String,
-  baudrate_muatan: Number,
-  port_ats: String,
-  baudrate_ats: Number,
-  latitude: Number,
-  longitude: Number,
-});
-
-var Setting = mongoose.model("Setting", settingSchema);
-
-//send map ATS data
-// mapATS.emit("arduino:dataATS", {
-//   origin_latitude: -7.77126,
-//   origin_longitude: 110.37338,
+// var settingSchema = new mongoose.Schema({
+//   port_muatan: String,
+//   baudrate_muatan: Number,
+//   port_ats: String,
+//   baudrate_ats: Number,
+//   latitude: Number,
+//   longitude: Number,
 // });
+
+// var Setting = mongoose.model("Setting", settingSchema);
+
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static(__dirname + "/public"));
+
 // var set = new Setting({
 //   port_muatan: "req.body.port_muatan",
 //   baudrate_muatan: 1232,
@@ -72,52 +71,39 @@ var Setting = mongoose.model("Setting", settingSchema);
 //   }
 // });
 
-const parserATSManual = new parsers.Readline({
-  delimiter: "\r\n",
-});
-
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static(__dirname + "/public"));
 
 var port = 0;
 
-// Routes
+// ROUTES
 app.get("/", (req, res) => {
   res.sendFile(__dirname + "/index.html");
 });
 
-// app.post("/", function (req, res) {
-// port_muatan = req.body.port_muatan;
-// baudrate_muatan = req.body.baudrate_muatan;
-// console.log(port_muatan);
-
-//   var port = new SerialPort(port_muatan, {
-//     baudRate: baudrate_muatan
-
-//     });
-// });
-
-app.post("/", (req, res) => {
-  if (req.body.Connect == "Disconnect") {
+app.post('/', (req,res)=>{
+  if(req.body.Connect == "Disconnect"){
     ConnectPort();
-  } else if (req.body.Connect == "Connect") {
+  }
+  else if(req.body.Connect == "Connect"){
     DisconnectPort();
   }
-  if (req.body.ConnectManual == "Disconnect") {
+  if(req.body.ConnectManual == "Disconnect"){
     ConnectManualPort();
-  } else if (req.body.ConnectManual == "Connect") {
+  }
+  else if(req.body.ConnectManual == "Connect"){
     DisconnectManualPort();
   }
-});
+})
 
 var portATS = 0;
 
 var receivedData;
 var cleanData;
 
-//var origin_latitude = -7.77126;
-//var origin_longitude = 110.37338;
+var origin_latitude =  -7.771173;
+var origin_longitude = 110.373230;
 
+
+// WRITE CSV
 const csvWriter = createCsvWriter({
   path: "CSV/data.csv",
   header: [
@@ -134,74 +120,118 @@ const csvWriter = createCsvWriter({
   ],
 });
 
-
+// AUTOTRACK
 var j = 0;
 var reconnect = false;
-var noportmuatan = "/dev/cu.usbmodem14101";
-var noportats = "/dev/cu.usbmodem14201";
-function ConnectPort() {
-  if (reconnect) {
+var noportmuatan = '0';
+var noportats = '/dev/cu.usbmodem55335201';
+// AUTOTRACK - CONNECT
+function ConnectPort(){
+  // reconnect
+  if(reconnect){
     port = new SerialPort(noportmuatan, {
-      baudRate: 57600,
+      baudRate: 57600 
     });
-    portATS = new SerialPort(noportats, {
-      baudRate: 57600,
+    portATS = new SerialPort(noportats,{
+      baudRate: 57600
     });
-    port.pipe(parser);
+    port.pipe(parser)
     portATS.pipe(parserATS);
-    port.on("open", function () {});
-    portATS.on("open", function () {});
+    port.on('open', function() {});
+    portATS.on('open', function() {});
     reconnect = false;
   }
-  if (j == 0) {
-    port = new SerialPort(noportmuatan, {
-      baudRate: 57600,
+  //connect
+  if(j == 0){
+    const openPort = () => {
+      return new Promise((resolve, reject) => {
+        rl.question("Port Muatan: ", (portMuatan) => {
+          noportmuatan = portMuatan;
+          port = new SerialPort(portMuatan, { baudRate: 57600 });
+          port.pipe(parser);
+          port.on("open", function () {});
+            portATS = new SerialPort(noportats,{
+      baudRate: 57600
     });
-    portATS = new SerialPort(noportats, {
-      baudRate: 57600,
-    });
-    console.log("Connected");
-    port.pipe(parser);
     portATS.pipe(parserATS);
-    port.on("open", function () {});
-    portATS.on("open", function () {});
+    portATS.on('open', function() {});
+          resolve();
+        });
+      });
+    };
+    // port = new SerialPort(noportmuatan, {
+    //   baudRate: 57600 
+    // });
+    // portATS = new SerialPort(noportats,{
+    //   baudRate: 57600
+    // });
+    console.log("Connected")
+    // port.pipe(parser);
+    // portATS.pipe(parserATS);
+    // port.on('open', function() {});
+    // portATS.on('open', function() {});
+
+    const main = async () => {
+      await openPort()
+    };
+    
+    main();
   }
   j++;
-}
-function DisconnectPort() {
-  console.log("Disconnected");
+} 
+// AUTOTRACK - DISCONNECT
+function DisconnectPort(){
+  console.log("Disconnected")
   port.close();
   portATS.close();
   reconnect = true;
 }
+
+// MANUAL TRACK
 var reconnectmanual = false;
 var jj = 0;
-function ConnectManualPort() {
-  if (reconnectmanual) {
-    portATS = new SerialPort(noportats, {
-      baudRate: 57600,
+// MANUAL TRACK - CONNECT
+function ConnectManualPort(){
+  //reconnect
+  if(reconnectmanual){
+    portATS = new SerialPort(noportats,{
+      baudRate: 57600
     });
+    port = new SerialPort(noportmuatan, {
+      baudRate: 57600 
+    });
+    port.pipe(parserManual);
     portATS.pipe(parserATSManual);
-    portATS.on("open", function () {});
+    port.on('open', function() {});
+    portATS.on('open', function() {});
     reconnectmanual = false;
   }
-  if (jj == 0) {
-    portATS = new SerialPort(noportats, {
-      baudRate: 57600,
+  //connect
+  if(jj == 0){
+  
+    portATS = new SerialPort(noportats,{
+      baudRate: 57600
+    });
+    port = new SerialPort(noportmuatan, {
+      baudRate: 57600 
     });
     console.log("Connected");
     portATS.pipe(parserATSManual);
-    portATS.on("open", function () {});
+    portATS.on('open', function() {});
+    port.pipe(parserManual);
+    port.on('open', function() {})
   }
   jj++;
 }
-
-function DisconnectManualPort() {
+// MANUAL TRACK - DISCONNECT
+function DisconnectManualPort(){
   console.log("Disconnected");
   portATS.close();
+  port.close();
   reconnectmanual = true;
 }
 
+// PARSERATSMANUAL.ON
 // var HoriTemp = 0;
 // var VerTemp = 0;
 var delay = 0;
@@ -214,7 +244,7 @@ parserATSManual.on("data", function (data) {
     .replace(/(\r\n|\n|\r)/gm, "");
   k = cleanData.split(" ");
   console.log(cleanData);
-  fs.readFile("Input.txt", "utf-8", function (err, data) {
+  fs.readFile("Joystick/Input.txt", "utf-8", function (err, data) {
     if (err) throw err;
     var newValue = "empty";
     if (data == "ATAS") {
@@ -230,7 +260,7 @@ parserATSManual.on("data", function (data) {
       var newValue = data.replace(/KIRI/gim, "empty");
       Horizontal = Math.abs(Horizontal - 3 + 360) % 360;
     }
-    fs.writeFile("Input.txt", newValue, "utf-8", function (err, data) {
+    fs.writeFile("Joystick/Input.txt", newValue, "utf-8", function (err, data) {
       if (err) throw err;
       console.log("Done!");
     });
@@ -250,13 +280,97 @@ parserATSManual.on("data", function (data) {
     });
   }
   delay++;
-
-  // app.post('/', (req,res)=>{
-  //   console.log(req.body.fname + " " + req.body.lname)
-  //   booll = false;
-  // })
 });
 
+// PARSERMANUAL.ON
+parserManual.on("data", function(data){
+  receivedData = data.toString();
+  var cleanData = receivedData
+    .substring(receivedData.indexOf("\r\n"))
+    .replace(/(\r\n|\n|\r)/gm, "");
+  k = cleanData.split(" ");
+  var dataCSV = [];
+
+  var ID_Peserta = k[0];
+  var waktu = k[1];
+  var altitude = k[2];
+  var temp = k[3];
+  var humid = k[4];
+  var pressure = k[5];
+  var wind_dir = k[6];
+  var wind_speed = k[7];
+  var lintang = k[8];
+  var bujur = k[9];
+
+  console.log(cleanData);
+  console.log("------------------------");
+
+  bearing = 0;
+
+  if (k.length == 10) {
+    io.emit("arduino:data", {
+      temps: temp,
+      humids: humid,
+      altitudes: altitude,
+      pressures: pressure,
+      windd: wind_dir,
+      winds: wind_speed,
+      lintangs: lintang,
+      bujurs: bujur,
+      pause: i,
+      bearings: bearing,
+    });
+    i++;
+    // Setting.findOne({}, function (err, foundSetting) {
+    //   if (err) {
+    //     console.log(err);
+    //   } else {
+        parserATSManual.emit("data", {
+          origin_latitude: origin_latitude,
+          origin_longitude: origin_longitude,
+          lintangs: lintang,
+          bujurs: bujur,
+          altitudes: altitude,
+        });
+    //   }
+    // });
+  }
+
+  dataCSV.push({
+    idP: k[0],
+    waktu: k[1],
+    ketinggian: k[2],
+    temperature: k[3],
+    kelembapan: k[4],
+    tekanan: k[5],
+    arah_angin: k[6],
+    kec_angin: k[7],
+    lintang: k[8],
+    bujur: k[9],
+  });
+  csvWriter.writeRecords(dataCSV).then(() => console.log("CSV written"));
+
+  const autotrack = require("./Geo_calculator.js");
+  bearing = autotrack.data.calculate_compass_bearing(
+    lintang,
+    bujur,
+    data.origin_latitude,
+    data.origin_longitude
+  );
+  vertical = autotrack.data.calculate_vertical_angle(
+    autotrack.data.calculate_distance(
+      lintang,
+      bujur,
+      data.origin_latitude,
+      data.origin_longitude
+    ),
+    altitude
+  );
+  // console.log(lintang,bujur,data.origin_latitude,data.origin_longitude,altitude);
+  console.log(bearing,vertical)
+});
+
+// PARSER.ON
 var i = 0;
 parser.on("data", function (data) {
   //setInterval(function(){
@@ -297,23 +411,16 @@ parser.on("data", function (data) {
       bearings: bearing,
     });
     i++;
-    Setting.findOne({}, function (err, foundSetting) {
-      if (err) {
-        console.log(err);
-      } else {
+ 
         parserATS.emit("arduino:data1", {
-          origin_latitude: -7.77126,
-          origin_longitude: 110.37338,
-          port_ats: foundSetting.port_ats,
-          port_muatan: foundSetting.port_muatan,
+          origin_latitude: origin_latitude,
+          origin_longitude: origin_longitude,
           lintangs: lintang,
           bujurs: bujur,
           altitudes: altitude,
         });
-      }
-    });
+     
   }
-
 
   dataCSV.push({
     idP: k[0],
@@ -328,54 +435,16 @@ parser.on("data", function (data) {
     bujur: k[9],
   });
   csvWriter.writeRecords(dataCSV).then(() => console.log("CSV written"));
-
   app.use(bodyParser.urlencoded({ extended: true }));
-  app.post("/", (req, res) => {
-    console.log(req.body.fname, req.body.lname, req.body.latitude_ats);
-    Setting.collection.update(
-      {},
-      {
-        port_muatan: req.body.port_muatan,
-        baudrate_muatan: req.body.baudrate_muatan,
-        port_ats: req.body.port_ats,
-        baudrate_ats: req.body.baudrate_ats,
-        latitude: req.body.latitude_ats,
-        longitude: req.body.longitude_ats,
-      },
-      function (err, setting) {
-        Setting.findOne({}, function (err, foundSetting) {
-          if (err) {
-            console.log(err);
-          } else {
-            //console.log(foundSetting);
-            parserATS.emit("arduino:data1", {
-              Horizontal: req.body.fname,
-              Vertikal: req.body.lname,
-              lintangs: lintang,
-              bujurs: bujur,
-              altitudes: altitude,
-              port_muatan: foundSetting.port_muatan,
-              baudrate_muatan: foundSetting.baudrate_muatan,
-              port_ats: foundSetting.port_ats,
-              baudrate_ats: foundSetting.baudrate_ats,
-              origin_latitude: foundSetting.latitude,
-              origin_longitude: foundSetting.longitude,
-            });
-          }
-        });
-      }
-    );
-  });
 });
 
+// PARSERATS.ON
 parserATS.on("arduino:data1", function (data) {
   //autotrack
 
   const autotrack = require("./Geo_calculator.js");
-  console.log("latitude: " + data.origin_latitude);
-  console.log("longitude: " + data.origin_longitude);
-  console.log("port muatan: " + data.port_muatan);
-  console.log("port ats: " + data.port_ats);
+  // console.log("latitude: " + data.origin_latitude);
+  // console.log("longitude: " + data.origin_longitude);
 
   //console.log(autotrack.data.calculate_compass_bearing(100,45,10,0))
   if (data.Horizontal != undefined || data.Vertikal != undefined) {
@@ -402,12 +471,12 @@ parserATS.on("arduino:data1", function (data) {
       ),
       data.altitudes
     );
-    console.log(
-      data.lintangs,
-      data.bujurs,
-      data.origin_latitude,
-      data.origin_longitude
-    );
+    // console.log(
+    //   data.lintangs,
+    //   data.bujurs,
+    //   data.origin_latitude,
+    //   data.origin_longitude
+    // );
     // console.log('port muatan: ' + data.port_muatan);
     // console.log('baudrate muatan: ' + data.baudrate_muatan);
     // console.log('port ats: ' + data.port_ats);
@@ -423,5 +492,5 @@ parserATS.on("arduino:data1", function (data) {
   }
 });
 
-// Start server
+// START SERVER
 server.listen(3000);
