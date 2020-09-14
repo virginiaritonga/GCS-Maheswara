@@ -116,9 +116,9 @@
                         <span class="title">Detail</span></a>
                 </li>
                 <li>
-                    <div class="custom-control custom-switch">
+                    <div class="custom-control custom-switch" style="text-align: center;">
                         <input type="checkbox" class="custom-control-input" id="darkSwitch" />
-                        <label class="custom-control-label" for="darkSwitch">Dark Mode</label>
+                        <label class="custom-control-label" for="darkSwitch"></label>
                       </div>
                       <script src="js/dark-mode-switch.min.js"></script>
                 </li>
@@ -823,6 +823,8 @@
                     document.getElementById('map_tinggi').innerHTML = dataSerial.altitudes;
                     document.getElementById('map_latitude').innerHTML = dataSerial.lintangs;
                     document.getElementById('map_longitude').innerHTML = dataSerial.bujurs;
+                    document.getElementById('init_latitude').innerHTML = dataSerial.origin_latitude;
+                    document.getElementById('init_longitude').innerHTML = dataSerial.origin_longitude;
                 });
                 if (dataSerial.pause % 5 == 0) {
                     chart.data.datasets.forEach(dataset => {

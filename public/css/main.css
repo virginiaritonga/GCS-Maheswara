@@ -58,6 +58,11 @@ body{
   color: #eee;
 }
 
+.sensor {
+  font-size: 2rem;
+  font-weight: 800;
+}
+
 .wrapper-show{
   margin: 10px;
 }
@@ -103,9 +108,17 @@ body{
 
 .wrapper-show .top_navbar .top_menu .logo .GMAT{
     display: block;
-    width:60px;
+    width:55px;
     height: 70px;
     line-height: 70px;
+    margin-top: 16px;
+}
+
+.wrapper-show .top_navbar .top_menu .logo .UGM{
+  display: block;
+  width:50px;
+  height: 51px;
+  margin-top: 25px;
 }
 
 .wrapper-show .top_navbar .top_menu .team{
@@ -311,6 +324,7 @@ body{
 	margin-bottom: 16px;
 	cursor: pointer;
 }
+
 #DownloadCSV{
 	display: inline;
   cursor: pointer;
